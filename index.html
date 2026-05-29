@@ -24,6 +24,10 @@
         window.addEventListener('DOMContentLoaded', () => {
             includeHTML('header-placeholder', 'header.html');
             includeHTML('sidebar-placeholder', 'sidebar.html');
+            
+            // 1. ADDED: This line tells JavaScript to fetch your new column file
+            includeHTML('first-column-placeholder', 'firstColumn.html');
+            
             includeHTML('footer-placeholder', 'footer.html');
         });
     </script>
@@ -33,11 +37,13 @@
     <div id="header-placeholder" style="position: relative; z-index: 999;"></div>
     
     <div style="display: flex;">
-        <div id="sidebar-placeholder" style="width: 200px;"></div>
+        <div id="sidebar-placeholder" style="width: 200px; flex-shrink: 0;"></div>
     
+        <div id="first-column-placeholder" style="width: 250px; flex-shrink: 0; border-right: 1px solid #eee;"></div>
+
         <main style="flex-grow: 1; padding: 20px;">
             <h2>Welcome to the Home Page!</h2>
-            <p>This content belongs strictly to index.html. The header, sidebar, and footer are being pulled in dynamically.</p>
+            <p>This content belongs strictly to index.html. The header, sidebar, first column, and footer are being pulled in dynamically.</p>
         </main>
     </div>
 
