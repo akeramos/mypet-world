@@ -10,9 +10,9 @@
     overflow: hidden;
     perspective: 1500px;
     font-family: 'Lexend', sans-serif;
-    border-radius: 24px; /* Optional rounded edges looks better as a standalone section */
-    margin-top: 30px; /* Spacing below your paragraph text */
-    padding: 40px; /* Gives internal canvas contents breathing room */
+    border-radius: 24px; 
+    margin-top: 30px; 
+    padding: 40px; 
   }
 
   @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;800&display=swap');
@@ -25,12 +25,11 @@
     pointer-events: none;
   }
 
-  /* Upgraded Card: Changed to horizontal row format for widescreen display rows */
   .clinic-card {
     position: relative;
     z-index: 10;
     display: flex;
-    flex-direction: row; /* Flipped back to side-by-side alignment inside the element */
+    flex-direction: row; 
     align-items: center;
     justify-content: center;
     padding: 30px 50px;
@@ -59,7 +58,7 @@
 
   .clinic-logo {
     max-width: 90px;
-    margin-right: 35px; /* Added margin space to the right side of picture frame */
+    margin-right: 35px; 
     margin-bottom: 0;
     transform: translateZ(80px);
     filter: drop-shadow(0 0 20px rgba(0, 159, 252, 0.4));
@@ -67,7 +66,7 @@
 
   .clinic-text {
     border-top: none;
-    border-left: 4px solid var(--primary-blue); /* Clean accent divider line to the left of header */
+    border-left: 4px solid var(--primary-blue); 
     padding-left: 25px;
     padding-top: 0;
     transform: translateZ(50px);
@@ -76,14 +75,13 @@
 
   .clinic-text h1 {
     margin: 0;
-    font-size: 2.2rem; /* Enhanced text size for wide headers */
+    font-size: 2.2rem; 
     font-weight: 800;
     color: #ffffff;
     line-height: 1.1;
     text-shadow: 0 0 15px rgba(0, 159, 252, 0.5);
   }
 
-  /* Mobile Responsive fallbacks */
   @media (max-width: 600px) {
     .clinic-card, .content-wrapper { flex-direction: column; text-align: center; }
     .clinic-logo { margin: 0 0 20px 0; }
@@ -91,3 +89,136 @@
     .clinic-text h1 { font-size: 1.8rem; }
   }
 </style>
+
+<canvas id="networkCanvas"></canvas>
+
+<div class="clinic-card" id="card">
+  <div class="content-wrapper">
+    <img src="https://lh3.googleusercontent.com/u/0/d/1sCmL7kb6XisU53H38_al4YMHnG9LUAJZ" alt="Logo" class="clinic-logo">
+    <div class="clinic-text">
+      <h1>Mypet-world</h1>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initFirstColumnNetwork() {
+    const canvas = document.getElementById('networkCanvas');
+    if (!canvas) return; 
+    
+    const ctx = canvas.getContext('2d');
+    const card = document.getElementById('card');
+    const container = document.getElementById('first-column-placeholder');
+    
+    let particles = [];
+    const particleCount = 30; 
+    const connectionDist = 100;
+    let mouse = { x: null, y: null };
+
+    window.addEventListener('mousemove', (e) => {
+      if (!container) return;
+      const containerRect = container.getBoundingClientRect();
+      mouse.x = e.clientX - containerRect.left;
+      mouse.y = e.clientY - containerRect.top;
+
+      const rect = card.getBoundingClientRect();
+      if (e.clientX >= rect.left && e.clientX <= rect.right &&
+          e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX = (y - rect.height/2) / 8;
+        const rotateY = (rect.width/2 - x) / 8;
+        card.style.transition = 'none';
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+      card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    });
+
+    function resize() {
+      if(container) {
+        canvas.width = container.clientWidth || 250;
+        canvas.height = container.clientHeight || 500;
+        init();
+      }
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.baseSize = Math.random() * 2 + 2;
+        this.size = this.baseSize;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.pulse = Math.random();
+        this.pulseSpeed = Math.random() * 0.05 + 0.02;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.pulse += this.pulseSpeed;
+        this.size = this.baseSize + Math.sin(this.pulse) * 1;
+
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+
+        if (mouse.x >= 0 && mouse.x <= canvas.width && mouse.y >= 0 && mouse.y <= canvas.height) {
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 80) {
+            this.x -= dx/40;
+            this.y -= dy/40;
+          }
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = 'rgba(0, 159, 252, 0.8)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        for (let j = i; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectionDist) {
+            ctx.strokeStyle = `rgba(0, 159, 252, ${0.6 - dist/connectionDist})`;
+            ctx.lineWidth = 1; 
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    const resizeObserver = new ResizeObserver(() => resize());
+    resizeObserver.observe(container);
+    
+    resize();
+    animate();
+  }
+</script>
