@@ -1,53 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    
-    <script>
-        // The magic function that fetches your external HTML files
-        async function includeHTML(placeholderId, filename) {
-            try {
-                const response = await fetch(filename);
-                if (response.ok) {
-                    document.getElementById(placeholderId).innerHTML = await response.text();
-                } else {
-                    console.error(`Failed to load ${filename}: ${response.statusText}`);
+<script>
+    async function includeHTML(placeholderId, filename) {
+        try {
+            const response = await fetch(filename);
+            if (response.ok) {
+                document.getElementById(placeholderId).innerHTML = await response.text();
+                
+                // If we just successfully loaded the first column, trigger its animation engine!
+                if (placeholderId === 'first-column-placeholder' && typeof initFirstColumnNetwork === 'function') {
+                    initFirstColumnNetwork();
                 }
-            } catch (error) {
-                console.error(`Error fetching ${filename}:`, error);
+            } else {
+                console.error(`Failed to load ${filename}: ${response.statusText}`);
             }
+        } catch (error) {
+            console.error(`Error fetching ${filename}:`, error);
         }
+    }
 
-        // Trigger the loading as soon as the page opens
-        window.addEventListener('DOMContentLoaded', () => {
-            includeHTML('header-placeholder', 'header.html');
-            includeHTML('sidebar-placeholder', 'sidebar.html');
-            
-            // 1. ADDED: This line tells JavaScript to fetch your new column file
-            includeHTML('first-column-placeholder', 'firstColumn.html');
-            
-            includeHTML('footer-placeholder', 'footer.html');
-        });
-    </script>
-</head>
-<body style="margin: 0; font-family: Arial, sans-serif;">
-
-    <div id="header-placeholder" style="position: relative; z-index: 999;"></div>
-    
-    <div style="display: flex;">
-        <div id="sidebar-placeholder" style="width: 200px; flex-shrink: 0;"></div>
-    
-        <div id="first-column-placeholder" style="width: 250px; flex-shrink: 0; border-right: 1px solid #eee;"></div>
-
-        <main style="flex-grow: 1; padding: 20px;">
-            <h2>Welcome to the Home Page!</h2>
-            <p>This content belongs strictly to index.html. The header, sidebar, first column, and footer are being pulled in dynamically.</p>
-        </main>
-    </div>
-
-    <div id="footer-placeholder"></div>
-
-</body>
-</html>
+    window.addEventListener('DOMContentLoaded', () => {
+        includeHTML('header-placeholder', 'header.html');
+        includeHTML('sidebar-placeholder', 'sidebar.html');
+        includeHTML('first-column-placeholder', 'firstColumn.html');
+        includeHTML('footer-placeholder', 'footer.html');
+    });
+</script>
