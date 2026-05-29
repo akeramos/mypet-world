@@ -1,26 +1,54 @@
-<script>
-    async function includeHTML(placeholderId, filename) {
-        try {
-            const response = await fetch(filename);
-            if (response.ok) {
-                document.getElementById(placeholderId).innerHTML = await response.text();
-                
-                // If we just successfully loaded the first column, trigger its animation engine!
-                if (placeholderId === 'first-column-placeholder' && typeof initFirstColumnNetwork === 'function') {
-                    initFirstColumnNetwork();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mypet-world | Home</title>
+    
+    <script>
+        async function includeHTML(placeholderId, filename) {
+            try {
+                const response = await fetch(filename);
+                if (response.ok) {
+                    document.getElementById(placeholderId).innerHTML = await response.text();
+                    
+                    // If we just successfully loaded the first column, trigger its animation engine!
+                    if (placeholderId === 'first-column-placeholder' && typeof initFirstColumnNetwork === 'function') {
+                        initFirstColumnNetwork();
+                    }
+                } else {
+                    console.error(`Failed to load ${filename}: ${response.statusText}`);
                 }
-            } else {
-                console.error(`Failed to load ${filename}: ${response.statusText}`);
+            } catch (error) {
+                console.error(`Error fetching ${filename}:`, error);
             }
-        } catch (error) {
-            console.error(`Error fetching ${filename}:`, error);
         }
-    }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        includeHTML('header-placeholder', 'header.html');
-        includeHTML('sidebar-placeholder', 'sidebar.html');
-        includeHTML('first-column-placeholder', 'firstColumn.html');
-        includeHTML('footer-placeholder', 'footer.html');
-    });
-</script>
+        window.addEventListener('DOMContentLoaded', () => {
+            includeHTML('header-placeholder', 'header.html');
+            includeHTML('sidebar-placeholder', 'sidebar.html');
+            includeHTML('first-column-placeholder', 'firstColumn.html');
+            includeHTML('footer-placeholder', 'footer.html');
+        });
+    </script>
+</head>
+<body style="margin: 0; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; flex-direction: column;">
+
+    <div id="header-placeholder" style="position: relative; z-index: 999;"></div>
+    
+    <div style="display: flex; flex: 1; position: relative; z-index: 1;">
+        
+        <div id="sidebar-placeholder" style="width: 200px; flex-shrink: 0;"></div>
+    
+        <div id="first-column-placeholder" style="width: 260px; flex-shrink: 0;"></div>
+
+        <main style="flex-grow: 1; padding: 30px; background-color: #f8fafc; padding-bottom: 80px;">
+            <h2>Welcome to Mypet-world!</h2>
+            <p>This space is your main dashboard workspace content area. The structural headers, nav columns, and footers are all being built dynamically behind the scenes.</p>
+        </main>
+    </div>
+
+    <div id="footer-placeholder" style="position: relative; z-index: 10;"></div>
+
+</body>
+</html>
