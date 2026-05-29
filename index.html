@@ -12,7 +12,6 @@
                 if (response.ok) {
                     document.getElementById(placeholderId).innerHTML = await response.text();
                     
-                    // If we just successfully loaded the first column, trigger its animation engine!
                     if (placeholderId === 'first-column-placeholder' && typeof initFirstColumnNetwork === 'function') {
                         initFirstColumnNetwork();
                     }
@@ -26,7 +25,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             includeHTML('header-placeholder', 'header.html');
-            includeHTML('sidebar-placeholder', 'sidebar.html');
+            // REMOVED: sidebar.html fetch request is gone
             includeHTML('first-column-placeholder', 'firstColumn.html');
             includeHTML('footer-placeholder', 'footer.html');
         });
@@ -38,13 +37,11 @@
     
     <div style="display: flex; flex: 1; position: relative; z-index: 1;">
         
-        <div id="sidebar-placeholder" style="width: 200px; flex-shrink: 0;"></div>
-    
         <div id="first-column-placeholder" style="width: 260px; flex-shrink: 0;"></div>
 
         <main style="flex-grow: 1; padding: 30px; background-color: #f8fafc; padding-bottom: 80px;">
             <h2>Welcome to Mypet-world!</h2>
-            <p>This space is your main dashboard workspace content area. The structural headers, nav columns, and footers are all being built dynamically behind the scenes.</p>
+            <p>This space is your main dashboard workspace content area. The sidebar is gone, giving your main content and dashboard card more room to breathe.</p>
         </main>
     </div>
 
