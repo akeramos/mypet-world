@@ -1,0 +1,7 @@
+<aside style="background-color: #e2e2e2; padding: 15px; height: 100vh;">
+    <h3>Navigation Menu</h3>
+    <ul>
+        <li><a href="#link1">Link 1</a></li>
+        <li><a href="#link2">Link 2</a></li>
+    </ul>
+</aside>
