@@ -1,0 +1,35 @@
+<style>
+  .info-banner {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 30px;
+    margin-top: 30px; /* Generates a clean space between column 1 and column 2 */
+    color: #ffffff;
+    font-family: system-ui, sans-serif;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .info-banner h3 {
+    margin: 0 0 10px 0;
+    color: #009FFC;
+    font-size: 1.5rem;
+  }
+  .info-banner p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 1rem;
+  }
+</style>
+
+<div class="info-banner">
+  <h3>🐾 Quick Status Update</h3>
+  <p>All pet medical networks are fully operational. Welcome to your new stacked layout dashboard row!</p>
+</div>
+
+<script>
+  // Kept as a fallback placeholder function to match the index.html logic
+  function initSecondColumnEngine() {
+    console.log("Second column initialized successfully.");
+  }
+</script>
