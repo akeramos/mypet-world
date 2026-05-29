@@ -1,140 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KK Batu 9 - Neural Pulse</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-blue: #009FFC;
-    }
+<style>
+  :root {
+    --primary-blue: #009FFC;
+  }
 
-    html, body {
-      margin: 0; padding: 0;
-      background: black; /* Deep slate for high contrast */
-      height: 100vh; width: 100vw;
-      display: flex; justify-content: center; align-items: center;
-      font-family: 'Lexend', sans-serif;
-      perspective: 1500px;
-      overflow: hidden;
-    }
+  /* Target the placeholder container directly, NOT the page body */
+  #first-column-placeholder {
+    position: relative;
+    background: #000000; /* Confines black background strictly to this column */
+    overflow: hidden;
+    perspective: 1500px;
+    font-family: 'Lexend', sans-serif;
+    min-height: calc(100vh - 100px); /* Scales vertically nicely */
+  }
 
-    /* Full-screen Background Neural Net */
-    #networkCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
+  /* Full-width Font Import */
+  @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;800&display=swap');
 
-    /* Repaired 3D Card Styling */
-    .clinic-card {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 50px 70px;
-      background: rgba(15, 23, 42, 0.7); 
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 40px;
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
-      max-width: 900px;
-      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-      transform-style: preserve-3d;
-      will-change: transform;
-      cursor: pointer;
-    }
+  /* Background Canvas restricted to the column layout boundary */
+  #networkCanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
 
-    .content-wrapper {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      transform-style: preserve-3d;
-      pointer-events: none;
-    }
+  /* Adjusted 3D Card Scaling to fit nicely inside a 250px column width */
+  .clinic-card {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column; /* Changed to stacked format to fit narrow widths */
+    align-items: center;
+    padding: 25px 15px;
+    background: rgba(15, 23, 42, 0.7); 
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+    width: 85%;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-style: preserve-3d;
+    will-change: transform;
+    cursor: pointer;
+  }
 
-    .clinic-logo {
-      max-width: 160px;
-      margin-right: 45px;
-      transform: translateZ(80px);
-      filter: drop-shadow(0 0 20px rgba(0, 159, 252, 0.4));
-    }
+  .content-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    text-align: center;
+  }
 
-    .clinic-text {
-      text-align: left;
-      border-left: 5px solid var(--primary-blue);
-      padding-left: 35px;
-      transform: translateZ(50px);
-    }
+  .clinic-logo {
+    max-width: 80px; /* Scaled down logo */
+    margin: 0 0 15px 0;
+    transform: translateZ(80px);
+    filter: drop-shadow(0 0 20px rgba(0, 159, 252, 0.4));
+  }
 
-    .clinic-text h1 {
-      margin: 0;
-      font-size: 3.2rem;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 0.9;
-      text-shadow: 0 0 15px rgba(0, 159, 252, 0.5);
-    }
+  .clinic-text {
+    border-left: none;
+    border-top: 3px solid var(--primary-blue); /* Flipped axis layout for thin column design */
+    padding: 15px 0 0 0;
+    transform: translateZ(50px);
+  }
 
-    .clinic-text span {
-      display: block;
-      font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
+  .clinic-text h1 {
+    margin: 0;
+    font-size: 1.6rem; /* Scaled text size for compact readability */
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    text-shadow: 0 0 15px rgba(0, 159, 252, 0.5);
+  }
+</style>
 
-    @media (max-width: 768px) {
-      .clinic-card { flex-direction: column; padding: 40px; }
-      .content-wrapper { flex-direction: column; text-align: center; }
-      .clinic-logo { margin: 0 0 30px 0; }
-      .clinic-text { border-left: none; border-top: 5px solid var(--primary-blue); padding: 25px 0 0 0; }
-      .clinic-text h1 { font-size: 2.2rem; }
-    }
-  </style>
-</head>
-<body>
+<canvas id="networkCanvas"></canvas>
 
-  <canvas id="networkCanvas"></canvas>
-
-  <div class="clinic-card" id="card">
-    <div class="content-wrapper">
-      <img src="https://lh3.googleusercontent.com/u/0/d/1sCmL7kb6XisU53H38_al4YMHnG9LUAJZ" alt="Logo" class="clinic-logo">
-      <div class="clinic-text">
-        <h1>Mypet-world</h1>
-      </div>
+<div class="clinic-card" id="card">
+  <div class="content-wrapper">
+    <img src="https://lh3.googleusercontent.com/u/0/d/1sCmL7kb6XisU53H38_al4YMHnG9LUAJZ" alt="Logo" class="clinic-logo">
+    <div class="clinic-text">
+      <h1>Mypet-world</h1>
     </div>
   </div>
+</div>
 
-  <script>
+<script>
+  (function() { // Wrapped in an IIFE closure function to isolate variables safely from index.html
     const canvas = document.getElementById('networkCanvas');
     const ctx = canvas.getContext('2d');
     const card = document.getElementById('card');
+    const container = document.getElementById('first-column-placeholder');
     
     let particles = [];
-    const particleCount = 70; 
-    const connectionDist = 180;
+    const particleCount = 30; // Reduced count to maintain high frame-rates inside thin viewports
+    const connectionDist = 100;
     let mouse = { x: null, y: null };
 
     window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      // Calculate cursor offsets relative to this column boundary coordinate structure
+      const containerRect = container.getBoundingClientRect();
+      mouse.x = e.clientX - containerRect.left;
+      mouse.y = e.clientY - containerRect.top;
 
-      // 3D Card Tilt Logic
+      // 3D Card Tilt Engine
       const rect = card.getBoundingClientRect();
       if (e.clientX >= rect.left && e.clientX <= rect.right &&
           e.clientY >= rect.top && e.clientY <= rect.bottom) {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        const rotateX = (y - rect.height/2) / 15;
-        const rotateY = (rect.width/2 - x) / 15;
+        const rotateX = (y - rect.height/2) / 8;
+        const rotateY = (rect.width/2 - x) / 8;
         card.style.transition = 'none';
         card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       }
@@ -146,8 +129,9 @@
     });
 
     function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Dynamically matches parent container constraints instead of desktop display window width boundaries
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
       init();
     }
 
@@ -155,11 +139,11 @@
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.baseSize = Math.random() * 3 + 3;
+        this.baseSize = Math.random() * 2 + 2;
         this.size = this.baseSize;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.pulse = 0;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
+        this.pulse = Math.random();
         this.pulseSpeed = Math.random() * 0.05 + 0.02;
       }
 
@@ -167,31 +151,27 @@
         this.x += this.speedX;
         this.y += this.speedY;
         this.pulse += this.pulseSpeed;
-        this.size = this.baseSize + Math.sin(this.pulse) * 2;
+        this.size = this.baseSize + Math.sin(this.pulse) * 1;
 
         if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
         if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
 
-        // Subtle Mouse Interaction (Push/Pull)
-        if (mouse.x) {
+        if (mouse.x >= 0 && mouse.x <= canvas.width && mouse.y >= 0 && mouse.y <= canvas.height) {
           let dx = mouse.x - this.x;
           let dy = mouse.y - this.y;
           let dist = Math.sqrt(dx*dx + dy*dy);
-          if (dist < 150) {
-            this.x -= dx/60;
-            this.y -= dy/60;
+          if (dist < 80) {
+            this.x -= dx/40;
+            this.y -= dy/40;
           }
         }
       }
 
       draw() {
         ctx.fillStyle = 'rgba(0, 159, 252, 0.8)';
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = '#009FFC';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
     }
 
@@ -212,8 +192,8 @@
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < connectionDist) {
-            ctx.strokeStyle = `rgba(0, 159, 252, ${1.2 - dist/connectionDist})`;
-            ctx.lineWidth = 1.2; 
+            ctx.strokeStyle = `rgba(0, 159, 252, ${0.6 - dist/connectionDist})`;
+            ctx.lineWidth = 1; 
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -224,9 +204,11 @@
       requestAnimationFrame(animate);
     }
 
-    window.addEventListener('resize', resize);
+    // Connect resize observers strictly scoped to parent layout element
+    const resizeObserver = new ResizeObserver(() => resize());
+    resizeObserver.observe(container);
+    
     resize();
     animate();
-  </script>
-</body>
-</html>
+  })();
+</script>
