@@ -1,7 +1,220 @@
-<header style="background-color: #f1f1f1; padding: 20px; text-align: center;">
-    <h1>My Awesome Pokémon Site</h1>
-    <nav>
-        <a href="index.html">Home</a> | 
-        <a href="about.html">About</a>
-    </nav>
+<header class="pet-header">
+    <div class="animated-bg">
+        <span class="floating-animal">🐶</span>
+        <span class="floating-animal">🐱</span>
+        <span class="floating-animal">🐹</span>
+        <span class="floating-animal">🐦</span>
+        <span class="floating-animal">🐾</span>
+    </div>
+
+    <div class="header-content">
+        <a href="index.html" class="brand-container">
+            <img src="https://lh3.googleusercontent.com/d/1-Yh5oQL9nOedGu-YyDFi0-KfqP18FiN-" alt="Mypet-world Logo" class="brand-logo">
+            <h1 class="brand-name">Mypet-world</h1>
+        </a>
+
+        <nav>
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn">Our Services ▾</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-section">Care & Health</div>
+                    <a href="vaccination.html">💉 Vaccination</a>
+                    <a href="clinic.html">🏥 Pet Clinic</a>
+                    
+                    <div class="dropdown-section">Daily Life</div>
+                    <a href="groceries.html">🛒 Groceries</a>
+                    <a href="calendar.html">📅 Calendar Events</a>
+                    <a href="newsletter.html">📰 Newsletter</a>
+                    
+                    <div class="dropdown-section">Community & Stay</div>
+                    <a href="hotel.html">🏨 Pet Hotel</a>
+                    <a href="adoption.html">🏠 Adoption Center</a>
+                    <a href="memorial.html">🌈 Memorial Services</a>
+                </div>
+            </div>
+
+            <a href="account.html" class="nav-link account-btn">👤 Account</a>
+        </nav>
+    </div>
 </header>
+
+<style>
+/* --- Header Layout & Animated Background --- */
+.pet-header {
+    position: relative;
+    padding: 15px 40px; /* Reduced vertical padding, added horizontal padding */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- The Layout Core: Splitting Left and Right --- */
+.header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between; /* Pushes brand to left, navigation to right */
+    align-items: center; /* Aligns them vertically perfectly straight */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Brand styling container */
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+}
+
+.brand-logo {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%; /* Optional: Makes your logo neat and circular */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.brand-name {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: -0.5px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* --- Moving Animals Magic --- */
+.animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.floating-animal {
+    position: absolute;
+    font-size: 1.8rem;
+    bottom: -50px;
+    opacity: 0.15;
+    animation: floatUp 12s linear infinite;
+}
+
+.floating-animal:nth-child(1) { left: 10%; animation-duration: 10s; animation-delay: 0s; }
+.floating-animal:nth-child(2) { left: 30%; animation-duration: 14s; animation-delay: 2s; }
+.floating-animal:nth-child(3) { left: 55%; animation-duration: 11s; animation-delay: 1s; }
+.floating-animal:nth-child(4) { left: 75%; animation-duration: 15s; animation-delay: 4s; }
+.floating-animal:nth-child(5) { left: 90%; animation-duration: 9s;  animation-delay: 3s; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.25; }
+    90% { opacity: 0.25; }
+    100% { transform: translateY(-250px) rotate(360deg); opacity: 0; }
+}
+
+/* --- Navigation & Button Typography --- */
+.nav-link, .dropbtn {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.nav-link:hover, .dropbtn:hover, .dropdown:hover .dropbtn {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.account-btn {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* --- THE DROPDOWN MECHANICS --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 240px;
+    box-shadow: 0px 8px 24px rgba(0,0,0,0.15);
+    border-radius: 12px;
+    padding: 10px 0;
+    z-index: 100;
+    top: 100%;
+    right: 0; /* Aligns dropdown box to the right edge of button so it doesn't clip outside your viewport */
+    margin-top: 10px;
+    text-align: left;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-content a {
+    color: #333333;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f5f5f5;
+    color: #e73c7e;
+}
+
+.dropdown-section {
+    padding: 8px 20px 4px 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    font-weight: 700;
+    border-top: 1px solid #eee;
+    margin-top: 5px;
+}
+.dropdown-section:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+</style>
