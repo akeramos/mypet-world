@@ -62,6 +62,9 @@
                     gateway.style.display = 'none';
                     profile.style.display = 'block';
                     document.getElementById('profile-email').innerText = user.email;
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+            }, 1500);
                 } else {
                     gateway.style.display = 'block';
                     profile.style.display = 'none';
