@@ -1,10 +1,33 @@
+<header class="pet-header">
+    <div class="animated-bg">
+        <span class="floating-animal">🐶</span>
+        <span class="floating-animal">🐱</span>
+        <span class="floating-animal">🐹</span>
+        <span class="floating-animal">🐦</span>
+        <span class="floating-animal">🐾</span>
+    </div>
+
+    <div class="header-content">
+        <a href="index.html" class="brand-container">
+            <img src="https://lh3.googleusercontent.com/d/1-Yh5oQL9nOedGu-YyDFi0-KfqP18FiN-" alt="Mypet-world Logo" class="brand-logo">
+            <h1 class="brand-name">Mypet-world</h1>
+        </a>
+
+        <nav>
+            <a href="account.html" class="nav-link account-btn">👤 Account</a>
+        </nav>
+    </div>
+</header>
+
 <style>
 /* --- Header Layout & Glassmorphism Theme Tweak --- */
 .pet-header {
     position: relative;
+    z-index: 9999;       /* Keeps header above your background leaf canvas */
+    flex-shrink: 0;      /* Prevents flex layouts from crushing the header height */
     padding: 15px 40px; 
     
-    /* THE TWEAK: Shifting from bright colors to a dark, deep glassmorphic bar */
+    /* Dark, deep glassmorphic bar matching your canvas theme */
     background: rgba(2, 6, 23, 0.4); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -12,8 +35,6 @@
     
     color: white;
     overflow: hidden;
-    
-    /* Updated font-family to match your Lexend main font choice */
     font-family: 'Lexend', system-ui, -apple-system, sans-serif;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
@@ -76,7 +97,7 @@ nav {
     position: absolute;
     font-size: 1.6rem;
     bottom: -50px;
-    opacity: 0.1; /* Dropped slightly so they don't distract from text navigation */
+    opacity: 0.1; 
     animation: floatUp 14s linear infinite;
 }
 
@@ -93,7 +114,7 @@ nav {
     100% { transform: translateY(-180px) rotate(180deg); opacity: 0; }
 }
 
-/* --- Navigation Button (Tuned to fit your Leaf Green aesthetic) --- */
+/* --- Navigation Button --- */
 .nav-link {
     color: white;
     text-decoration: none;
@@ -108,9 +129,9 @@ nav {
 }
 
 .nav-link:hover {
-    background: rgba(74, 222, 128, 0.15); /* Soft glowing leaf green container on hover */
-    border-color: #4ade80;                /* Hard green border target */
-    color: #4ade80;                       /* Text turns green */
+    background: rgba(74, 222, 128, 0.15); 
+    border-color: #4ade80;                
+    color: #4ade80;                       
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(74, 222, 128, 0.15);
 }
