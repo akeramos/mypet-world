@@ -27,24 +27,26 @@
         background-position: center;
         background-repeat: no-repeat;
         opacity: 0;
-        animation: fadeAnimation 15s infinite ease-in-out;
+        /* Balanced across a 16-second loop for 4 distinct images */
+        animation: fadeAnimation 16s infinite ease-in-out;
     }
 
-    /* Temporary beautiful color gradients instead of missing images */
+    /* 📸 YOUR IMAGE ASSETS MAPPED HERE */
     .slide:nth-child(1) {
-        /* Replace with url('assets/slide1.jpg') later */
-        background-image: linear-gradient(135deg, #0f172a, #064e3b); 
+        background-image: url('assets/slider1.png'); 
         animation-delay: 0s;
     }
     .slide:nth-child(2) {
-        /* Replace with url('assets/slide2.jpg') later */
-        background-image: linear-gradient(135deg, #020617, #1e3a8a); 
-        animation-delay: 5s;
+        background-image: url('assets/slider2.png'); 
+        animation-delay: 4s;
     }
     .slide:nth-child(3) {
-        /* Replace with url('assets/slide3.jpg') later */
-        background-image: linear-gradient(135deg, #1e1b4b, #581c87); 
-        animation-delay: 10s;
+        background-image: url('assets/slider3.png'); 
+        animation-delay: 8s;
+    }
+    .slide:nth-child(4) {
+        background-image: url('assets/slider4.png'); 
+        animation-delay: 12s;
     }
 
     /* Dark Elegant Overlay so text is ALWAYS readable on glass */
@@ -71,6 +73,7 @@
         color: #ffffff;
         margin-bottom: 12px;
         text-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        font-family: 'Lexend', sans-serif;
     }
 
     .slider-overlay p {
@@ -79,15 +82,16 @@
         font-weight: 400;
         max-width: 600px;
         text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        font-family: 'Lexend', sans-serif;
     }
 
-    /* THE MAGIC CROSS-FADE FORMULA */
+    /* THE MAGIC 4-SLIDE CROSS-FADE FORMULA */
     @keyframes fadeAnimation {
         0% { opacity: 0; }
-        10% { opacity: 1; }  /* Fade in */
-        33% { opacity: 1; }  /* Stay visible */
-        43% { opacity: 0; }  /* Fade out */
-        100% { opacity: 0; } /* Stay hidden until loop restarts */
+        6% { opacity: 1; }   /* Fade in quickly */
+        25% { opacity: 1; }  /* Hold image on screen */
+        31% { opacity: 0; }  /* Fade out smoothly */
+        100% { opacity: 0; } /* Hold hidden until loop restarts */
     }
 
     /* Mobile scaling safety */
@@ -100,6 +104,7 @@
 
 <div class="hero-slider">
     <div class="slider-track">
+        <div class="slide"></div>
         <div class="slide"></div>
         <div class="slide"></div>
         <div class="slide"></div>
