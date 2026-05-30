@@ -144,3 +144,136 @@ main h2, main p {
     object-fit: contain;   /* Ensures no awkward squishing or clipping */
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); /* Gives the glass icon extra depth */
 }
+
+/* --- REGISTRATION AND ACCOUNT STYLING NODES --- */
+.auth-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+}
+
+.auth-error-banner {
+    color: #ef4444;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+    text-align: center;
+    max-width: 420px;
+    font-weight: 600;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    font-weight: 600;
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Lexend', sans-serif;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+    border-color: var(--leaf-green);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    margin-top: 8px;
+}
+
+.btn-primary {
+    background: var(--leaf-green);
+    color: var(--dark-green);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+}
+
+.btn-danger {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+.btn-danger:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.auth-switchlinks {
+    margin-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 12px;
+    font-size: 0.85rem;
+}
+
+.auth-switchlinks p {
+    margin: 6px 0;
+    color: #94a3b8;
+}
+
+.auth-switchlinks a {
+    color: var(--leaf-green);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* Auth Profile view UI styling cards */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.profile-avatar {
+    font-size: 3rem;
+    margin-bottom: 8px;
+}
+.profile-status-badge {
+    display: inline-block;
+    background: rgba(74, 222, 128, 0.15);
+    color: var(--leaf-green);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+.profile-details {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+    text-align: left;
+}
