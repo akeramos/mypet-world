@@ -3,16 +3,16 @@
     .hero-slider {
         position: relative;
         width: 100%;
-        height: 380px; /* Optimized height for a cleaner dashboard banner layout */
+        height: 380px;
         border-radius: 24px;
         overflow: hidden;
         margin-bottom: 32px;
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        background: #020617; /* Solid dark backing */
+        background: #020617;
+        font-family: 'Lexend', sans-serif;
     }
 
-    /* The Moving Slides Wrapper */
     .slider-track {
         position: absolute;
         width: 100%;
@@ -25,14 +25,17 @@
         width: 100%;
         height: 100%;
         opacity: 0;
-        /* Balanced across a 16-second loop for 4 distinct images */
-        animation: fadeAnimation 16s infinite ease-in-out;
+        transition: opacity 0.8s ease-in-out;
+        z-index: 1;
     }
 
-    /* ✨ THE HEAD-PROTECTION FORMULA:
-       We use a pseudo-element (:before) to create a blurred, full-bleed version of your photo in the background,
-       then place the actual sharp, uncropped photo perfectly centered on top! 
-    */
+    /* Active State managed by JavaScript */
+    .slide.active {
+        opacity: 1;
+        z-index: 2;
+    }
+
+    /* Blurred Background Protection */
     .slide::before {
         content: "";
         position: absolute;
@@ -40,103 +43,235 @@
         background-image: inherit;
         background-size: cover;
         background-position: center;
-        filter: blur(20px) brightness(0.4); /* Smoothly blurs out the background edges */
+        filter: blur(20px) brightness(0.4);
         z-index: 1;
     }
 
+    /* Sharp Centered Image Layer */
     .slide::after {
         content: "";
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
         background-image: inherit;
-        background-size: contain; /* 🎯 GUARANTEES NO HEADS GET CUT OFF */
+        background-size: contain;
         background-position: center;
         background-repeat: no-repeat;
         z-index: 2;
     }
 
-    /* 📸 YOUR IMAGE ASSETS MAPPED HERE */
-    .slide:nth-child(1) {
-        background-image: url('assets/slider1.png'); 
-        animation-delay: 0s;
-    }
-    .slide:nth-child(2) {
-        background-image: url('assets/slider2.png'); 
-        animation-delay: 4s;
-    }
-    .slide:nth-child(3) {
-        background-image: url('assets/slider3.png'); 
-        animation-delay: 8s;
-    }
-    .slide:nth-child(4) {
-        background-image: url('assets/slider4.png'); 
-        animation-delay: 12s;
-    }
-
-    /* Dark Elegant Overlay so text is ALWAYS readable on glass */
+    /* Dark Elegant Left-Heavy Overlay */
     .slider-overlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to right, rgba(2, 6, 23, 0.7) 30%, rgba(2, 6, 23, 0.2)); 
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to right, rgba(2, 6, 23, 0.75) 35%, rgba(2, 6, 23, 0.1)); 
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start; /* Aligns text left for a clean dashboard profile aesthetic */
+        align-items: flex-start;
         text-align: left;
-        padding: 0 60px;
-        z-index: 4;
+        padding: 0 80px;
+        z-index: 3;
+        pointer-events: none; /* Allows clicking buttons underneath */
     }
 
     .slider-overlay h1 {
-        font-size: 2.5rem;
+        font-size: 2.6rem;
         font-weight: 800;
         color: #ffffff;
         margin-bottom: 12px;
         text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-        font-family: 'Lexend', sans-serif;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.5s ease;
     }
 
     .slider-overlay p {
         font-size: 1.1rem;
-        color: #4ade80; /* Matching your leaf-green brand */
+        color: #4ade80;
         font-weight: 400;
         max-width: 500px;
         text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        font-family: 'Lexend', sans-serif;
         line-height: 1.5;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.5s ease 0.15s;
     }
 
-    /* THE MAGIC 4-SLIDE CROSS-FADE FORMULA */
-    @keyframes fadeAnimation {
-        0% { opacity: 0; }
-        6% { opacity: 1; }   /* Fade in quickly */
-        25% { opacity: 1; }  /* Hold image on screen */
-        31% { opacity: 0; }  /* Fade out smoothly */
-        100% { opacity: 0; } /* Hold hidden until loop restarts */
+    /* Trigger Typography Entrances when Slide is Active */
+    .slide.active .slider-overlay h1,
+    .slide.active .slider-overlay p {
+        transform: translateY(0);
+        opacity: 1;
     }
 
-    /* Mobile scaling safety */
+    /* --- Interactive Glass Controls --- */
+    .slider-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 45px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        border-radius: 50%;
+        color: white;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        opacity: 0; /* Hidden initially, fades on hover */
+        user-select: none;
+    }
+
+    .hero-slider:hover .slider-arrow {
+        opacity: 1;
+    }
+
+    .slider-arrow:hover {
+        background: rgba(74, 222, 128, 0.2);
+        border-color: #4ade80;
+        color: #4ade80;
+        box-shadow: 0 0 15px rgba(74, 222, 128, 0.3);
+    }
+
+    .arrow-left { left: 20px; }
+    .arrow-right { right: 20px; }
+
+    /* --- Pagination Dots Container --- */
+    .slider-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 10;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .dot.active {
+        background: #4ade80;
+        width: 28px; /* Smooth pill-shape expansion for the active node */
+        border-radius: 5px;
+        box-shadow: 0 0 10px #4ade80;
+    }
+
+    /* Mobile Scaling */
     @media (max-width: 768px) {
-        .hero-slider { height: 260px; }
-        .slider-overlay { padding: 0 24px; background: rgba(2, 6, 23, 0.6); }
+        .hero-slider { height: 280px; }
+        .slider-overlay { padding: 0 30px; }
         .slider-overlay h1 { font-size: 1.6rem; }
         .slider-overlay p { font-size: 0.9rem; }
+        .slider-arrow { display: none; } /* Hide arrows on touch screens */
     }
 </style>
 
 <div class="hero-slider">
-    <div class="slider-track">
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
+    <button class="slider-arrow arrow-left" onclick="changeSlide(-1)">‹</button>
+    <button class="slider-arrow arrow-right" onclick="changeSlide(1)">›</button>
+
+    <div class="slider-track" id="sliderTrack">
+        
+        <div class="slide active" style="background-image: url('assets/slider1.png');">
+            <div class="slider-overlay">
+                <h1>Welcome to Mypet-world</h1>
+                <p>The ultimate modern workspace and ecosystem for contemporary pet caretakers.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('assets/slider2.png');">
+            <div class="slider-overlay">
+                <h1>Health Tracking and Vaccination Card</h1>
+                <p>Get e-Vaccination card, smart database and track your pet health with schedule visit.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('assets/slider3.png');">
+            <div class="slider-overlay">
+                <h1>Pet Event</h1>
+                <p>Identify and get notice on future nearby animal hosting event.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('assets/slider4.png');">
+            <div class="slider-overlay">
+                <h1>Animal Services</h1>
+                <p>Connect with local service, verified caretakers, and save some love.</p>
+            </div>
+        </div>
+
     </div>
-    
-    <div class="slider-overlay">
-        <h1>Welcome to Mypet-world</h1>
-        <p>The ultimate modern workspace and ecosystem for contemporary pet owner, caretakers, health provider and services.</p>
+
+    <div class="slider-dots" id="dotsContainer">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+        <span class="dot" onclick="goToSlide(3)"></span>
     </div>
 </div>
+
+<script>
+    let currentSlideIndex = 0;
+    let autoSlideTimer = null;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function updateSliderVisuals() {
+        // Cycle through items and swap tracking classes
+        slides.forEach((slide, idx) => {
+            if (idx === currentSlideIndex) {
+                slide.classList.add('active');
+                dots[idx].classList.add('active');
+            } else {
+                slide.classList.remove('active');
+                dots[idx].classList.remove('active');
+            }
+        });
+    }
+
+    function changeSlide(direction) {
+        resetTimer();
+        currentSlideIndex += direction;
+        
+        // Handle Boundary Loops
+        if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+        if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
+        
+        updateSliderVisuals();
+    }
+
+    function goToSlide(index) {
+        resetTimer();
+        currentSlideIndex = index;
+        updateSliderVisuals();
+    }
+
+    function startTimer() {
+        autoSlideTimer = setInterval(() => {
+            currentSlideIndex++;
+            if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
+            updateSliderVisuals();
+        }, 5000); // Transitions automatically every 5 seconds
+    }
+
+    function resetTimer() {
+        clearInterval(autoSlideTimer);
+        startTimer();
+    }
+
+    // Initialize Auto Cycle Engine
+    startTimer();
+</script>
