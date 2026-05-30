@@ -54,19 +54,25 @@ main h2, main p {
     display: block;
 }
 
+/* --- Header Layout & Glassmorphism Theme Tweak --- */
 .pet-header {
     position: relative;
-    z-index: 9999; /* 🌟 ADD THIS: Forces the header to pop on top of the canvas and content wrappers */
+    z-index: 9999;       /* 🔥 ADD THIS: Keeps it pinned over the leaf canvas */
+    flex-shrink: 0;      /* 🔥 ADD THIS: Stops the main layout grid from crushing it */
     padding: 15px 40px; 
+    
+    /* THE TWEAK: Shifting from bright colors to a dark, deep glassmorphic bar */
     background: rgba(2, 6, 23, 0.4); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    
     color: white;
     overflow: hidden;
+    
+    /* Updated font-family to match your Lexend main font choice */
     font-family: 'Lexend', system-ui, -apple-system, sans-serif;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-    flex-shrink: 0;
 }
 
 #footer-placeholder {
