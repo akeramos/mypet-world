@@ -1,1 +1,91 @@
+:root {
+    --leaf-green: #4ade80; 
+    --dark-green: #064e3b;
+    --bg-dark: #020617; /* Deep organic dark background */
+}
 
+/* Set the main site background to the dark theme */
+body {
+    margin: 0;
+    background-color: var(--bg-dark);
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Fix the Canvas to the background of the ENTIRE page */
+#neuralCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* Sits behind everything */
+    pointer-events: none;
+}
+
+/* Content wrapper stays above canvas, backgrounds are transparent */
+.content-container {
+    display: flex;
+    flex: 1;
+    position: relative;
+    z-index: 1; /* Keeps text and cards clickable above the leaves */
+}
+
+main {
+    flex-grow: 1;
+    padding: 24px;
+    padding-bottom: 80px;
+    background-color: transparent !important;
+    color: white;
+}
+
+main h2, main p {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Layout layer fixes from your inline HTML styles */
+#header-placeholder {
+    position: relative; 
+    z-index: 999;
+}
+
+#footer-placeholder {
+    position: relative; 
+    z-index: 10;
+}
+
+/* --- NEW COMPONENT STYLES FOR THE GLASS CARDS --- */
+
+/* The Grid Wrapper */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin: 32px 0;
+}
+
+/* Glassmorphism Formula */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05); /* Soft transparent tint */
+    backdrop-filter: blur(12px);            /* Frosted glass blur effect */
+    -webkit-backdrop-filter: blur(12px);    /* Safari Support */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Crisp glass edge */
+    border-radius: 16px;
+    padding: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Card Interactive Hover Spark */
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--leaf-green); /* Subtle green glow matching your leaves */
+    box-shadow: 0 10px 20px rgba(74, 222, 128, 0.1);
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
