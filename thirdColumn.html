@@ -1,1 +1,171 @@
+<style>
+    /* Third Column Dashboard Section Grid */
+    .metric-showcase-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 40px;
+        margin-bottom: 32px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        gap: 40px;
+    }
 
+    /* Left Copy Area */
+    .metric-info-side {
+        max-width: 60%;
+    }
+
+    .metric-info-side h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0 0 16px 0;
+        letter-spacing: -0.5px;
+    }
+
+    .metric-info-side p {
+        font-size: 1.1rem;
+        color: #94a3b8; /* Soft readable slate text */
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .metric-info-side .highlight-compliance {
+        color: #4ade80; /* Your signature brand leaf-green */
+        font-weight: 600;
+    }
+
+    /* Right Side Metered Counter Box */
+    .counter-meter-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        min-width: 280px;
+    }
+
+    .counter-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #4ade80;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+    }
+
+    /* Live Digital Ticker Layout */
+    .digital-ticker {
+        background: #020617;
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        border-radius: 16px;
+        padding: 16px 24px;
+        display: flex;
+        gap: 6px;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 222, 128, 0.05);
+    }
+
+    /* Individual Ticker Number Nodes */
+    .ticker-digit {
+        font-family: monospace;
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #ffffff;
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        padding: 4px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        min-width: 38px;
+        text-align: center;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .ticker-comma {
+        font-family: monospace;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: rgba(74, 222, 128, 0.5);
+        align-self: flex-end;
+        padding-bottom: 4px;
+    }
+
+    /* Responsive Breakdown Configuration */
+    @media (max-width: 992px) {
+        .metric-showcase-container {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 30px;
+            gap: 30px;
+        }
+        .metric-info-side { max-width: 100%; }
+        .counter-meter-box { align-items: flex-start; min-width: 100%; }
+    }
+</style>
+
+<div class="metric-showcase-container">
+    
+    <div class="metric-info-side">
+        <h3>Trusted Ecosystem & Moving Forward</h3>
+        <p> Join our robust Mypet-world community! We explicitly customized our care to serve pet better! 
+          Our footprint reaches 50,000+ active users within Southeast Asia across  
+          <span class="highlight-compliance">Malaysia, Thailand, Vietnam and Indonesia!</span>.
+        </p>
+    </div>
+
+    <div class="counter-meter-box">
+        <div class="counter-label">Global Footprint</div>
+        <div class="digital-ticker" id="liveEcosystemTicker">
+            <span class="ticker-digit">7</span>
+            <span class="ticker-digit">0</span>
+            <span class="ticker-comma">,</span>
+            <span class="ticker-digit">4</span>
+            <span class="ticker-digit">1</span>
+            <span class="ticker-digit">2</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Self-correcting asynchronous ticker initialization engine
+    function initTickerEngine() {
+        const tickerContainer = document.getElementById('liveEcosystemTicker');
+        if (!tickerContainer) {
+            setTimeout(initTickerEngine, 50);
+            return;
+        }
+
+        // Target baseline starting population node count (70,412)
+        let baseCount = 70412;
+
+        function updateTickerDisplay(currentNum) {
+            // Transform the raw integers cleanly into a comma-spaced localized string array
+            const formattedStr = currentNum.toLocaleString('en-US');
+            let generatedHTML = '';
+
+            for (let char of formattedStr) {
+                if (char === ',') {
+                    generatedHTML += `<span class="ticker-comma">,</span>`;
+                } else {
+                    generatedHTML += `<span class="ticker-digit">${char}</span>`;
+                }
+            }
+            tickerContainer.innerHTML = generatedHTML;
+        }
+
+        // Live updating simulation loop: increments counts randomly to look active
+        setInterval(() => {
+            // Adds a random increment spike between 1 and 3 instances every few seconds
+            const increment = Math.floor(Math.random() * 3) + 1;
+            baseCount += increment;
+            updateTickerDisplay(baseCount);
+        }, 4500); // Ticks smoothly forward every 4.5 seconds
+    }
+
+    initTickerEngine();
+</script>
