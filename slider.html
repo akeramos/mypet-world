@@ -10,6 +10,7 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         background: #020617; /* Solid dark backing */
+        font-family: 'Lexend', sans-serif;
     }
 
     /* The Moving Slides Wrapper */
@@ -73,21 +74,21 @@
         animation-delay: 12s;
     }
 
-    /* Dark Elegant Overlay so text is ALWAYS readable on glass */
+    /* Dark Elegant Overlay nested safely inside the slide scope stack */
     .slider-overlay {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to right, rgba(2, 6, 23, 0.7) 30%, rgba(2, 6, 23, 0.2)); 
+        background: linear-gradient(to right, rgba(2, 6, 23, 0.75) 35%, rgba(2, 6, 23, 0.2)); 
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start; /* Aligns text left for a clean dashboard profile aesthetic */
         text-align: left;
-        padding: 0 60px;
-        z-index: 4;
+        padding: 0 80px;
+        z-index: 3; /* Placed cleanly right above the uncropped image asset layer */
     }
 
     .slider-overlay h1 {
@@ -96,16 +97,14 @@
         color: #ffffff;
         margin-bottom: 12px;
         text-shadow: 0 4px 12px rgba(0,0,0,0.6);
-        font-family: 'Lexend', sans-serif;
     }
 
     .slider-overlay p {
         font-size: 1.1rem;
         color: #4ade80; /* Matching your leaf-green brand */
         font-weight: 400;
-        max-width: 500px;
+        max-width: 550px;
         text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        font-family: 'Lexend', sans-serif;
         line-height: 1.5;
     }
 
@@ -129,14 +128,34 @@
 
 <div class="hero-slider">
     <div class="slider-track">
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-    </div>
-    
-    <div class="slider-overlay">
-        <h1>Welcome to Mypet-world</h1>
-        <p>The ultimate modern workspace and ecosystem for contemporary pet owner, caretakers, health provider and various services.</p>
+        
+        <div class="slide" style="background-image: url('assets/slider1.png');">
+            <div class="slider-overlay">
+                <h1>Welcome to Mypet-world</h1>
+                <p>The ultimate modern workspace and ecosystem for contemporary pet owners, caretakers, health providers, and services.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('assets/slider2.png');">
+            <div class="slider-overlay">
+                <h1>Smart Care Workspace</h1>
+                <p>Track health records, manage vaccinations, and synchronize dashboard appointments smoothly.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('assets/slider3.png');">
+            <div class="slider-overlay">
+                <h1>Verified Providers</h1>
+                <p>Connect with professional local animal handlers and expert veterinary service nodes instantly.</p>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('assets/slider4.png');">
+            <div class="slider-overlay">
+                <h1>Ecosystem Synchronization</h1>
+                <p>A unified cloud platform built explicitly to look after the pets who look after our hearts.</p>
+            </div>
+        </div>
+
     </div>
 </div>
