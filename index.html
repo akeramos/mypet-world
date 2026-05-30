@@ -8,6 +8,24 @@
     
     <link rel="stylesheet" href="style.css">
 
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    
+    <script>
+        // Global config so index.html knows how to talk to your project container
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
+            authDomain: "mypet-worlds.firebaseapp.com",
+            projectId: "mypet-worlds",
+            storageBucket: "mypet-worlds.firebasestorage.app",
+            messagingSenderId: "223873016606",
+            appId: "1:223873016606:web:b228b11e349e9ee85c9f0f",
+            measurementId: "G-XR07S3PJ2R"
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+    </script>
     <script>
         async function includeHTML(placeholderId, filename) {
             try {
