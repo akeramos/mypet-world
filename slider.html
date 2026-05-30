@@ -32,9 +32,10 @@
     .slide-bg-blur {
         position: absolute;
         top: -20px; left: -20px; right: -20px; bottom: -20px;
+        background-image: inherit;
         background-size: cover;
         background-position: center;
-        filter: blur(25px) brightness(0.35);
+        filter: blur(20px) brightness(0.5);
         z-index: 1;
     }
 
@@ -43,40 +44,55 @@
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
         background-size: contain;
-        background-position: center;
+        background-position: center; 
         background-repeat: no-repeat;
-        z-index: 2; /* Sits cleanly in front of the blur */
+        z-index: 2; 
     }
 
-    /* ✍️ LAYER 3: Text Content Mask Overlay */
+    /* ✍️ LAYER 3: Completely Borderless Text Overlay */
     .slider-overlay {
         position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(to right, rgba(2, 6, 23, 0.85) 40%, rgba(2, 6, 23, 0.1) 75%); 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0 80px;
+        
+        /* 🔥 FIXED: Completely stripped out all background colors, borders, cards, and filters */
+        background: none;
+        border: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start; 
+        align-items: flex-start;
         text-align: left;
-        padding: 0 80px;
-        z-index: 4; /* Floats clear above all image layers */
+        z-index: 4; 
     }
 
     .slider-overlay h1 {
-        font-size: 2.5rem;
+        font-size: 2.6rem;
         font-weight: 800;
         color: #ffffff;
-        margin-bottom: 12px;
-        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        margin: 0 0 12px 0;
+        max-width: 600px;
+        line-height: 1.2;
+        /* 🔥 High-contrast deep drop shadow ensures readability over white/bright image sections */
+        text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .slider-overlay p {
-        font-size: 1.1rem;
-        color: #4ade80; 
+        font-size: 1.15rem;
+        color: #4ade80; /* Leaf-green brand */
         font-weight: 400;
-        max-width: 550px;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        margin: 0;
+        max-width: 500px;
         line-height: 1.5;
+        /* 🔥 Secondary tight shadow protection layer */
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
     /* Staggered Timings for the 4 Slides */
@@ -97,9 +113,10 @@
     /* Mobile scaling safety */
     @media (max-width: 768px) {
         .hero-slider { height: 260px; }
-        .slider-overlay { padding: 0 24px; background: rgba(2, 6, 23, 0.65); }
+        .slide-img-sharp { opacity: 0.35; } /* Subtly dials down image brightness on mobile so text stands out sharply */
+        .slider-overlay { padding: 0 24px; }
         .slider-overlay h1 { font-size: 1.6rem; }
-        .slider-overlay p { font-size: 0.9rem; }
+        .slider-overlay p { font-size: 0.95rem; }
     }
 </style>
 
@@ -120,7 +137,7 @@
             <div class="slide-img-sharp" style="background-image: url('assets/slider2.png');"></div>
             <div class="slider-overlay">
                 <h1>Health Tracking and <br>Vaccination Card</h1>
-                <p>Get e-Vaccination card, smart database and <br>track your pet health with schedule visit.</p>
+                <p>Get e-Vaccination cards, smart databases, and track your pet's health with scheduled visits.</p>
             </div>
         </div>
 
@@ -128,8 +145,8 @@
             <div class="slide-bg-blur" style="background-image: url('assets/slider3.png');"></div>
             <div class="slide-img-sharp" style="background-image: url('assets/slider3.png');"></div>
             <div class="slider-overlay">
-                <h1>Pet Event</h1>
-                <p>Identify and get notice on future nearby <br>animal hosting event.</p>
+                <h1>Pet Events</h1>
+                <p>Identify and get notifications on future nearby animal hosting events.</p>
             </div>
         </div>
 
@@ -138,7 +155,7 @@
             <div class="slide-img-sharp" style="background-image: url('assets/slider4.png');"></div>
             <div class="slider-overlay">
                 <h1>Animal Services</h1>
-                <p>Connect with local service, verified caretakers, <br>and submit your love one.</p>
+                <p>Connect with local services, verified caretakers, and submit your loved ones.</p>
             </div>
         </div>
 
