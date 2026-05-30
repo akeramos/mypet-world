@@ -90,13 +90,13 @@ main h2, main p {
     margin-bottom: 12px;
 }
 
-/* Styling fixes for image-based headers */
+/* Updated styling for centered, responsive image headers */
 .card-image-header {
     width: 100%;
-    height: 70px;          /* Restricts header height uniformly */
+    height: 70px;          
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Aligns with your titles below */
+    justify-content: center; /* Changed from flex-start to center */
     margin-bottom: 16px;
 }
 
