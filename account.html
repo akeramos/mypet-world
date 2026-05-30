@@ -136,16 +136,16 @@
                     <form onsubmit="handleSignIn(event)">
                         <div class="input-group">
                             <label>Email Address</label>
-                            <input type="email" id="login-email" required placeholder="name@domain.com">
+                            <input type="email" id="login-email" required placeholder="email@domain.com">
                         </div>
                         <div class="input-group">
                             <label>Password</label>
                             <input type="password" id="login-pass" required placeholder="••••••••">
                         </div>
-                        <button type="submit" class="auth-btn btn-primary">Sign Into Account</button>
+                        <button type="submit" class="auth-btn btn-primary">Sign In</button>
                     </form>
                     <div class="auth-switchlinks">
-                        <p>Need a profile? <a href="#" onclick="showForm('signup')">Create one here</a></p>
+                        <p>Need a Profile? <a href="#" onclick="showForm('signup')">Create Account Here</a></p>
                         <p><a href="#" onclick="showForm('forgot')">Forgot Password?</a></p>
                     </div>
                 </div>
@@ -155,13 +155,13 @@
                     <form onsubmit="handleSignUp(event)">
                         <div class="input-group">
                             <label>Email Address</label>
-                            <input type="email" id="register-email" required placeholder="name@domain.com">
+                            <input type="email" id="register-email" required placeholder="email@domain.com">
                         </div>
                         <div class="input-group">
                             <label>Password</label>
                             <input type="password" id="register-pass" required placeholder="Minimum 6 characters">
                         </div>
-                        <button type="submit" class="auth-btn btn-primary">Register New Profile</button>
+                        <button type="submit" class="auth-btn btn-primary">Register New Account</button>
                     </form>
                     <div class="auth-switchlinks">
                         <p>Already have an account? <a href="#" onclick="showForm('signin')">Sign In</a></p>
@@ -191,10 +191,10 @@
                     <p class="profile-status-badge">Authenticated</p>
                 </div>
                 <div class="profile-details">
-                    <p><strong>System Identity Node:</strong> <span id="profile-email"></span></p>
-                    <p><strong>Database Workspace Access:</strong> Authorized (Firestore Rules Verified)</p>
+                    <p><strong>Account Identified:</strong> <span id="profile-email"></span></p>
+                    <p><strong>Database Workspace Access:</strong> Authorization Verified)</p>
                 </div>
-                <button onclick="handleSignOut()" class="auth-btn btn-danger">Secure Sign Out</button>
+                <button onclick="handleSignOut()" class="auth-btn btn-danger">Sign Out Successful</button>
             </div>
 
         </main>        
