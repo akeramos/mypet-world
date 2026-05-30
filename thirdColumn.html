@@ -15,10 +15,7 @@
         gap: 40px;
     }
 
-    /* Left Copy Area */
-    .metric-info-side {
-        max-width: 60%;
-    }
+    .metric-info-side { max-width: 60%; }
 
     .metric-info-side h3 {
         font-size: 1.8rem;
@@ -30,17 +27,16 @@
 
     .metric-info-side p {
         font-size: 1.1rem;
-        color: #94a3b8; /* Soft readable slate text */
+        color: #94a3b8;
         line-height: 1.7;
         margin: 0;
     }
 
     .metric-info-side .highlight-compliance {
-        color: #4ade80; /* Signature brand leaf-green */
+        color: #4ade80;
         font-weight: 600;
     }
 
-    /* Right Side Metered Counter Box */
     .counter-meter-box {
         display: flex;
         flex-direction: column;
@@ -59,7 +55,6 @@
         text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
     }
 
-    /* Live Digital Ticker Layout */
     .digital-ticker {
         background: #020617;
         border: 1px solid rgba(74, 222, 128, 0.2);
@@ -70,7 +65,6 @@
         box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 222, 128, 0.05);
     }
 
-    /* Individual Ticker Number Nodes */
     .ticker-digit {
         font-family: monospace;
         font-size: 3.5rem;
@@ -94,24 +88,17 @@
         padding-bottom: 4px;
     }
 
-    /* Responsive Breakdown Configuration */
     @media (max-width: 992px) {
-        .metric-showcase-container {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 30px;
-            gap: 30px;
-        }
+        .metric-showcase-container { flex-direction: column; align-items: flex-start; padding: 30px; gap: 30px; }
         .metric-info-side { max-width: 100%; }
         .counter-meter-box { align-items: flex-start; min-width: 100%; }
     }
 </style>
 
 <div class="metric-showcase-container">
-    
     <div class="metric-info-side">
-        <h3>Our Trusted Ecosystem are Moving Forward!</h3>
-        <p> Join our robust Mypet-world community! We explicitly customized our care to serve pet better! 
+        <h3>Our Trusted Ecosystem is Moving Forward!</h3>
+        <p> Join our robust Mypet-world community! We explicitly customized our care to serve pets better! 
           Our footprint reaches 50,000+ active users within Southeast Asia across  
           <span class="highlight-compliance">Malaysia, Thailand, Vietnam and Indonesia!</span>
         </p>
@@ -120,28 +107,19 @@
     <div class="counter-meter-box">
         <div class="counter-label">Global Active Footprint</div>
         <div class="digital-ticker" id="liveEcosystemTicker">
-            <span class="ticker-digit">-</span>
-            <span class="ticker-digit">-</span>
-            <span class="ticker-comma">,</span>
-            <span class="ticker-digit">-</span>
-            <span class="ticker-digit">-</span>
-            <span class="ticker-digit">-</span>
+            <span class="ticker-digit">-</span><span class="ticker-digit">-</span><span class="ticker-comma">,</span><span class="ticker-digit">-</span><span class="ticker-digit">-</span><span class="ticker-digit">-</span>
         </div>
     </div>
-
 </div>
 
 <script>
-    function initLiveVisitorCounter() {
-        const tickerContainer = document.getElementById('liveEcosystemTicker');
+    (function() {
+        const BASE_NUMBER = 70412;
         
-        // Safety Step 1: Wait for HTML template layout to finish loading
-        if (!tickerContainer) {
-            setTimeout(initLiveVisitorCounter, 50);
-            return;
-        }
-
         function updateTickerDisplay(currentNum) {
+            const tickerContainer = document.getElementById('liveEcosystemTicker');
+            if (!tickerContainer) return false;
+            
             const formattedStr = currentNum.toLocaleString('en-US');
             let generatedHTML = '';
 
@@ -153,49 +131,55 @@
                 }
             }
             tickerContainer.innerHTML = generatedHTML;
+            return true;
         }
 
-        // Safety Step 2: Wait for global Firebase object to finish initialization
-        if (typeof firebase === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
-            setTimeout(initLiveVisitorCounter, 100);
-            return;
+        function runCounterEngine() {
+            // 🌟 FORCE IMMEDIATELY: Display baseline number so it NEVER shows empty dashes
+            const rendered = updateTickerDisplay(BASE_NUMBER);
+            if (!rendered) {
+                setTimeout(runCounterEngine, 30);
+                return;
+            }
+
+            // Verify if parent index.html has successfully loaded Firebase scripts
+            if (typeof firebase === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
+                console.warn("Ticker Engine running in static offline mode: Waiting for Firebase core script hooks.");
+                setTimeout(runCounterEngine, 200);
+                return;
+            }
+
+            try {
+                const db = firebase.firestore();
+                const counterDocRef = db.collection('metrics').doc('visitor_counter');
+
+                // Log page hit securely using mathematical atomic increments
+                counterDocRef.set({
+                    total_views: firebase.firestore.FieldValue.increment(1)
+                }, { merge: true }).catch(err => {
+                    console.error("Firestore hit increment rejected. Check your console rules tab:", err);
+                });
+
+                // Listen stream
+                counterDocRef.onSnapshot((doc) => {
+                    let cloudHits = 0;
+                    if (doc.exists && doc.data().total_views) {
+                        cloudHits = doc.data().total_views;
+                    }
+                    updateTickerDisplay(BASE_NUMBER + cloudHits);
+                    console.log("Ecosystem database metrics loaded live! Stream sync value:", BASE_NUMBER + cloudHits);
+                }, (streamError) => {
+                    console.error("Firestore database stream reading blocked:", streamError);
+                    updateTickerDisplay(BASE_NUMBER);
+                });
+
+            } catch (globalErr) {
+                console.error("Critical framework error within Firebase initialization sequence:", globalErr);
+                updateTickerDisplay(BASE_NUMBER);
+            }
         }
 
-        try {
-            const db = firebase.firestore();
-            // Target a specific, single metric document in your database
-            const counterDocRef = db.collection('metrics').doc('visitor_counter');
-
-            // 🚀 STEP A: Increment the global website view counter by +1 instantly on page load
-            // uses fieldvalue.increment so multiple users loading simultaneously won't clash
-            counterDocRef.set({
-                total_views: firebase.firestore.FieldValue.increment(1)
-            }, { merge: true }).catch(err => console.warn("Visitor hit increment paused:", err));
-
-            // 📡 STEP B: Listen to that exact single number and feed it directly into your ticker layout
-            counterDocRef.onSnapshot((doc) => {
-                let realCloudHits = 0;
-                
-                if (doc.exists && doc.data().total_views) {
-                    realCloudHits = doc.data().total_views;
-                }
-                
-                // Balance math: Add your massive 50,000 legacy footprint offset to the real hits
-                const absoluteTotalFootprint = 70412 + realCloudHits;
-                
-                updateTickerDisplay(absoluteTotalFootprint);
-                console.log(`Global visitor web hits updated. Cloud Hits: ${realCloudHits} Ticker: ${absoluteTotalFootprint}`);
-            }, (error) => {
-                console.error("Firestore stream dropped:", error);
-                updateTickerDisplay(70412); // Safe structural fallback
-            });
-
-        } catch (err) {
-            console.error("Metrics loop error:", err);
-            updateTickerDisplay(70412);
-        }
-    }
-
-    // Launch connection pipeline safely
-    initLiveVisitorCounter();
+        // Initialize execution sequence loop safely
+        runCounterEngine();
+    })();
 </script>
