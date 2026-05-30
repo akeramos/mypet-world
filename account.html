@@ -87,7 +87,7 @@
             catch (err) { document.getElementById('error-message').innerText = err.message; }
         }
 
-       async function handleForgotPassword(e) {
+        async function handleForgotPassword(e) {
             e.preventDefault();
             const email = document.getElementById('forgot-email').value;
             const errorBanner = document.getElementById('error-message');
@@ -111,14 +111,6 @@
                     errorBanner.innerText = "An error occurred. Please try again later."; 
                 }
             }
-        } async function handleForgotPassword(e) {
-            e.preventDefault();
-            const email = document.getElementById('forgot-email').value;
-            try { 
-                await auth.sendPasswordResetEmail(email); 
-                alert('Password reset link dispatched to your inbox!');
-                showForm('signin');
-            } catch (err) { document.getElementById('error-message').innerText = err.message; }
         }
 
         function handleSignOut() { auth.signOut(); }
