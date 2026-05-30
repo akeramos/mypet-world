@@ -87,7 +87,31 @@
             catch (err) { document.getElementById('error-message').innerText = err.message; }
         }
 
-        async function handleForgotPassword(e) {
+       async function handleForgotPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('forgot-email').value;
+            const errorBanner = document.getElementById('error-message');
+            
+            // Clear out any old error banners first
+            errorBanner.innerText = "";
+        
+            try { 
+                await auth.sendPasswordResetEmail(email); 
+                
+                // OPTION A: Secure, smart enterprise messaging
+                alert('If this email address is registered in our database, a secure password reset link has been dispatched to your inbox. Please check your spam folder if it doesn\'t arrive shortly!');
+                
+                showForm('signin');
+            } catch (err) { 
+                // We catch immediate structural format errors (e.g. "testgmail.com")
+                if (err.code === 'auth/invalid-email') {
+                    errorBanner.innerText = "Please enter a valid email address format (e.g., name@domain.com).";
+                } else {
+                    // General network fallback errors
+                    errorBanner.innerText = "An error occurred. Please try again later."; 
+                }
+            }
+        } async function handleForgotPassword(e) {
             e.preventDefault();
             const email = document.getElementById('forgot-email').value;
             try { 
