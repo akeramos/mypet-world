@@ -14,10 +14,16 @@
     <script>
         // CLIENT CONFIGURATION LINKED TO: mypet-worlds
         const firebaseConfig = {
-            projectId: "mypet-worlds",
+            apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
             authDomain: "mypet-worlds.firebaseapp.com",
-            apiKey: "AIzaSyYourActualClientAPIKeyGoesHere IfYouHaveIt" 
+            projectId: "mypet-worlds",
+            storageBucket: "mypet-worlds.firebasestorage.app",
+            messagingSenderId: "223873016606",
+            appId: "1:223873016606:web:b228b11e349e9ee85c9f0f",
+            measurementId: "G-XR07S3PJ2R"
         };
+        
+        // Initialize Firebase safely via browser compat channel
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
