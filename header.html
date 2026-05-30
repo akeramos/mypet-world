@@ -160,15 +160,15 @@
                     if (!navContainer) return;
 
                     if (user) {
-                        // 🌟 MEMBER STATE: Show their email prefix + a logout link
-                        const shortEmail = user.email.split('@')[0]; // Turns "alex@domain.com" into "alex"
+                        // MEMBER STATE: Show their email prefix + a portal link
+                        const shortEmail = user.email.split('@')[0]; 
                         
                         navContainer.innerHTML = `
                             <span class="nav-user-greeting">👋 Hi, ${shortEmail}</span>
                             <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
                         `;
                     } else {
-                        // 👤 GUEST STATE: Fallback to the regular sign-in link
+                        // GUEST STATE: Fallback to the regular sign-in link
                         navContainer.innerHTML = `
                             <a href="account.html" class="nav-link account-btn">👤 Account</a>
                         `;
