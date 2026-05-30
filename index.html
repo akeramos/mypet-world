@@ -12,7 +12,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>  
     <script>
-        // Global config so index.html knows how to talk to your project container
         const firebaseConfig = {
             apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
             authDomain: "mypet-worlds.firebaseapp.com",
@@ -27,6 +26,7 @@
         }
     </script>
     <script>
+        // Modified to return a Promise so we can track when it actually finishes loading
         async function includeHTML(placeholderId, filename) {
             try {
                 const response = await fetch(filename);
@@ -40,17 +40,21 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            includeHTML('header-placeholder', 'header.html');
-            includeHTML('services-grid-placeholder', 'services.html');
-            includeHTML('services2-grid-placeholder', 'services2.html');
-            includeHTML('about-placeholder', 'about.html');                    
-            includeHTML('slider-placeholder', 'slider.html');
-            includeHTML('first-column-placeholder', 'firstColumn.html');             
-            includeHTML('second-column-placeholder', 'secondColumn.html');                       
-            includeHTML('third-column-placeholder', 'thirdColumn.html');
-            includeHTML('footer-placeholder', 'footer.html');
-            // Kick off the background animation natively on index
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Use Promise.all to load every single sub-component concurrently and safely
+            await Promise.all([
+                includeHTML('header-placeholder', 'header.html'),
+                includeHTML('services-grid-placeholder', 'services.html'),
+                includeHTML('services2-grid-placeholder', 'services2.html'),
+                includeHTML('about-placeholder', 'about.html'),                    
+                includeHTML('slider-placeholder', 'slider.html'),
+                includeHTML('first-column-placeholder', 'firstColumn.html'),             
+                includeHTML('second-column-placeholder', 'secondColumn.html'),                        
+                includeHTML('third-column-placeholder', 'thirdColumn.html'),
+                includeHTML('footer-placeholder', 'footer.html')
+            ]);
+            
+            // ✨ FIX: Kick off the canvas background loop ONLY after every component is safely rendered
             initBackgroundOrganicPulse();
         });
     </script>
@@ -89,7 +93,16 @@
             function resize() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                init();
+                
+                // Keep particles bounded safely instead of re-instantiating thousands of empty pointers on window resize
+                if (particles.length === 0) {
+                    init();
+                } else {
+                    particles.forEach(p => {
+                        if (p.x > canvas.width) p.x = Math.random() * canvas.width;
+                        if (p.y > canvas.height) p.y = Math.random() * canvas.height;
+                    });
+                }
             }
 
             class Particle {
@@ -112,7 +125,6 @@
                     ctx.fillStyle = `rgba(74, 222, 128, ${this.opacity * 0.3})`;
                     ctx.lineWidth = 1.5;
 
-                    // Leaf Path
                     ctx.beginPath();
                     ctx.moveTo(0, -this.size);
                     ctx.quadraticCurveTo(this.size, 0, 0, this.size);
@@ -163,9 +175,11 @@
             }
 
             window.addEventListener('resize', resize);
+            
+            // Account for window scrolling offsets so context trails don't drift away on long scroll blocks
             window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
+                mouse.x = e.clientX + window.scrollX;
+                mouse.y = e.clientY + window.scrollY;
             });
             window.addEventListener('mouseout', () => {
                 mouse.x = null;
