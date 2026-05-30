@@ -36,7 +36,7 @@
     }
 
     .metric-info-side .highlight-compliance {
-        color: #4ade80; /* Your signature brand leaf-green */
+        color: #4ade80; /* Signature brand leaf-green */
         font-weight: 600;
     }
 
@@ -118,33 +118,31 @@
     </div>
 
     <div class="counter-meter-box">
-        <div class="counter-label">Global Footprint</div>
+        <div class="counter-label">Global Active Footprint</div>
         <div class="digital-ticker" id="liveEcosystemTicker">
-            <span class="ticker-digit">7</span>
-            <span class="ticker-digit">0</span>
+            <span class="ticker-digit">-</span>
+            <span class="ticker-digit">-</span>
             <span class="ticker-comma">,</span>
-            <span class="ticker-digit">4</span>
-            <span class="ticker-digit">1</span>
-            <span class="ticker-digit">2</span>
+            <span class="ticker-digit">-</span>
+            <span class="ticker-digit">-</span>
+            <span class="ticker-digit">-</span>
         </div>
     </div>
 
 </div>
 
 <script>
-    // Self-correcting asynchronous ticker initialization engine
-    function initTickerEngine() {
+    // Real-Time Production Database Integration Listener
+    function initLiveFirestoreCounter() {
         const tickerContainer = document.getElementById('liveEcosystemTicker');
+        
+        // Asynchronous safety loop check for included html render timelines
         if (!tickerContainer) {
-            setTimeout(initTickerEngine, 50);
+            setTimeout(initLiveFirestoreCounter, 50);
             return;
         }
 
-        // Target baseline starting population node count (70,412)
-        let baseCount = 70412;
-
         function updateTickerDisplay(currentNum) {
-            // Transform the raw integers cleanly into a comma-spaced localized string array
             const formattedStr = currentNum.toLocaleString('en-US');
             let generatedHTML = '';
 
@@ -158,14 +156,31 @@
             tickerContainer.innerHTML = generatedHTML;
         }
 
-        // Live updating simulation loop: increments counts randomly to look active
-        setInterval(() => {
-            // Adds a random increment spike between 1 and 3 instances every few seconds
-            const increment = Math.floor(Math.random() * 3) + 1;
-            baseCount += increment;
-            updateTickerDisplay(baseCount);
-        }, 4500); // Ticks smoothly forward every 4.5 seconds
+        try {
+            const db = firebase.firestore();
+            
+            // 📡 LIVE REAL-TIME STREAM: Listens to your 'users' collection instantly.
+            // Every time a registration completes, this function fires automatically!
+            db.collection('users').onSnapshot((snapshot) => {
+                const realLiveUserCount = snapshot.size; // Grabs the direct collection size
+                
+                // Southeast Asian Legacy Footprint Offset Core Balance Math
+                const absoluteTotalFootprint = 70412 + realLiveUserCount;
+                
+                updateTickerDisplay(absoluteTotalFootprint);
+                console.log(`Live metric stream synced. Registered: ${realLiveUserCount} Node Total: ${absoluteTotalFootprint}`);
+            }, (error) => {
+                console.error("Firestore metrics synchronization interrupted:", error);
+                // Graceful fallback to static legacy footprint display if connection times out
+                updateTickerDisplay(70412);
+            });
+
+        } catch (err) {
+            console.error("Firebase instance context missing in template scope:", err);
+            updateTickerDisplay(70412);
+        }
     }
 
-    initTickerEngine();
+    // Launch connection pipeline
+    initLiveFirestoreCounter();
 </script>
