@@ -226,11 +226,25 @@
 <script>
     let currentSlideIndex = 0;
     let autoSlideTimer = null;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
+    let slides = [];
+    let dots = [];
+
+    function initSliderEngine() {
+        slides = document.querySelectorAll('.slide');
+        dots = document.querySelectorAll('.dot');
+
+        // 🔍 SELF-CORRECTING TIMING CHECK:
+        // If includeHTML hasn't finished painting the slides yet, wait 50ms and try again
+        if (slides.length === 0 || dots.length === 0) {
+            setTimeout(initSliderEngine, 50);
+            return;
+        }
+
+        // Once elements are safely found, start the automatic carousel
+        startTimer();
+    }
 
     function updateSliderVisuals() {
-        // Cycle through items and swap tracking classes
         slides.forEach((slide, idx) => {
             if (idx === currentSlideIndex) {
                 slide.classList.add('active');
@@ -246,7 +260,6 @@
         resetTimer();
         currentSlideIndex += direction;
         
-        // Handle Boundary Loops
         if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
         if (currentSlideIndex < 0) currentSlideIndex = slides.length - 1;
         
@@ -260,18 +273,21 @@
     }
 
     function startTimer() {
+        // Double check we have slides to loop over
+        if (slides.length === 0) return;
+        
         autoSlideTimer = setInterval(() => {
             currentSlideIndex++;
             if (currentSlideIndex >= slides.length) currentSlideIndex = 0;
             updateSliderVisuals();
-        }, 5000); // Transitions automatically every 5 seconds
+        }, 5000); // Slides automatically change every 5 seconds
     }
 
     function resetTimer() {
         clearInterval(autoSlideTimer);
         startTimer();
     }
-
-    // Initialize Auto Cycle Engine
-    startTimer();
+        
+    // Safely kick off the checker loop
+    initSliderEngine();
 </script>
