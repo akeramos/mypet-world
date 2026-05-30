@@ -185,34 +185,37 @@
     (function() {
         function checkAndRenderHeader() {
             if (typeof firebase !== 'undefined' && firebase.auth) {
-                // We attach the listener globally to capture live updates
                 firebase.auth().onAuthStateChanged((user) => {
                     const navContainer = document.getElementById('header-nav-container');
                     
-                    // If the includeHTML function hasn't finished rendering the bar yet, try again
+                    // 🔥 SELF-CORRECTING FIX: If the async loader hasn't painted the HTML yet, 
+                    // wait 50ms and try running the render engine again.
                     if (!navContainer) {
                         setTimeout(checkAndRenderHeader, 50);
                         return;
                     }
 
                     if (user) {
+                        // MEMBER STATE: Show their email prefix + a portal link
                         const shortEmail = user.email.split('@')[0]; 
                         navContainer.innerHTML = `
                             <span class="nav-user-greeting">👋 Hi, ${shortEmail}</span>
                             <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
                         `;
                     } else {
+                        // GUEST STATE: Fallback to the regular sign-in link
                         navContainer.innerHTML = `
                             <a href="account.html" class="nav-link account-btn">👤 Account</a>
                         `;
                     }
                 });
             } else {
+                // Retry in 100ms if Firebase libraries are still processing network handshake
                 setTimeout(checkAndRenderHeader, 100);
             }
         }
         
-        // Execute loop safely
+        // Fire the initialization sequence safely
         checkAndRenderHeader();
     })();
 </script>
