@@ -1,279 +1,146 @@
-:root {
-    --leaf-green: #4ade80; 
-    --dark-green: #064e3b;
-    --bg-dark: #020617; /* Deep organic dark background */
-}
+<style>
+    /* Slider Container */
+    .hero-slider {
+        position: relative;
+        width: 100%;
+        height: 380px;
+        border-radius: 24px;
+        overflow: hidden;
+        margin-bottom: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        background: #020617; 
+        font-family: 'Lexend', sans-serif;
+    }
 
-/* Set the main site background to the dark theme */
-body {
-    margin: 0;
-    background-color: var(--bg-dark);
-    font-family: system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-}
+    .slider-track {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
 
-/* Fix the Canvas to the background of the ENTIRE page */
-#neuralCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0; /* Sits behind everything */
-    pointer-events: none;
-}
+    /* Individual Slide Frame */
+    .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        animation: fadeAnimation 16s infinite ease-in-out;
+    }
 
-/* Content wrapper stays above canvas, backgrounds are transparent */
-.content-container {
-    display: flex;
-    flex: 1;
-    position: relative;
-    z-index: 1; /* Keeps text and cards clickable above the leaves */
-}
+    /* 🌫️ LAYER 1: Explicit Blurred Background Fill */
+    .slide-bg-blur {
+        position: absolute;
+        top: -20px; left: -20px; right: -20px; bottom: -20px;
+        background-size: cover;
+        background-position: center;
+        filter: blur(25px) brightness(0.35);
+        z-index: 1;
+    }
 
-main {
-    flex-grow: 1;
-    padding: 24px;
-    padding-bottom: 80px;
-    background-color: transparent !important;
-    color: white;
-}
+    /* 🎯 LAYER 2: Explicit Sharp Foreground Pet Image */
+    .slide-img-sharp {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: 2; /* Sits cleanly in front of the blur */
+    }
 
-main h2, main p {
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
+    /* ✍️ LAYER 3: Text Content Mask Overlay */
+    .slider-overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to right, rgba(2, 6, 23, 0.85) 40%, rgba(2, 6, 23, 0.1) 75%); 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start; 
+        text-align: left;
+        padding: 0 80px;
+        z-index: 4; /* Floats clear above all image layers */
+    }
 
-/* Layout layer fixes from your inline HTML styles */
-#header-placeholder {
-    position: relative; 
-    z-index: 9999;
-    width: 100%;
-    display: block;
-}
+    .slider-overlay h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 12px;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    }
 
-/* --- Header Layout & Glassmorphism Theme Tweak --- */
-.pet-header {
-    position: relative;
-    z-index: 9999;       /* 🔥 ADD THIS: Keeps it pinned over the leaf canvas */
-    flex-shrink: 0;      /* 🔥 ADD THIS: Stops the main layout grid from crushing it */
-    padding: 15px 40px; 
-    
-    /* THE TWEAK: Shifting from bright colors to a dark, deep glassmorphic bar */
-    background: rgba(2, 6, 23, 0.4); 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    
-    color: white;
-    overflow: hidden;
-    
-    /* Updated font-family to match your Lexend main font choice */
-    font-family: 'Lexend', system-ui, -apple-system, sans-serif;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-}
+    .slider-overlay p {
+        font-size: 1.1rem;
+        color: #4ade80; 
+        font-weight: 400;
+        max-width: 550px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        line-height: 1.5;
+    }
 
-#footer-placeholder {
-    position: relative; 
-    z-index: 10;
-}
+    /* Staggered Timings for the 4 Slides */
+    .slide:nth-child(1) { animation-delay: 0s; }
+    .slide:nth-child(2) { animation-delay: 4s; }
+    .slide:nth-child(3) { animation-delay: 8s; }
+    .slide:nth-child(4) { animation-delay: 12s; }
 
-/* --- NEW COMPONENT STYLES FOR THE GLASS CARDS --- */
+    /* Cross-fade Formula */
+    @keyframes fadeAnimation {
+        0% { opacity: 0; }
+        6% { opacity: 1; }   
+        25% { opacity: 1; }  
+        31% { opacity: 0; }  
+        100% { opacity: 0; } 
+    }
 
-/* The Grid Wrapper */
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin: 32px 0;
-}
+    /* Mobile scaling safety */
+    @media (max-width: 768px) {
+        .hero-slider { height: 260px; }
+        .slider-overlay { padding: 0 24px; background: rgba(2, 6, 23, 0.65); }
+        .slider-overlay h1 { font-size: 1.6rem; }
+        .slider-overlay p { font-size: 0.9rem; }
+    }
+</style>
 
-/* Glassmorphism Formula */
-.glass-card {
-    background: rgba(255, 255, 255, 0.05); /* Soft transparent tint */
-    backdrop-filter: blur(12px);            /* Frosted glass blur effect */
-    -webkit-backdrop-filter: blur(12px);    /* Safari Support */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Crisp glass edge */
-    border-radius: 16px;
-    padding: 24px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+<div class="hero-slider">
+    <div class="slider-track">
+        
+        <div class="slide">
+            <div class="slide-bg-blur" style="background-image: url('assets/slider1.png');"></div>
+            <div class="slide-img-sharp" style="background-image: url('assets/slider1.png');"></div>
+            <div class="slider-overlay">
+                <h1>Welcome to Mypet-world</h1>
+                <p>The ultimate modern workspace and ecosystem for contemporary pet owners, caretakers, health providers, and services.</p>
+            </div>
+        </div>
 
-.glass-card h3 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 12px;
-    width: 100%; /* Ensures it takes up the full width to center perfectly */
-}
+        <div class="slide">
+            <div class="slide-bg-blur" style="background-image: url('assets/slider2.png');"></div>
+            <div class="slide-img-sharp" style="background-image: url('assets/slider2.png');"></div>
+            <div class="slider-overlay">
+                <h1>Health Tracking and <br>Vaccination Card</h1>
+                <p>Get e-Vaccination card, smart database and <br>track your pet health with schedule visit.</p>
+            </div>
+        </div>
 
-.glass-card p {
-    text-align: left;
-    line-height: 1.5;
-    font-size: 0.95rem;
-    color: #cbd5e1;
-    margin: 0;
-}
+        <div class="slide">
+            <div class="slide-bg-blur" style="background-image: url('assets/slider3.png');"></div>
+            <div class="slide-img-sharp" style="background-image: url('assets/slider3.png');"></div>
+            <div class="slider-overlay">
+                <h1>Pet Event</h1>
+                <p>Identify and get notice on future nearby <br>animal hosting event.</p>
+            </div>
+        </div>
 
-/* Card Interactive Hover Spark */
-.glass-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--leaf-green); /* Subtle green glow matching your leaves */
-    box-shadow: 0 10px 20px rgba(74, 222, 128, 0.1);
-}
+        <div class="slide">
+            <div class="slide-bg-blur" style="background-image: url('assets/slider4.png');"></div>
+            <div class="slide-img-sharp" style="background-image: url('assets/slider4.png');"></div>
+            <div class="slider-overlay">
+                <h1>Animal Services</h1>
+                <p>Connect with local service, verified caretakers, <br>and submit your love one.</p>
+            </div>
+        </div>
 
-.card-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-}
-
-/* Updated styling for centered, responsive image headers */
-.card-image-header {
-    width: 100%;
-    height: 70px;          
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Changed from flex-start to center */
-    margin-bottom: 16px;
-}
-
-.service-icon-img {
-    height: 100%;          /* Forces the image to fit the 70px boundary */
-    width: auto;           /* Scale width proportionally */
-    object-fit: contain;   /* Ensures no awkward squishing or clipping */
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); /* Gives the glass icon extra depth */
-}
-
-/* --- REGISTRATION AND ACCOUNT STYLING NODES --- */
-.auth-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 70vh;
-    padding: 20px;
-}
-
-.auth-card {
-    width: 100%;
-    max-width: 420px;
-    box-sizing: border-box;
-}
-
-.auth-error-banner {
-    color: #ef4444;
-    font-size: 0.9rem;
-    margin-bottom: 16px;
-    text-align: center;
-    max-width: 420px;
-    font-weight: 600;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-    text-align: left;
-}
-
-.input-group label {
-    font-size: 0.85rem;
-    color: #cbd5e1;
-    font-weight: 600;
-}
-
-.input-group input {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 12px 16px;
-    border-radius: 10px;
-    color: white;
-    font-family: 'Lexend', sans-serif;
-    outline: none;
-    transition: all 0.2s ease;
-}
-
-.input-group input:focus {
-    border-color: var(--leaf-green);
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.auth-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    font-family: 'Lexend', sans-serif;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    margin-top: 8px;
-}
-
-.btn-primary {
-    background: var(--leaf-green);
-    color: var(--dark-green);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
-}
-
-.btn-danger {
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.4);
-    color: #f87171;
-}
-
-.btn-danger:hover {
-    background: #ef4444;
-    color: white;
-}
-
-.auth-switchlinks {
-    margin-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 12px;
-    font-size: 0.85rem;
-}
-
-.auth-switchlinks p {
-    margin: 6px 0;
-    color: #94a3b8;
-}
-
-.auth-switchlinks a {
-    color: var(--leaf-green);
-    text-decoration: none;
-    font-weight: 700;
-}
-
-/* Auth Profile view UI styling cards */
-.profile-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-.profile-avatar {
-    font-size: 3rem;
-    margin-bottom: 8px;
-}
-.profile-status-badge {
-    display: inline-block;
-    background: rgba(74, 222, 128, 0.15);
-    color: var(--leaf-green);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-}
-.profile-details {
-    background: rgba(0, 0, 0, 0.2);
-    padding: 16px;
-    border-radius: 10px;
-    margin-bottom: 24px;
-    font-size: 0.9rem;
-    text-align: left;
-}
+    </div>
+</div>
