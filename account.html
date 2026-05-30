@@ -1,64 +1,218 @@
-Project ID: mypet-worlds
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mypet-world | Account Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
-Project number: 223873016606
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-firestore rules:
+    <script>
+        // CLIENT CONFIGURATION LINKED TO: mypet-worlds
+        const firebaseConfig = {
+            projectId: "mypet-worlds",
+            authDomain: "mypet-worlds.firebaseapp.com",
+            apiKey: "AIzaSyYourActualClientAPIKeyGoesHere IfYouHaveIt" 
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // This allows any logged-in user to read and write their own data
-    match /{document=**} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}
+        // Include wrapper templates
+        async function includeHTML(placeholderId, filename) {
+            try {
+                const response = await fetch(filename);
+                if (response.ok) {
+                    document.getElementById(placeholderId).innerHTML = await response.text();
+                }
+            } catch (error) { console.error(`Failed to fetch ${filename}`); }
+        }
 
+        window.addEventListener('DOMContentLoaded', () => {
+            includeHTML('header-placeholder', 'header.html');
+            includeHTML('footer-placeholder', 'footer.html');
+            initBackgroundOrganicPulse();
+            setupAuthListener();
+        });
 
-firebase admin SDK: node.js
+        // Toggle Views gracefully inside the single glass panel
+        function showForm(formType) {
+            document.getElementById('signin-view').style.display = formType === 'signin' ? 'block' : 'none';
+            document.getElementById('signup-view').style.display = formType === 'signup' ? 'block' : 'none';
+            document.getElementById('forgot-view').style.display = formType === 'forgot' ? 'block' : 'none';
+            document.getElementById('error-message').innerText = "";
+        }
 
-var admin = require("firebase-admin");
+        // Handle State Transitions dynamically based on Firebase Auth Core
+        function setupAuthListener() {
+            auth.onAuthStateChanged((user) => {
+                const gateway = document.getElementById('auth-gateway');
+                const profile = document.getElementById('user-profile-view');
+                
+                if (user) {
+                    gateway.style.display = 'none';
+                    profile.style.display = 'block';
+                    document.getElementById('profile-email').innerText = user.email;
+                } else {
+                    gateway.style.display = 'block';
+                    profile.style.display = 'none';
+                    showForm('signin');
+                }
+            });
+        }
 
-var serviceAccount = require("path/to/serviceAccountKey.json");
+        // Firebase Operations Actions
+        async function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            try { await auth.signInWithEmailAndPassword(email, pass); } 
+            catch (err) { document.getElementById('error-message').innerText = err.message; }
+        }
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
+        async function handleSignUp(e) {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const pass = document.getElementById('register-pass').value;
+            try { await auth.createUserWithEmailAndPassword(email, pass); } 
+            catch (err) { document.getElementById('error-message').innerText = err.message; }
+        }
 
-firebase admin SDK: java
-FileInputStream serviceAccount =
-new FileInputStream("path/to/serviceAccountKey.json");
+        async function handleForgotPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('forgot-email').value;
+            try { 
+                await auth.sendPasswordResetEmail(email); 
+                alert('Password reset link dispatched to your inbox!');
+                showForm('signin');
+            } catch (err) { document.getElementById('error-message').innerText = err.message; }
+        }
 
-FirebaseOptions options = new FirebaseOptions.Builder()
-  .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-  .build();
+        function handleSignOut() { auth.signOut(); }
+    </script>
+</head>
+<body>
 
-FirebaseApp.initializeApp(options);
+    <canvas id="neuralCanvas"></canvas>
+    <div id="header-placeholder"></div>
+    
+    <div class="content-container">
+        <main class="auth-main">
+            
+            <div id="error-message" class="auth-error-banner"></div>
 
+            <div id="auth-gateway" class="glass-card auth-card">
+                
+                <div id="signin-view">
+                    <h3>Sign In</h3>
+                    <form onsubmit="handleSignIn(event)">
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="login-email" required placeholder="name@domain.com">
+                        </div>
+                        <div class="input-group">
+                            <label>Password</label>
+                            <input type="password" id="login-pass" required placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="auth-btn btn-primary">Sign Into Account</button>
+                    </form>
+                    <div class="auth-switchlinks">
+                        <p>Need a profile? <a href="#" onclick="showForm('signup')">Create one here</a></p>
+                        <p><a href="#" onclick="showForm('forgot')">Forgot Password?</a></p>
+                    </div>
+                </div>
 
-Firebase admin SDK: phython
-import firebase_admin
-from firebase_admin import credentials
+                <div id="signup-view" style="display:none;">
+                    <h3>Create Profile</h3>
+                    <form onsubmit="handleSignUp(event)">
+                        <div class="input-group">
+                            <label>Email Address</label>
+                            <input type="email" id="register-email" required placeholder="name@domain.com">
+                        </div>
+                        <div class="input-group">
+                            <label>Password</label>
+                            <input type="password" id="register-pass" required placeholder="Minimum 6 characters">
+                        </div>
+                        <button type="submit" class="auth-btn btn-primary">Register New Profile</button>
+                    </form>
+                    <div class="auth-switchlinks">
+                        <p>Already have an account? <a href="#" onclick="showForm('signin')">Sign In</a></p>
+                    </div>
+                </div>
 
-cred = credentials.Certificate("path/to/serviceAccountKey.json")
-firebase_admin.initialize_app(cred)
+                <div id="forgot-view" style="display:none;">
+                    <h3>Recover Password</h3>
+                    <form onsubmit="handleForgotPassword(event)">
+                        <div class="input-group">
+                            <label>Registered Email</label>
+                            <input type="email" id="forgot-email" required placeholder="name@domain.com">
+                        </div>
+                        <button type="submit" class="auth-btn btn-primary">Send Reset Link</button>
+                    </form>
+                    <div class="auth-switchlinks">
+                        <p>Remembered your settings? <a href="#" onclick="showForm('signin')">Back to Login</a></p>
+                    </div>
+                </div>
 
-firestore database rules: 
-rules_version = '2';
-2
-service cloud.firestore {
-3
-  match /databases/{database}/documents {
-4
-    // This allows any logged-in user to read and write their own data
-5
-    match /{document=**} {
-6
-      allow read, write: if request.auth != null;
-7
-    }
-8
-  }
-9
-}
+            </div>
 
+            <div id="user-profile-view" class="glass-card auth-card" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-avatar">👤</div>
+                    <h3>Account Dashboard</h3>
+                    <p class="profile-status-badge">Authenticated</p>
+                </div>
+                <div class="profile-details">
+                    <p><strong>System Identity Node:</strong> <span id="profile-email"></span></p>
+                    <p><strong>Database Workspace Access:</strong> Authorized (Firestore Rules Verified)</p>
+                </div>
+                <button onclick="handleSignOut()" class="auth-btn btn-danger">Secure Sign Out</button>
+            </div>
+
+        </main>        
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Background logic matches index exactly to ensure zero console trace faulting
+        let mouse = { x: null, y: null, radius: 250 };
+        function initBackgroundOrganicPulse() {
+            const canvas = document.getElementById('neuralCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            function resize() {
+                canvas.width = window.innerWidth; canvas.height = window.innerHeight; init();
+            }
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 12 + 8; this.vx = (Math.random() - 0.5) * 0.4; this.vy = (Math.random() - 0.5) * 0.4;
+                    this.rotation = Math.random() * Math.PI * 2; this.rotationSpeed = (Math.random() - 0.5) * 0.005; this.opacity = Math.random() * 0.4 + 0.2;
+                }
+                draw() {
+                    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rotation);
+                    ctx.strokeStyle = `rgba(74, 222, 128, ${this.opacity})`; ctx.fillStyle = `rgba(74, 222, 128, ${this.opacity * 0.3})`; ctx.lineWidth = 1.5;
+                    ctx.beginPath(); ctx.moveTo(0, -this.size); ctx.quadraticCurveTo(this.size, 0, 0, this.size); ctx.quadraticCurveTo(-this.size, 0, 0, -this.size);
+                    ctx.fill(); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, -this.size); ctx.lineTo(0, this.size); ctx.stroke(); ctx.restore();
+                }
+                update() {
+                    this.x += this.vx; this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1; if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+            }
+            function init() { particles = []; for (let i = 0; i < 40; i++) particles.push(new Particle()); }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animate);
+            }
+            window.addEventListener('resize', resize); resize(); animate();
+        }
+    </script>
+</body>
+</html>
