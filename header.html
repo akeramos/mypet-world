@@ -21,61 +21,69 @@
 
 <style>
 /* --- Header Layout & Glassmorphism Theme Tweak --- */
-.pet-header {
-    position: relative;
-    z-index: 9999;       /* Keeps header above your background leaf canvas */
-    flex-shrink: 0;      /* Prevents flex layouts from crushing the header height */
-    padding: 15px 40px; 
+    .pet-header {
+        position: relative;
+        z-index: 9999;       /* Keeps header above your background leaf canvas */
+        flex-shrink: 0;      /* Prevents flex layouts from crushing the header height */
+        padding: 15px 40px; 
+        
+        /* Dark, deep glassmorphic bar matching your canvas theme */
+        background: rgba(2, 6, 23, 0.4); 
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        
+        color: white;
+        overflow: hidden;
+        font-family: 'Lexend', system-ui, -apple-system, sans-serif;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    }
     
-    /* Dark, deep glassmorphic bar matching your canvas theme */
-    background: rgba(2, 6, 23, 0.4); 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* --- The Layout Core --- */
+    .header-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: space-between; 
+        align-items: center; 
+        max-width: 1400px;
+        margin: 0 auto;
+    }
     
-    color: white;
-    overflow: hidden;
-    font-family: 'Lexend', system-ui, -apple-system, sans-serif;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-}
+    /* Brand styling container */
+    .brand-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: white;
+    }
+    
+    .brand-logo {
+        width: 45px;
+        height: 45px;
+        object-fit: cover;
+        border-radius: 50%; 
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+        
+    .brand-name {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 800;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        letter-spacing: -0.5px;
+    }
 
-/* --- The Layout Core --- */
-.header-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-/* Brand styling container */
-.brand-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: white;
-}
-
-.brand-logo {
-    width: 45px;
-    height: 45px;
-    object-fit: cover;
-    border-radius: 50%; 
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.brand-name {
-    margin: 0;
-    font-size: 1.8rem;
-    font-weight: 800;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    letter-spacing: -0.5px;
-}
-
+    .nav-user-greeting {
+        font-size: 0.9rem;
+        color: #4ade80; /* Glowing Leaf Green text */
+        font-weight: 700;
+        margin-right: 8px;
+        letter-spacing: -0.3px;
+        text-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
+    }
 nav {
     display: flex;
     align-items: center;
