@@ -78,6 +78,13 @@ main h2, main p {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.glass-card h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 12px;
+    width: 100%; /* Ensures it takes up the full width to center perfectly */
+}
+
 /* Card Interactive Hover Spark */
 .glass-card:hover {
     transform: translateY(-5px);
