@@ -49,7 +49,9 @@ main h2, main p {
 /* Layout layer fixes from your inline HTML styles */
 #header-placeholder {
     position: relative; 
-    z-index: 999;
+    z-index: 9999;
+    width: 100%;
+    display: block;
 }
 
 #footer-placeholder {
