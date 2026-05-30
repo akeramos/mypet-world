@@ -54,6 +54,21 @@ main h2, main p {
     display: block;
 }
 
+.pet-header {
+    position: relative;
+    z-index: 9999; /* 🌟 ADD THIS: Forces the header to pop on top of the canvas and content wrappers */
+    padding: 15px 40px; 
+    background: rgba(2, 6, 23, 0.4); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: white;
+    overflow: hidden;
+    font-family: 'Lexend', system-ui, -apple-system, sans-serif;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    flex-shrink: 0;
+}
+
 #footer-placeholder {
     position: relative; 
     z-index: 10;
@@ -85,6 +100,14 @@ main h2, main p {
     margin-top: 0;
     margin-bottom: 12px;
     width: 100%; /* Ensures it takes up the full width to center perfectly */
+}
+
+.glass-card p {
+    text-align: left;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    margin: 0;
 }
 
 /* Card Interactive Hover Spark */
