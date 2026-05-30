@@ -136,7 +136,7 @@
     function initLiveFirestoreCounter() {
         const tickerContainer = document.getElementById('liveEcosystemTicker');
         
-        // Asynchronous safety loop check for included html render timelines
+        // Safety Step 1: Wait for HTML template inject layout context to finish
         if (!tickerContainer) {
             setTimeout(initLiveFirestoreCounter, 50);
             return;
@@ -156,31 +156,37 @@
             tickerContainer.innerHTML = generatedHTML;
         }
 
+        // Safety Step 2: If the global Firebase object isn't fully ready in the window yet, wait for it!
+        if (typeof firebase === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
+            console.log("Metrics engine waiting for active Firebase connection handshake...");
+            setTimeout(initLiveFirestoreCounter, 100);
+            return;
+        }
+
         try {
             const db = firebase.firestore();
             
-            // 📡 LIVE REAL-TIME STREAM: Listens to your 'users' collection instantly.
-            // Every time a registration completes, this function fires automatically!
+            // 📡 LIVE REAL-TIME STREAM CONNECTOR
             db.collection('users').onSnapshot((snapshot) => {
-                const realLiveUserCount = snapshot.size; // Grabs the direct collection size
+                const realLiveUserCount = snapshot.size; 
                 
-                // Southeast Asian Legacy Footprint Offset Core Balance Math
+                // Match your text display alignment here (e.g., use 50412 if you state 50k in the text)
                 const absoluteTotalFootprint = 70412 + realLiveUserCount;
                 
                 updateTickerDisplay(absoluteTotalFootprint);
                 console.log(`Live metric stream synced. Registered: ${realLiveUserCount} Node Total: ${absoluteTotalFootprint}`);
             }, (error) => {
-                console.error("Firestore metrics synchronization interrupted:", error);
-                // Graceful fallback to static legacy footprint display if connection times out
+                console.error("Firestore metrics stream blocked by security rules or connection drop:", error);
+                // Hard absolute fallback to ensure counter NEVER displays blank dashes or 0
                 updateTickerDisplay(70412);
             });
 
         } catch (err) {
-            console.error("Firebase instance context missing in template scope:", err);
+            console.error("Internal loop error inside metrics engine:", err);
             updateTickerDisplay(70412);
         }
     }
 
-    // Launch connection pipeline
+    // Launch connection pipeline safely
     initLiveFirestoreCounter();
 </script>
