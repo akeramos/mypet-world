@@ -89,3 +89,20 @@ main h2, main p {
     font-size: 32px;
     margin-bottom: 12px;
 }
+
+/* Styling fixes for image-based headers */
+.card-image-header {
+    width: 100%;
+    height: 70px;          /* Restricts header height uniformly */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Aligns with your titles below */
+    margin-bottom: 16px;
+}
+
+.service-icon-img {
+    height: 100%;          /* Forces the image to fit the 70px boundary */
+    width: auto;           /* Scale width proportionally */
+    object-fit: contain;   /* Ensures no awkward squishing or clipping */
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); /* Gives the glass icon extra depth */
+}
