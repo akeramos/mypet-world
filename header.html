@@ -13,7 +13,7 @@
             <h1 class="brand-name">Mypet-world</h1>
         </a>
 
-        <nav>
+        <nav id="header-nav-container">
             <a href="account.html" class="nav-link account-btn">👤 Account</a>
         </nav>
     </div>
@@ -84,11 +84,12 @@
         letter-spacing: -0.3px;
         text-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
     }
-nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+
+    nav {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
 
 /* --- Moving Animals Magic --- */
 .animated-bg {
@@ -151,7 +152,6 @@ nav {
 
 <script>
     (function() {
-        // Safe check function to ensure Firebase libraries are fully ready in the browser
         function initHeaderAuth() {
             if (typeof firebase !== 'undefined' && firebase.auth) {
                 firebase.auth().onAuthStateChanged((user) => {
@@ -159,22 +159,19 @@ nav {
                     if (!navContainer) return;
 
                     if (user) {
-                        // 🌟 MEMBER STATE: Show their email prefix + a logout link
-                        const shortEmail = user.email.split('@')[0]; // Turns "alex@domain.com" into "alex"
+                        const shortEmail = user.email.split('@')[0]; 
                         
                         navContainer.innerHTML = `
                             <span class="nav-user-greeting">👋 Hi, ${shortEmail}</span>
                             <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
                         `;
                     } else {
-                        // 👤 GUEST STATE: Fallback to the regular sign-in link
                         navContainer.innerHTML = `
                             <a href="account.html" class="nav-link account-btn">👤 Account</a>
                         `;
                     }
                 });
             } else {
-                // Retry in 100ms if Firebase is still processing its network handshake
                 setTimeout(initHeaderAuth, 100);
             }
         }
