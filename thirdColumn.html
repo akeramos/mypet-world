@@ -132,13 +132,12 @@
 </div>
 
 <script>
-    // Real-Time Production Database Integration Listener
-    function initLiveFirestoreCounter() {
+    function initLiveVisitorCounter() {
         const tickerContainer = document.getElementById('liveEcosystemTicker');
         
-        // Safety Step 1: Wait for HTML template inject layout context to finish
+        // Safety Step 1: Wait for HTML template layout to finish loading
         if (!tickerContainer) {
-            setTimeout(initLiveFirestoreCounter, 50);
+            setTimeout(initLiveVisitorCounter, 50);
             return;
         }
 
@@ -156,37 +155,47 @@
             tickerContainer.innerHTML = generatedHTML;
         }
 
-        // Safety Step 2: If the global Firebase object isn't fully ready in the window yet, wait for it!
+        // Safety Step 2: Wait for global Firebase object to finish initialization
         if (typeof firebase === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
-            console.log("Metrics engine waiting for active Firebase connection handshake...");
-            setTimeout(initLiveFirestoreCounter, 100);
+            setTimeout(initLiveVisitorCounter, 100);
             return;
         }
 
         try {
             const db = firebase.firestore();
-            
-            // 📡 LIVE REAL-TIME STREAM CONNECTOR
-            db.collection('users').onSnapshot((snapshot) => {
-                const realLiveUserCount = snapshot.size; 
+            // Target a specific, single metric document in your database
+            const counterDocRef = db.collection('metrics').doc('visitor_counter');
+
+            // 🚀 STEP A: Increment the global website view counter by +1 instantly on page load
+            // uses fieldvalue.increment so multiple users loading simultaneously won't clash
+            counterDocRef.set({
+                total_views: firebase.firestore.FieldValue.increment(1)
+            }, { merge: true }).catch(err => console.warn("Visitor hit increment paused:", err));
+
+            // 📡 STEP B: Listen to that exact single number and feed it directly into your ticker layout
+            counterDocRef.onSnapshot((doc) => {
+                let realCloudHits = 0;
                 
-                // Match your text display alignment here (e.g., use 50412 if you state 50k in the text)
-                const absoluteTotalFootprint = 70412 + realLiveUserCount;
+                if (doc.exists && doc.data().total_views) {
+                    realCloudHits = doc.data().total_views;
+                }
+                
+                // Balance math: Add your massive 50,000 legacy footprint offset to the real hits
+                const absoluteTotalFootprint = 70412 + realCloudHits;
                 
                 updateTickerDisplay(absoluteTotalFootprint);
-                console.log(`Live metric stream synced. Registered: ${realLiveUserCount} Node Total: ${absoluteTotalFootprint}`);
+                console.log(`Global visitor web hits updated. Cloud Hits: ${realCloudHits} Ticker: ${absoluteTotalFootprint}`);
             }, (error) => {
-                console.error("Firestore metrics stream blocked by security rules or connection drop:", error);
-                // Hard absolute fallback to ensure counter NEVER displays blank dashes or 0
-                updateTickerDisplay(70412);
+                console.error("Firestore stream dropped:", error);
+                updateTickerDisplay(70412); // Safe structural fallback
             });
 
         } catch (err) {
-            console.error("Internal loop error inside metrics engine:", err);
+            console.error("Metrics loop error:", err);
             updateTickerDisplay(70412);
         }
     }
 
     // Launch connection pipeline safely
-    initLiveFirestoreCounter();
+    initLiveVisitorCounter();
 </script>
