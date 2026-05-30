@@ -181,4 +181,38 @@
         }
         initHeaderAuth();
     })();
+
+    (function() {
+        function checkAndRenderHeader() {
+            if (typeof firebase !== 'undefined' && firebase.auth) {
+                // We attach the listener globally to capture live updates
+                firebase.auth().onAuthStateChanged((user) => {
+                    const navContainer = document.getElementById('header-nav-container');
+                    
+                    // If the includeHTML function hasn't finished rendering the bar yet, try again
+                    if (!navContainer) {
+                        setTimeout(checkAndRenderHeader, 50);
+                        return;
+                    }
+
+                    if (user) {
+                        const shortEmail = user.email.split('@')[0]; 
+                        navContainer.innerHTML = `
+                            <span class="nav-user-greeting">👋 Hi, ${shortEmail}</span>
+                            <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
+                        `;
+                    } else {
+                        navContainer.innerHTML = `
+                            <a href="account.html" class="nav-link account-btn">👤 Account</a>
+                        `;
+                    }
+                });
+            } else {
+                setTimeout(checkAndRenderHeader, 100);
+            }
+        }
+        
+        // Execute loop safely
+        checkAndRenderHeader();
+    })();
 </script>
