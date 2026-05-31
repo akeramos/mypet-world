@@ -54,20 +54,21 @@
                 <p style="font-size: 1.1rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
                 <p style="font-size: 1.1rem; color: #94a3b8; margin: 8px 0; line-height: 1.7;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
                 
-              <div style="margin-top: 14px; margin-bottom: 10px;">
-                  <a href="petowner/pet-profile.html" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-decoration: none; font-family: 'Lexend', sans-serif; transition: all 0.2s ease;">
-                      <span>➕</span> Add Pet
-                  </a>
-              </div>
-              
+                <div style="margin-top: 14px; margin-bottom: 10px;">
+                    <button onclick="injectNewPetForm()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; transition: all 0.2s ease; border:none; cursor:pointer;">
+                        <span>➕</span> Add Pet
+                    </button>
+                </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px;">
                     <h1 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0;">Dashboard</h1>
-                    
                     <button id="dash-logout-btn" class="btn-danger" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; cursor: pointer; transition: all 0.2s ease;">
-                        Sign Out
+                        <span>🚪</span> Sign Out
                     </button>
                 </div>
             </div>
+
+            <div id="dynamic-pet-forms-container"></div>
             
             <div id="services-grid-placeholder"></div>
             <div id="services2-grid-placeholder"></div>
@@ -90,52 +91,121 @@
         
         const auth = firebase.auth();
         const db = firebase.firestore();
+        let currentUserId = null;
 
-        // 🔒 Security Guard Listener: Route logic tracking setup
         auth.onAuthStateChanged(async (user) => {
             if (!user) {
                 window.location.href = "account.html";
                 return;
             }
+            currentUserId = user.uid;
 
             try {
                 const userDoc = await db.collection("users").doc(user.uid).get();
                 if (userDoc.exists) {
                     const userData = userDoc.data();
-                    
-                    const rawUsername = userData.username || userData.displayName || "Pet Owner";
-                    const rawEmail = userData.email || user.email;
-                    const rawRole = userData.profileType || userData.profile_type || "pet_owner";
-                    const cleanRoleDisplay = rawRole.replace('_', ' ').replace('-', ' ').toUpperCase();
-                    
-                    if (document.getElementById('dash-username')) {
-                        document.getElementById('dash-username').innerText = rawUsername;
-                    }
-                    if (document.getElementById('dash-email')) {
-                        document.getElementById('dash-email').innerText = rawEmail;
-                    }
-                    if (document.getElementById('dash-role')) {
-                        document.getElementById('dash-role').innerText = cleanRoleDisplay;
-                    }
+                    if (document.getElementById('dash-username')) document.getElementById('dash-username').innerText = userData.username || "Pet Owner";
+                    if (document.getElementById('dash-email')) document.getElementById('dash-email').innerText = userData.email || user.email;
+                    if (document.getElementById('dash-role')) document.getElementById('dash-role').innerText = (userData.profileType || "PET_OWNER").replace('_', ' ').toUpperCase();
                 }
-            } catch (error) {
-                console.error("Error loading dashboard profile metrics:", error);
-            }
+            } catch (error) { console.error(error); }
         });
 
-        // 🚀 NEW: Click Listener to sign out the user and clean out data cookies
-        document.getElementById('dash-logout-btn').addEventListener('click', async () => {
+        // 🚀 DYNAMIC INJECTION PIPELINE: Fetches the form template, appends it, and sets random Unique ID values
+        async function injectNewPetForm() {
             try {
-                await auth.signOut();
-                // The onAuthStateChanged listener above will automatically kick them to account.html!
-            } catch (error) {
-                alert("Failed to securely log out. Please check your connection.");
-                console.error("Logout Pipeline Error:", error);
+                const response = await fetch('petowner/pet-profile.html');
+                if (!response.ok) return;
+                const formHTML = await response.text();
+
+                const container = document.getElementById('dynamic-pet-forms-container');
+                
+                // Create a temporary layout node element wrapper block
+                const tempWrapper = document.createElement('div');
+                tempWrapper.innerHTML = formHTML;
+                const freshFormElement = tempWrapper.firstElementChild;
+
+                // Auto-generate unique ID specific to this fresh instance copy block path
+                freshFormElement.querySelector('.petUniqueId').value = Math.floor(1000 + Math.random() * 90000);
+
+                // Add submit database interception listener specifically to this component row instance
+                freshFormElement.querySelector('.dynamic-pet-submit-form').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if(!currentUserId) return;
+
+                    const petRecord = {
+                        petName: freshFormElement.querySelector('.petName').value,
+                        species: freshFormElement.querySelector('.petSpecies').value,
+                        subspecies: freshFormElement.querySelector('.petSubspecies').value,
+                        age: freshFormElement.querySelector('.petAge').value || "N/A",
+                        gender: freshFormElement.querySelector('.petGender').value,
+                        uniqueID: freshFormElement.querySelector('.petUniqueId').value,
+                        vaccination: {
+                            type: freshFormElement.querySelector('.vaccineType').value || "None Listed",
+                            administeredDate: freshFormElement.querySelector('.vaccineDate').value || "",
+                            expiryDate: freshFormElement.querySelector('.vaccineExpiry').value || ""
+                        },
+                        healthLogs: [
+                            freshFormElement.querySelector('.healthLog1').value || "",
+                            freshFormElement.querySelector('.healthLog2').value || ""
+                        ],
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+
+                    try {
+                        // Secure nesting structure directly inside Firebase subcollection row paths
+                        await db.collection("users").doc(currentUserId).collection("pets").add(petRecord);
+                        alert(`Success! ${petRecord.petName}'s profile record saved securely!`);
+                        freshFormElement.remove(); // Delete form element node once completely saved down
+                    } catch(err) {
+                        console.error(err);
+                        alert("Database server network drop occurred.");
+                    }
+                });
+
+                // Prepend to top of injection slot area container block view
+                container.insertBefore(freshFormElement, container.firstChild);
+            } catch (error) { console.error("Form expansion pipeline collapsed:", error); }
+        }
+
+        // Shared dynamic event triggers used by loaded sub-components
+        const scheduleSpecs = {
+            dog: "Core Rabies, DHPP (Distemper, Hepatitis, Parvovirus, Parainfluenza). Booster every 3 Years.",
+            cat: "Core FVRCP (Feline Viral Rhinotracheitis, Calicivirus, Panleukopenia) + Rabies. Booster every 3 Years.",
+            rabbit: "Myxomatosis and Rabbit Haemorrhagic Disease (RHDV-1 & RHDV-2). Booster annually.",
+            bird: "Polyomavirus & Psittacosis screen tracks. Consult avian practitioner."
+        };
+
+        function handleSpeciesChange(selectEl) {
+            const formInstance = selectEl.closest('.pet-profile-form-instance');
+            const banner = formInstance.querySelector('.vaccineInfoBanner');
+            const txt = formInstance.querySelector('.vaccineRecommendationText');
+            if(scheduleSpecs[selectEl.value]) {
+                txt.innerText = scheduleSpecs[selectEl.value];
+                banner.style.display = "block";
+                // Trigger date calculations recount check step in case user filled it out out of order
+                handleDateChange(formInstance.querySelector('.vaccineDate'));
             }
+        }
+
+        function handleDateChange(dateInputEl) {
+            if(!dateInputEl.value) return;
+            const formInstance = dateInputEl.closest('.pet-profile-form-instance');
+            const species = formInstance.querySelector('.petSpecies').value;
+            const expiryInput = formInstance.querySelector('.vaccineExpiry');
+
+            const adminDate = new Date(dateInputEl.value);
+            const gapYears = (species === 'rabbit') ? 1 : 3;
+            adminDate.setFullYear(adminDate.getFullYear() + gapYears);
+            expiryInput.value = adminDate.toISOString().split('T')[0];
+        }
+
+        document.getElementById('dash-logout-btn').addEventListener('click', async () => {
+            try { await auth.signOut(); } catch (error) { console.error(error); }
         });
       
+        // Particle Background Logic
         let mouse = { x: null, y: null, radius: 250 };
-
         function initBackgroundOrganicPulse() {
             const canvas = document.getElementById('neuralCanvas');
             if (!canvas) return;
@@ -145,14 +215,7 @@
             function resize() {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                if (particles.length === 0) {
-                    init();
-                } else {
-                    particles.forEach(p => {
-                        if (p.x > canvas.width) p.x = Math.random() * canvas.width;
-                        if (p.y > canvas.height) p.y = Math.random() * canvas.height;
-                    });
-                }
+                if (particles.length === 0) { init(); }
             }
 
             class Particle {
@@ -166,7 +229,6 @@
                     this.rotationSpeed = (Math.random() - 0.5) * 0.005;
                     this.opacity = Math.random() * 0.4 + 0.2;
                 }
-
                 draw() {
                     ctx.save();
                     ctx.translate(this.x, this.y);
@@ -186,7 +248,6 @@
                     ctx.stroke();
                     ctx.restore();
                 }
-
                 update() {
                     this.x += this.vx;
                     this.y += this.vy;
@@ -221,17 +282,9 @@
                 });
                 requestAnimationFrame(animate);
             }
-
             window.addEventListener('resize', resize);
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX + window.scrollX;
-                mouse.y = e.clientY + window.scrollY;
-            });
-            window.addEventListener('mouseout', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
-
+            window.addEventListener('mousemove', (e) => { mouse.x = e.clientX + window.scrollX; mouse.y = e.clientY + window.scrollY; });
+            window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
             resize();
             animate();
         }
