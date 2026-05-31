@@ -109,58 +109,95 @@
     </div>
 </div>
 
-<script>
-    (function() {
-        // 🛰️ Verified functional endpoint link
-        const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbyX-qeGntX5NzpFwGN4JrO_S10cwjBO16H9_nRukU0jsx08IP2dTQHJW6O1j4Ti7XQG/exec"; 
+<script type="module">
 
-        function updateTickerDisplay(currentNum) {
-            const tickerContainer = document.getElementById('liveEcosystemTicker');
-            if (!tickerContainer) return;
-            
-            const formattedStr = currentNum.toLocaleString('en-US');
-            let generatedHTML = '';
-            for (let char of formattedStr) {
-                if (char === ',') {
-                    generatedHTML += `<span class="ticker-comma">,</span>`;
-                } else {
-                    generatedHTML += `<span class="ticker-digit"><span>${char}</span></span>`;
-                }
-            }
-            tickerContainer.innerHTML = generatedHTML;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    updateDoc,
+    increment
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
+    authDomain: "mypet-worlds.firebaseapp.com",
+    projectId: "mypet-worlds",
+    storageBucket: "mypet-worlds.firebasestorage.app",
+    messagingSenderId: "223873016606",
+    appId: "1:223873016606:web:b228b11e349e9ee85c9f0f",
+    measurementId: "G-XR07S3PJ2R"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+function updateTickerDisplay(currentNum) {
+    const tickerContainer = document.getElementById('liveEcosystemTicker');
+
+    if (!tickerContainer) return;
+
+    const formattedStr = currentNum.toLocaleString('en-US');
+
+    let generatedHTML = '';
+
+    for (let char of formattedStr) {
+
+        if (char === ',') {
+
+            generatedHTML += `
+                <span class="ticker-comma">,</span>
+            `;
+
+        } else {
+
+            generatedHTML += `
+                <span class="ticker-digit">
+                    <span>${char}</span>
+                </span>
+            `;
+        }
+    }
+
+    tickerContainer.innerHTML = generatedHTML;
+}
+
+async function loadCounter() {
+
+    try {
+
+        const counterRef = doc(db, "stats", "pageViews");
+
+        // Increase by 1 every visit
+        await updateDoc(counterRef, {
+            count: increment(1)
+        });
+
+        // Read latest value
+        const snapshot = await getDoc(counterRef);
+
+        if (snapshot.exists()) {
+
+            const liveCount = snapshot.data().count || 70142;
+
+            updateTickerDisplay(liveCount);
+
+            console.log(
+                "Firestore counter loaded:",
+                liveCount
+            );
         }
 
-        // 🚀 MATCHED CALLBACK NAME FUNCTION EXPLICITLY
-        window.processSheetCounter = function(data) {
-            const liveTotal = data.total_views || 0;
-            if (liveTotal > 0) {
-                updateTickerDisplay(liveTotal);
-                console.log("Database sync finished! Value loaded:", liveTotal);
-            }
-            const scriptNode = document.getElementById('jsonpExecutionScript');
-            if (scriptNode) scriptNode.remove();
-        };
+    } catch (error) {
 
-        // 💥 COPY TARGET BINDINGS DIRECTLY TO EVERY EDGE LAYER
-        try { if (window.parent) window.parent.processSheetCounter = window.processSheetCounter; } catch(e){}
-        try { if (window.top) window.top.processSheetCounter = window.processSheetCounter; } catch(e){}
+        console.error(
+            "Firestore counter error:",
+            error
+        );
+    }
+}
 
-        function fetchLiveCounter() {
-            try {
-                const script = document.createElement('script');
-                script.id = 'jsonpExecutionScript';
-                script.src = GOOGLE_API_URL + "?callback=processSheetCounter&ts=" + new Date().getTime();
-                
-                script.onerror = function() {
-                    console.warn("Handshake timed out. Preserving current static layout baseline.");
-                };
+loadCounter();
 
-                document.body.appendChild(script);
-            } catch (err) {
-                console.error("Pipeline mapping crash context:", err);
-            }
-        }
-
-        fetchLiveCounter();
-    })();
 </script>
