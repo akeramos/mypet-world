@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>  
+    <script src="counter.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
@@ -53,8 +54,7 @@
                 includeHTML('third-column-placeholder', 'thirdColumn.html'),
                 includeHTML('footer-placeholder', 'footer.html')
             ]);
-            
-            // ✨ FIX: Kick off the canvas background loop ONLY after every component is safely rendered
+            loadCounter();
             initBackgroundOrganicPulse();
         });
     </script>
