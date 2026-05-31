@@ -1,86 +1,128 @@
-<div class="glass-card registered-pet-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.25); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 24px; padding: 40px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);">
+<div class="glass-card registered-pet-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.3); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 28px; padding: 32px; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25); font-family: 'Lexend', sans-serif;">
     
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
-        <div>
-          <span style="font-weight: 800; font-size: 1.8rem; color: var(--leaf-green); margin-right: 8px; font-family: 'Lexend', sans-serif;">Companion Name:</span>
-            <h2 class="view-petName" contenteditable="true" style="margin: 0; font-weight: 800; font-size: 1.8rem; color: #fff; border-bottom: 1px dashed transparent; display: inline-block; outline: none;" title="Click to edit name">Loading Name...</h2>
-            <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 0.95rem;">
-                <span class="view-petGender"></span> • <span class="view-petSpecies" style="text-transform: capitalize;"></span> <span class="view-petSubspecies"></span> • <span class="view-petAge"></span> Years Old
-            </p>
-        </div>
+    <div class="digital-license-badge" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1px solid rgba(74, 222, 128, 0.25); border-radius: 20px; padding: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); position: relative; overflow: hidden; margin-bottom: 24px;">
         
-        <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(74, 222, 128, 0.2); padding: 6px 14px; border-radius: 10px; text-align: right;">
-            <span style="font-size: 0.75rem; color: #94a3b8; display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Unique ID</span>
-            <span class="view-petUniqueId" style="color: var(--leaf-green); font-weight: 800; font-family: monospace; font-size: 1.1rem;">------</span>
+        <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(74, 222, 128, 0.08); filter: blur(40px); border-radius: 50%; pointer-events: none;"></div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 12px; margin-bottom: 16px;">
+            <span style="font-size: 0.75rem; font-weight: 800; color: #94a3b8; letter-spacing: 1.5px; text-transform: uppercase;">Mypet-World Ecosystem Matrix</span>
+            <span style="font-size: 0.7rem; background: rgba(74, 222, 128, 0.15); color: var(--leaf-green); padding: 4px 10px; border-radius: 20px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">Digital Health Pass</span>
+        </div>
+
+        <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+            
+            <div style="position: relative; width: 90px; height: 90px; background: rgba(0, 0, 0, 0.4); border: 2px solid var(--leaf-green); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(74, 222, 128, 0.15); overflow: hidden;">
+                <img src="../assets/first.png" alt="Companion Avatar" style="width: 70%; height: 70%; object-fit: contain; opacity: 0.85; filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.3));">
+            </div>
+
+            <div style="flex: 1; min-width: 200px;">
+                <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px;">
+                    <span style="font-size: 0.8rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Name:</span>
+                    <h2 class="view-petName" contenteditable="true" style="margin: 0; font-weight: 800; font-size: 1.5rem; color: #fff; outline: none; border-bottom: 1px dashed transparent; display: inline-block;" title="Click to edit name">Loading Name...</h2>
+                </div>
+                
+                <p style="margin: 0; color: #cbd5e1; font-size: 0.9rem; line-height: 1.5;">
+                    <span style="color: #64748b; font-weight:700; font-size: 0.75rem; text-transform: uppercase;">Identity:</span> 
+                    <span class="view-petGender" style="font-weight: 600;">...</span> • 
+                    <span class="view-petSpecies" style="text-transform: capitalize; font-weight: 600;">...</span> 
+                    (<span class="view-petSubspecies">...</span>) • 
+                    <span class="view-petAge" style="font-weight: 600;">...</span> Yrs Old
+                </p>
+
+                <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size: 0.9rem;">
+                    <span style="color: #64748b; font-weight:700; font-size: 0.75rem; text-transform: uppercase;">Unique ID:</span> 
+                    <span class="view-petUniqueId" style="color: var(--leaf-green); font-family: monospace; font-weight: 800; letter-spacing: 0.5px;">------</span>
+                </p>
+            </div>
+        </div>
+
+        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="color: #64748b; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Ecosystem Status:</span>
+                <span class="view-passportStatus" style="font-size: 0.8rem; font-weight: 800; color: #4ade80;">✅ SECURE RECORD</span>
+            </div>
+            <div style="font-size: 0.8rem; color: #cbd5e1;">
+                <span style="color: #94a3b8; font-weight: 600;">Next Priority Booster Due:</span> 
+                <span class="view-passportMasterExpiry" style="color: #f87171; font-weight: 800; background: rgba(248, 113, 113, 0.1); padding: 2px 8px; border-radius: 6px; margin-left: 4px;">--/--/----</span>
+            </div>
         </div>
     </div>
 
-    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.06); margin: 24px 0;">
-
-    <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
         
         <div>
-            <h3 style="color: var(--leaf-green); font-size: 1.1rem; margin-top: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">
-                <span>Vaccination Passport</span>
-            </h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="color: var(--leaf-green); font-size: 1.05rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">📜 Passport Immunization Ledger</h3>
+                <button onclick="toggleBoosterForm(this)" style="background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); color: var(--leaf-green); padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; font-family: 'Lexend', sans-serif; transition: all 0.2s;">
+                    ➕ Record Booster Shot
+                </button>
+            </div>
             
-            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 10px;">
                 </div>
 
-            <button onclick="toggleBoosterForm(this)" style="background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); color: var(--leaf-green); padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: 'Lexend', sans-serif;">
-                ➕ Record Vaccination
-            </button>
-
-            <div class="booster-form-slot" style="display: none; margin-top: 12px; padding: 20px; background: rgba(2, 6, 23, 0.4); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); font-family: 'Lexend', sans-serif;">
-                <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <span style="font-size: 0.85rem; color: var(--leaf-green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Log New Booster Shot</span>
-                    
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                        <input type="text" class="newVaccineType" placeholder="Vaccine Name (e.g. Core Feline 4-Way)" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
-                        <input type="text" class="newVaccineLabel" placeholder="Brand Label (e.g. PureVax Feline 4)" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
-                    </div>
-            
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
-                        <input type="text" class="newVaccineSerial" placeholder="Serial / Batch No." style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
-                        <input type="text" class="newVaccineVet" placeholder="Veterinarian Name" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
-                        <input type="text" class="newVaccineMvc" placeholder="Vet MVC No." style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
-                    </div>
-            
-                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 8px 14px; border-radius: 8px;">
-                            <label style="font-size: 0.75rem; color: #94a3b8; white-space: nowrap;">Admin Date:</label>
-                            <input type="date" class="newVaccineDate" style="background: transparent; border: none; color: white; font-size: 0.85rem; outline: none; cursor: pointer; width: 100%;">
+            <div class="booster-form-slot" style="display: none; margin-top: 16px; padding: 24px; background: rgba(15, 23, 42, 0.5); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <span style="font-size: 0.85rem; color: var(--leaf-green); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+                        <span>💉</span> Log New Booster Shot
+                    </span>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Type of Vaccination</label>
+                            <input type="text" class="newVaccineType" placeholder="e.g. Core Feline 4-Way" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
                         </div>
-                        <button onclick="submitInlineBooster(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Lexend', sans-serif; font-size: 0.85rem; height: 100%;">
-                            Add Booster
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Brand Label / Components</label>
+                            <input type="text" class="newVaccineLabel" placeholder="e.g. PureVax Feline 4" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Serial / Batch No.</label>
+                            <input type="text" class="newVaccineSerial" placeholder="e.g. 64393A" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: monospace;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Veterinarian Name</label>
+                            <input type="text" class="newVaccineVet" placeholder="e.g. Dr Ismasyahir" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Vet MVC No.</label>
+                            <input type="text" class="newVaccineMvc" placeholder="e.g. 1451" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: flex-end;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Date of Administration</label>
+                            <input type="date" class="newVaccineDate" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 11px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; cursor: pointer; width: 100%; box-sizing: border-box;">
+                        </div>
+                        <button onclick="submitInlineBooster(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 12px 28px; border-radius: 10px; font-weight: 800; cursor: pointer; font-family: 'Lexend', sans-serif; font-size: 0.9rem; height: 44px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2);">
+                            💾 Add Booster
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div style="border-top: 1px dashed rgba(255,255,255,0.06); padding-top: 20px;">
-            <h2 style="color: var(--leaf-green); font-size: 1.1rem; margin-top: 0; font-weight: 800;">Health Information</h2>
-            
+        <div style="border-top: 1px dashed rgba(255,255,255,0.06); padding-top: 16px;">
+            <h3 style="color: var(--leaf-green); font-size: 1.05rem; margin-top: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">🏥 Critical Clinical Logs</h3>
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div>
-                    <label style="font-size: 0.8rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 4px;">1. General Health Notes</label>
-                    <div class="view-healthLog1" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 8px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">-</div>
+                    <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 4px;">1. General Health Notes</label>
+                    <div class="view-healthLog1" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 10px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">-</div>
                 </div>
                 <div>
-                    <label style="font-size: 0.8rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 4px;">2. Allergy History</label>
-                    <div class="view-healthLog2" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 8px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">-</div>
+                    <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 4px;">2. Allergy History Matrix</label>
+                    <div class="view-healthLog2" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 10px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">-</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 24px; wrap: wrap; gap: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 20px; flex-wrap: wrap; gap: 16px;">
         <div style="display: flex; gap: 12px;">
-            <button onclick="saveCardEdits(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Lexend', sans-serif; transition: transform 0.2s;">Update Profile</button>
-            <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Remove</button>
+            <button onclick="saveCardEdits(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif;">Update Profile</button>
+            <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Remove</button>
         </div>
-
         <div style="display: flex; gap: 12px;">
             <a href="#" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">🚨 Report Missing</a>
             <a href="#" style="background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.3); color: #cbd5e1; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Report Dead</a>
