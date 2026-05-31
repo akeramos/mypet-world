@@ -110,52 +110,54 @@
 </div>
 
 <script>
-    (function() {
-        // 🛰️ PASTE YOUR BRAND NEW, LATEST /exec URL STRING HERE:
-        const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbypJAB8cS4xu4u1ukq7OM0-vxGYgiFc_yuYTs5Z9VS6DNT6YhE4FRjOMgaa2OHrwRrl/exec"; 
+    // 🛰️ PASTE YOUR BRAND NEW, LATEST /exec URL STRING HERE:
+    const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbypJAB8cS4xu4u1ukq7OM0-vxGYgiFc_yuYTs5Z9VS6DNT6YhE4FRjOMgaa2OHrwRrl/exec"; 
 
-        function updateTickerDisplay(currentNum) {
+    // 🚀 STEP 1: Bind the processor explicitly to BOTH local window frames simultaneously
+    function handleIncomingDigits(data) {
+        const liveTotal = data.total_views || 0;
+        if (liveTotal > 0) {
             const tickerContainer = document.getElementById('liveEcosystemTicker');
-            if (!tickerContainer) return;
-            
-            const formattedStr = currentNum.toLocaleString('en-US');
-            let generatedHTML = '';
-            for (let char of formattedStr) {
-                if (char === ',') {
-                    generatedHTML += `<span class="ticker-comma">,</span>`;
-                } else {
-                    generatedHTML += `<span class="ticker-digit"><span>${char}</span></span>`;
+            if (tickerContainer) {
+                const formattedStr = liveTotal.toLocaleString('en-US');
+                let generatedHTML = '';
+                for (let char of formattedStr) {
+                    if (char === ',') {
+                        generatedHTML += `<span class="ticker-comma">,</span>`;
+                    } else {
+                        generatedHTML += `<span class="ticker-digit"><span>${char}</span></span>`;
+                    }
                 }
-            }
-            tickerContainer.innerHTML = generatedHTML;
-        }
-
-        window.processSheetCounter = function(data) {
-            const liveTotal = data.total_views || 0;
-            if (liveTotal > 0) {
-                updateTickerDisplay(liveTotal);
-                console.log("Database sync finished! Value loaded:", liveTotal);
-            }
-            const scriptNode = document.getElementById('jsonpExecutionScript');
-            if (scriptNode) scriptNode.remove();
-        };
-
-        function fetchLiveCounter() {
-            try {
-                const script = document.createElement('script');
-                script.id = 'jsonpExecutionScript';
-                script.src = GOOGLE_API_URL + "?callback=processSheetCounter&ts=" + new Date().getTime();
-                
-                script.onerror = function() {
-                    console.warn("Handshake timed out. Preserving current static layout baseline.");
-                };
-
-                document.body.appendChild(script);
-            } catch (err) {
-                console.error("Pipeline mapping crash context:", err);
+                tickerContainer.innerHTML = generatedHTML;
+                console.log("GitHub Live Engine synced total:", liveTotal);
             }
         }
+        
+        // Clean up node allocations safely
+        const scriptNode = document.getElementById('jsonpExecutionScript');
+        if (scriptNode) scriptNode.remove();
+    }
 
-        fetchLiveCounter();
+    // Register globally across parents and subframes to block sandbox drops
+    window.processSheetCounter = handleIncomingDigits;
+    if (window.parent) {
+        window.parent.processSheetCounter = handleIncomingDigits;
+    }
+
+    // 🚀 STEP 2: Fire off execution track sequence
+    (function triggerNetworkHandshake() {
+        try {
+            const script = document.createElement('script');
+            script.id = 'jsonpExecutionScript';
+            script.src = GOOGLE_API_URL + "?callback=processSheetCounter&ts=" + new Date().getTime();
+            
+            script.onerror = function() {
+                console.warn("Handshake timed out. Preserving default visual layout baseline.");
+            };
+
+            document.body.appendChild(script);
+        } catch (err) {
+            console.error("Pipeline breakdown:", err);
+        }
     })();
 </script>
