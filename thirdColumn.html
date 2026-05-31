@@ -51,7 +51,15 @@
     }
 
     /* 📈 Dynamic Scroll Up Digit Structures */
-    .digital-ticker { background: #020617; border: 1px solid rgba(74, 222, 128, 0.2); border-radius: 16px; padding: 16px 24px; display: flex; gap: 6px; box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 222, 128, 0.05); }
+    .digital-ticker { 
+        background: #020617; 
+        border: 1px solid rgba(74, 222, 128, 0.2); 
+        border-radius: 16px; 
+        padding: 16px 24px; 
+        display: flex; 
+        gap: 6px; 
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 222, 128, 0.05); 
+    }
     .ticker-digit { 
         font-family: monospace; 
         font-size: 3.5rem; 
@@ -70,13 +78,13 @@
         display: inline-block;
     }
     
+    /* 🔒 FIX: Re-balanced animation parameters to prevent layout flickering */
     .ticker-digit span {
         display: block;
-        animation: scrollDigitUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        transform: translateY(100%);
+        animation: scrollDigitUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
     @keyframes scrollDigitUp {
-        from { transform: translateY(100%); opacity: 0; }
+        from { transform: translateY(40px); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
     }
     
@@ -92,7 +100,7 @@
 <div class="metric-showcase-container">
     <div class="metric-info-side">
         <h3>Our Trusted Ecosystem is Moving Forward!</h3>
-        <p> Join our robust Mypet-world community! We explicitly customized our care to serve pets better! 
+        <p>Join our robust Mypet-world community! We explicitly customized our care to serve pets better! 
           Our footprint reaches 50,000+ active users within Southeast Asia across  
           <span class="highlight-compliance">Malaysia, Thailand, Vietnam and Indonesia!</span>
         </p>
@@ -104,7 +112,12 @@
             Global Active Footprint
         </div>
         <div class="digital-ticker" id="liveEcosystemTicker">
-            <span class="ticker-digit"><span>7</span></span><span class="ticker-digit"><span>0</span></span><span class="ticker-comma">,</span><span class="ticker-digit"><span>4</span></span><span class="ticker-digit"><span>1</span></span><span class="ticker-digit"><span>2</span></span>
+            <span class="ticker-digit"><span>7</span></span>
+            <span class="ticker-digit"><span>0</span></span>
+            <span class="ticker-comma">,</span>
+            <span class="ticker-digit"><span>1</span></span>
+            <span class="ticker-digit"><span>4</span></span>
+            <span class="ticker-digit"><span>2</span></span>
         </div>
     </div>
 </div>
