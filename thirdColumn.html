@@ -108,6 +108,7 @@
         </div>
     </div>
 </div>
+
 <script>
     (function() {
         // 🛰️ Verified functional endpoint link
@@ -129,9 +130,8 @@
             tickerContainer.innerHTML = generatedHTML;
         }
 
-        // 🚀 THE FRAME-PROOF FIX:
-        // Core handler that takes the incoming number matrix and updates the screen
-        function processCounterUpdate(data) {
+        // 🚀 MATCHED CALLBACK NAME FUNCTION EXPLICITLY
+        window.processSheetCounter = function(data) {
             const liveTotal = data.total_views || 0;
             if (liveTotal > 0) {
                 updateTickerDisplay(liveTotal);
@@ -139,12 +139,11 @@
             }
             const scriptNode = document.getElementById('jsonpExecutionScript');
             if (scriptNode) scriptNode.remove();
-        }
+        };
 
-        // 💥 EXPOSE TO EVERY SINGLE WINDOW LAYER SIMULTANEOUSLY
-        window.processSheetCounter = processCounterUpdate;
-        try { if (window.parent) window.parent.processSheetCounter = processCounterUpdate; } catch(e){}
-        try { if (window.top) window.top.processSheetCounter = processCounterUpdate; } catch(e){}
+        // 💥 COPY TARGET BINDINGS DIRECTLY TO EVERY EDGE LAYER
+        try { if (window.parent) window.parent.processSheetCounter = window.processSheetCounter; } catch(e){}
+        try { if (window.top) window.top.processSheetCounter = window.processSheetCounter; } catch(e){}
 
         function fetchLiveCounter() {
             try {
