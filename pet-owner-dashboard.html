@@ -1,13 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Pet Owner Dashboard</title>
-</head>
-<body>
+<div class="welcome-banner">
+    <h2>Welcome back, <span id="dash-username">Loading...</span>! 🐾</h2>
+    <p>Account Type: <span id="dash-role">Pet Owner</span></p>
+    <p>Registered Email: <span id="dash-email">...</span></p>
+</div>
 
-<h1>Pet Owner Dashboard</h1>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
-<p>Coming Soon</p>
+<script>
+    // Initialize your Firebase configurations
+    const firebaseConfig = {
+        apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
+        authDomain: "mypet-worlds.firebaseapp.com",
+        projectId: "mypet-worlds",
+        storageBucket: "mypet-worlds.firebasestorage.app",
+        messagingSenderId: "223873016606",
+        appId: "1:223873016606:web:b228b11e349e9ee85c9f0f"
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-</body>
-</html>
+    // 🔒 Security Guard: Kick unauthenticated users back to login page
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+            window.location.href = "account.html";
+            return;
+        }
+
+        try {
+            // Pull this exact user's profile details from your Firestore 'users' collection
+            const userDoc = await db.collection("users").doc(user.uid).get();
+            if (userDoc.exists) {
+                const userData = userDoc.data();
+                
+                // Inject the live database information into your dashboard HTML elements
+                document.getElementById('dash-username').innerText = userData.username || "Pet Owner";
+                document.getElementById('dash-email').innerText = userData.email;
+            }
+        } catch (error) {
+            console.error("Error loading dashboard profile metrics:", error);
+        }
+    });
+</script>
