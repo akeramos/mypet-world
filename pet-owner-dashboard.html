@@ -170,11 +170,25 @@
                         if (historyArray.length === 0) {
                             vaccineContainer.innerHTML = `<span style="color: #64748b; font-size: 0.9rem; font-style: italic;">No verified medical vaccine records tracked.</span>`;
                         } else {
+                            // 💉 LOOP VACCINE ARRAYS: Generate separate lines for multi-booster files
+                        const vaccineContainer = cardElement.querySelector('.view-vaccine-list');
+                        vaccineContainer.innerHTML = ""; 
+
+                        const historyArray = petData.vaccinations || [];
+                        let prioritizedExpiry = "No Booster Scheduled";
+
+                        if (historyArray.length === 0) {
+                            vaccineContainer.innerHTML = `<span style="color: #64748b; font-size: 0.9rem; font-style: italic;">No verified medical vaccine records tracked.</span>`;
+                        } else {
+                            // Sort vaccine entries chronologically by expiry date strings so the earliest expiry pops out first
+                            const sortedVaccines = [...historyArray].sort((a, b) => new Date(a.expiry) - new Date(b.expiry));
+                            prioritizedExpiry = sortedVaccines[0].expiry; // Capture the nearest deadline date element string
+
                             historyArray.forEach((vac) => {
                                 const row = document.createElement('div');
-                                row.style.cssText = "background: rgba(2, 6, 23, 0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); margin-bottom: 10px; font-family: 'Lexend', sans-serif;";
+                                row.style.cssText = "background: rgba(2, 6, 23, 0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); font-family: 'Lexend', sans-serif;";
                                 row.innerHTML = `
-                                    <div style="display: flex; justify-content: space-between; align-items: center; wrap: wrap; gap: 8px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                                         <span style="font-weight: 800; color: #fff; font-size: 0.95rem;">🛡️ ${vac.type}</span>
                                         <span style="color: #94a3b8; font-size: 0.8rem;">Administered: <strong>${vac.date}</strong></span>
                                     </div>
@@ -189,6 +203,10 @@
                                 `;
                                 vaccineContainer.appendChild(row);
                             });
+                        }
+
+                        // 🚀 INTERACTIVE SNAPSHOT INJECTIONS: Force priority expiry tracking directly onto your wallet card license footer
+                        cardElement.querySelector('.view-passportMasterExpiry').innerText = prioritizedExpiry;
                         }
 
                         feedContainer.appendChild(cardElement);
