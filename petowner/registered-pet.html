@@ -2,14 +2,15 @@
     
     <div style="display: flex; justify-content: space-between; align-items: flex-start; wrap: wrap; gap: 16px;">
         <div>
+          <span style="font-weight: 800; font-size: 1.8rem; color: var(--leaf-green); margin-right: 8px; font-family: 'Lexend', sans-serif;">Name:</span>
             <h2 class="view-petName" contenteditable="true" style="margin: 0; font-weight: 800; font-size: 1.8rem; color: #fff; border-bottom: 1px dashed transparent; display: inline-block; outline: none;" title="Click to edit name">Loading Name...</h2>
             <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 0.95rem;">
-                <span class="view-petGender">...</span> • <span class="view-petSpecies" style="text-transform: capitalize;">...</span> (<span class="view-petSubspecies">...</span>) • <span class="view-petAge">...</span> Yrs Old
+                <span class="view-petGender"></span> • <span class="view-petSpecies" style="text-transform: capitalize;"></span> <span class="view-petSubspecies"></span> • <span class="view-petAge"></span> Years Old
             </p>
         </div>
         
         <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(74, 222, 128, 0.2); padding: 6px 14px; border-radius: 10px; text-align: right;">
-            <span style="font-size: 0.75rem; color: #94a3b8; display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">System ID</span>
+            <span style="font-size: 0.75rem; color: #94a3b8; display: block; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Unique ID</span>
             <span class="view-petUniqueId" style="color: var(--leaf-green); font-weight: 800; font-family: monospace; font-size: 1.1rem;">------</span>
         </div>
     </div>
@@ -20,14 +21,14 @@
         
         <div>
             <h3 style="color: var(--leaf-green); font-size: 1.1rem; margin-top: 0; font-weight: 800; display: flex; align-items: center; gap: 6px;">
-                <span> Ferdinand Vaccine Passport 💉</span>
+                <span>Vaccination Passport</span>
             </h3>
             
             <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
                 </div>
 
             <button onclick="toggleBoosterForm(this)" style="background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); color: var(--leaf-green); padding: 6px 12px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: 'Lexend', sans-serif;">
-                ➕ Record Booster Shot
+                ➕ Record Shot
             </button>
 
             <div class="booster-form-slot" style="display: none; margin-top: 12px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.04);">
@@ -42,16 +43,16 @@
         </div>
 
         <div style="border-top: 1px dashed rgba(255,255,255,0.06); padding-top: 20px;">
-            <h3 style="color: var(--leaf-green); font-size: 1.1rem; margin-top: 0; font-weight: 800;">🏥 Active Medical Logs</h3>
+            <h2 style="color: var(--leaf-green); font-size: 1.1rem; margin-top: 0; font-weight: 800;">Health Information</h2>
             
             <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div>
                     <label style="font-size: 0.8rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 4px;">1. General Health Notes</label>
-                    <div class="view-healthLog1" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 8px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">...</div>
+                    <div class="view-healthLog1" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 8px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">-</div>
                 </div>
                 <div>
                     <label style="font-size: 0.8rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 4px;">2. Allergy History</label>
-                    <div class="view-healthLog2" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 8px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">...</div>
+                    <div class="view-healthLog2" contenteditable="true" style="background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.04); padding: 12px; border-radius: 8px; color: #cbd5e1; font-size: 0.9rem; outline: none; min-height: 20px;">-</div>
                 </div>
             </div>
         </div>
@@ -59,13 +60,13 @@
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 24px; wrap: wrap; gap: 16px;">
         <div style="display: flex; gap: 12px;">
-            <button onclick="saveCardEdits(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Lexend', sans-serif; transition: transform 0.2s;">💾 Update Profile</button>
+            <button onclick="saveCardEdits(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Lexend', sans-serif; transition: transform 0.2s;">Update Profile</button>
             <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Remove</button>
         </div>
 
         <div style="display: flex; gap: 12px;">
             <a href="#" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">🚨 Report Missing</a>
-            <a href="#" style="background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.3); color: #cbd5e1; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">⚱️ Report Dead</a>
+            <a href="#" style="background: rgba(148, 163, 184, 0.1); border: 1px solid rgba(148, 163, 184, 0.3); color: #cbd5e1; padding: 8px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Report Dead</a>
         </div>
     </div>
 </div>
