@@ -33,10 +33,9 @@
                 includeHTML('footer-placeholder', 'footer.html')
             ]);
             
-            // 🚀 THE TIMING FIX: Tell any child elements that the layout containers are ready!
+            // Tell any child elements that the layout containers are ready!
             window.dispatchEvent(new Event('ComponentsLoaded'));
             
-            // 🚀 THE GHOST FIX: Removed the non-existent loadCounter() call so code doesn't crash!
             initBackgroundOrganicPulse();
         });
     </script>
@@ -48,17 +47,29 @@
     <div id="header-placeholder"></div>
     
     <div class="content-container">
-        <main>
-            <div class="glass-card welcome-banner" style="margin-bottom: 32px; text-align: left;">
+        <main class="auth-main" style="max-width: 1200px; margin: 0 auto; width: 100%; justify-content: flex-start; min-height: auto;">
+            
+            <div class="glass-card welcome-banner" style="margin-bottom: 32px; text-align: left; width: 100%; box-sizing: border-box;">
                 <h2 style="margin-top:0;">Welcome back, <span id="dash-username" style="color: var(--leaf-green);">Loading...</span>! 🐾</h2>
                 <p style="margin: 6px 0; color: #cbd5e1;"><strong>Account Type:</strong> <span id="dash-role">Pet Owner</span></p>
                 <p style="margin: 6px 0; color: #cbd5e1;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
                 <h1 style="font-size: 1.8rem; font-weight: 800; margin-top: 20px; margin-bottom: 0; letter-spacing: -0.5px;">Pet Owner Dashboard Portal</h1>
             </div>
 
-            <div id="services-grid-placeholder"></div>
-            <div id="services2-grid-placeholder"></div>
-            <div id="third-column-placeholder"></div>
+            <div class="dashboard-section-block" style="width: 100%; margin-bottom: 32px;">
+                <h3 style="color: var(--leaf-green); text-align: left; margin-bottom: 16px;">Core Pet Services</h3>
+                <div id="services-grid-placeholder"></div>
+            </div>
+
+            <div class="dashboard-section-block" style="width: 100%; margin-bottom: 32px;">
+                <h3 style="color: var(--leaf-green); text-align: left; margin-bottom: 16px;">Community Features</h3>
+                <div id="services2-grid-placeholder"></div>
+            </div>
+
+            <div class="dashboard-section-block" style="width: 100%; margin-bottom: 32px;">
+                <div id="third-column-placeholder"></div>
+            </div>
+            
         </main>        
     </div>
 
@@ -79,7 +90,7 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // 🔒 Security Guard: Kick unauthenticated users back to login page
+        // Security Guard: Kick unauthenticated users back to login page
         auth.onAuthStateChanged(async (user) => {
             if (!user) {
                 window.location.href = "account.html";
@@ -92,9 +103,20 @@
                 if (userDoc.exists) {
                     const userData = userDoc.data();
                     
-                    // Populate data tags safely
-                    document.getElementById('dash-username').innerText = userData.username || "Pet Owner";
-                    document.getElementById('dash-email').innerText = userData.email;
+                    const rawUsername = userData.username || userData.displayName || "Pet Owner";
+                    const rawEmail = userData.email || user.email;
+                    const rawRole = userData.profileType || userData.profile_type || "pet_owner";
+                    const cleanRoleDisplay = rawRole.replace('_', ' ').replace('-', ' ').toUpperCase();
+                    
+                    if (document.getElementById('dash-username')) {
+                        document.getElementById('dash-username').innerText = rawUsername;
+                    }
+                    if (document.getElementById('dash-email')) {
+                        document.getElementById('dash-email').innerText = rawEmail;
+                    }
+                    if (document.getElementById('dash-role')) {
+                        document.getElementById('dash-role').innerText = cleanRoleDisplay;
+                    }
                 }
             } catch (error) {
                 console.error("Error loading dashboard profile metrics:", error);
