@@ -43,20 +43,19 @@
     <div class="counter-meter-box">
         <div class="counter-label">Global Active Footprint</div>
         <div class="digital-ticker" id="liveEcosystemTicker">
-            <span class="ticker-digit">7</span><span class="ticker-digit">0</span><span class="ticker-comma">,</span><span class="ticker-digit">4</span><span class="ticker-digit">1</span><span class="ticker-digit">2</span>
+            <span class="ticker-digit">-</span><span class="ticker-digit">-</span><span class="ticker-comma">,</span><span class="ticker-digit">-</span><span class="ticker-digit">-</span><span class="ticker-digit">-</span>
         </div>
     </div>
 </div>
 
 <script>
-    (function() {
-        const BASE_NUMBER = 70412;
-        // 🛰️ Connected directly to your live, unlocked Google Apps Script API endpoint
+    (async function() {
+        // 🛰️ Targets your exact web endpoint layout
         const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbwyx7oaE-DrP6tsMhkAoN05Ix60N_q8gHKQCvWZ5fg421kMZ3m0O5YHD6snX-OlKmgNDg/exec"; 
-        
+
         function updateTickerDisplay(currentNum) {
             const tickerContainer = document.getElementById('liveEcosystemTicker');
-            if (!tickerContainer) return false;
+            if (!tickerContainer) return;
             
             const formattedStr = currentNum.toLocaleString('en-US');
             let generatedHTML = '';
@@ -68,46 +67,22 @@
                 }
             }
             tickerContainer.innerHTML = generatedHTML;
-            return true;
         }
 
-        // 🚀 GLOBAL CALLBACK HANDLER: Processes incoming data securely through the JSONP pipeline
-        window.handleGoogleCounterResponse = function(data) {
-            const sheetHits = data.total_views || 0;
-            updateTickerDisplay(BASE_NUMBER + sheetHits);
-            console.log(`Synced via Google Sheets! Total Sheet Hits: ${sheetHits} | Total Ticker: ${BASE_NUMBER + sheetHits}`);
+        try {
+            // Modern native browser request that jumps cleanly past CodePen's local restrictions
+            const response = await fetch(GOOGLE_API_URL);
+            const data = await response.json();
             
-            // Cleanup the temporary script node to keep memory completely clear
-            const scriptNode = document.getElementById('jsonpGoogleCounterScript');
-            if (scriptNode) scriptNode.remove();
-        };
-
-        function fetchGoogleMetricsJSONP() {
-            // Instantly render baseline layout safely
-            updateTickerDisplay(BASE_NUMBER);
-
-            try {
-                // Generate a temporary script node to cleanly hop over cross-origin CORS barriers
-                const script = document.createElement('script');
-                script.id = 'jsonpGoogleCounterScript';
-                
-                // Append the custom callback instruction parameter onto your web app endpoint URL
-                script.src = GOOGLE_API_URL + "?callback=handleGoogleCounterResponse&ts=" + new Date().getTime();
-                
-                script.onerror = function() {
-                    console.warn("Google Sheet service handshake delayed. Maintaining baseline dashboard metric parameters.");
-                    updateTickerDisplay(BASE_NUMBER);
-                };
-
-                // Inject the script element to run the database counter increment task
-                document.body.appendChild(script);
-            } catch (err) {
-                console.error("Tracking framework routing initialization exception handled:", err);
-                updateTickerDisplay(BASE_NUMBER);
+            if (data && data.total_views) {
+                // Takes the full 70,000+ number from cell B1 and injects it straight into the boxes
+                updateTickerDisplay(data.total_views);
+                console.log("CodePen loaded views successfully:", data.total_views);
             }
+        } catch (err) {
+            console.error("CodePen fetch blocked or timed out:", err);
+            // Dynamic fail-safe number showing if your browser blocks Google entirely
+            updateTickerDisplay(70412); 
         }
-
-        // Fire the pipeline loop sequence
-        fetchGoogleMetricsJSONP();
     })();
 </script>
