@@ -1,5 +1,5 @@
 <style>
-    /* Third Column Dashboard Section Grid */
+    /* Third Column Dashboard Section Grid Layout Configuration */
     .metric-showcase-container {
         display: flex;
         justify-content: space-between;
@@ -13,81 +13,17 @@
         margin-bottom: 32px;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
         gap: 40px;
+        font-family: 'Lexend', sans-serif;
     }
-
     .metric-info-side { max-width: 60%; }
-
-    .metric-info-side h3 {
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: #ffffff;
-        margin: 0 0 16px 0;
-        letter-spacing: -0.5px;
-    }
-
-    .metric-info-side p {
-        font-size: 1.1rem;
-        color: #94a3b8;
-        line-height: 1.7;
-        margin: 0;
-    }
-
-    .metric-info-side .highlight-compliance {
-        color: #4ade80;
-        font-weight: 600;
-    }
-
-    .counter-meter-box {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: center;
-        min-width: 280px;
-    }
-
-    .counter-label {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #4ade80;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 12px;
-        text-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
-    }
-
-    .digital-ticker {
-        background: #020617;
-        border: 1px solid rgba(74, 222, 128, 0.2);
-        border-radius: 16px;
-        padding: 16px 24px;
-        display: flex;
-        gap: 6px;
-        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 222, 128, 0.05);
-    }
-
-    .ticker-digit {
-        font-family: monospace;
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: #ffffff;
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        padding: 4px 10px;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        min-width: 38px;
-        text-align: center;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .ticker-comma {
-        font-family: monospace;
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: rgba(74, 222, 128, 0.5);
-        align-self: flex-end;
-        padding-bottom: 4px;
-    }
-
+    .metric-info-side h3 { font-size: 1.8rem; font-weight: 800; color: #ffffff; margin: 0 0 16px 0; letter-spacing: -0.5px; }
+    .metric-info-side p { font-size: 1.1rem; color: #94a3b8; line-height: 1.7; margin: 0; }
+    .metric-info-side .highlight-compliance { color: #4ade80; font-weight: 600; }
+    .counter-meter-box { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; min-width: 280px; }
+    .counter-label { font-size: 0.85rem; font-weight: 700; color: #4ade80; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); }
+    .digital-ticker { background: #020617; border: 1px solid rgba(74, 222, 128, 0.2); border-radius: 16px; padding: 16px 24px; display: flex; gap: 6px; box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(74, 222, 128, 0.05); }
+    .ticker-digit { font-family: monospace; font-size: 3.5rem; font-weight: 800; color: #ffffff; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); padding: 4px 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); min-width: 38px; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .ticker-comma { font-family: monospace; font-size: 2.5rem; font-weight: 800; color: rgba(74, 222, 128, 0.5); align-self: flex-end; padding-bottom: 4px; }
     @media (max-width: 992px) {
         .metric-showcase-container { flex-direction: column; align-items: flex-start; padding: 30px; gap: 30px; }
         .metric-info-side { max-width: 100%; }
@@ -107,7 +43,7 @@
     <div class="counter-meter-box">
         <div class="counter-label">Global Active Footprint</div>
         <div class="digital-ticker" id="liveEcosystemTicker">
-            <span class="ticker-digit">-</span><span class="ticker-digit">-</span><span class="ticker-comma">,</span><span class="ticker-digit">-</span><span class="ticker-digit">-</span><span class="ticker-digit">-</span>
+            <span class="ticker-digit">7</span><span class="ticker-digit">0</span><span class="ticker-comma">,</span><span class="ticker-digit">4</span><span class="ticker-digit">1</span><span class="ticker-digit">2</span>
         </div>
     </div>
 </div>
@@ -115,6 +51,8 @@
 <script>
     (function() {
         const BASE_NUMBER = 70412;
+        // 🛰️ Connected directly to your live, unlocked Google Apps Script API endpoint
+        const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbwTj8wfzMDcWTm_LqwsD_5_VqyYvT9OXJ17OsdQ4hPOsZ74znPppfvniuKLBp2aalx01A/exec"; 
         
         function updateTickerDisplay(currentNum) {
             const tickerContainer = document.getElementById('liveEcosystemTicker');
@@ -122,7 +60,6 @@
             
             const formattedStr = currentNum.toLocaleString('en-US');
             let generatedHTML = '';
-
             for (let char of formattedStr) {
                 if (char === ',') {
                     generatedHTML += `<span class="ticker-comma">,</span>`;
@@ -134,52 +71,43 @@
             return true;
         }
 
-        function runCounterEngine() {
-            // 🌟 FORCE IMMEDIATELY: Display baseline number so it NEVER shows empty dashes
-            const rendered = updateTickerDisplay(BASE_NUMBER);
-            if (!rendered) {
-                setTimeout(runCounterEngine, 30);
-                return;
-            }
+        // 🚀 GLOBAL CALLBACK HANDLER: Processes incoming data securely through the JSONP pipeline
+        window.handleGoogleCounterResponse = function(data) {
+            const sheetHits = data.total_views || 0;
+            updateTickerDisplay(BASE_NUMBER + sheetHits);
+            console.log(`Synced via Google Sheets! Total Sheet Hits: ${sheetHits} | Total Ticker: ${BASE_NUMBER + sheetHits}`);
+            
+            // Cleanup the temporary script node to keep memory completely clear
+            const scriptNode = document.getElementById('jsonpGoogleCounterScript');
+            if (scriptNode) scriptNode.remove();
+        };
 
-            // Verify if parent index.html has successfully loaded Firebase scripts
-            if (typeof firebase === 'undefined' || !firebase.apps || firebase.apps.length === 0) {
-                console.warn("Ticker Engine running in static offline mode: Waiting for Firebase core script hooks.");
-                setTimeout(runCounterEngine, 200);
-                return;
-            }
+        function fetchGoogleMetricsJSONP() {
+            // Instantly render baseline layout safely
+            updateTickerDisplay(BASE_NUMBER);
 
             try {
-                const db = firebase.firestore();
-                const counterDocRef = db.collection('metrics').doc('visitor_counter');
-
-                // Log page hit securely using mathematical atomic increments
-                counterDocRef.set({
-                    total_views: firebase.firestore.FieldValue.increment(1)
-                }, { merge: true }).catch(err => {
-                    console.error("Firestore hit increment rejected. Check your console rules tab:", err);
-                });
-
-                // Listen stream
-                counterDocRef.onSnapshot((doc) => {
-                    let cloudHits = 0;
-                    if (doc.exists && doc.data().total_views) {
-                        cloudHits = doc.data().total_views;
-                    }
-                    updateTickerDisplay(BASE_NUMBER + cloudHits);
-                    console.log("Ecosystem database metrics loaded live! Stream sync value:", BASE_NUMBER + cloudHits);
-                }, (streamError) => {
-                    console.error("Firestore database stream reading blocked:", streamError);
+                // Generate a temporary script node to cleanly hop over cross-origin CORS barriers
+                const script = document.createElement('script');
+                script.id = 'jsonpGoogleCounterScript';
+                
+                // Append the custom callback instruction parameter onto your web app endpoint URL
+                script.src = GOOGLE_API_URL + "?callback=handleGoogleCounterResponse&ts=" + new Date().getTime();
+                
+                script.onerror = function() {
+                    console.warn("Google Sheet service handshake delayed. Maintaining baseline dashboard metric parameters.");
                     updateTickerDisplay(BASE_NUMBER);
-                });
+                };
 
-            } catch (globalErr) {
-                console.error("Critical framework error within Firebase initialization sequence:", globalErr);
+                // Inject the script element to run the database counter increment task
+                document.body.appendChild(script);
+            } catch (err) {
+                console.error("Tracking framework routing initialization exception handled:", err);
                 updateTickerDisplay(BASE_NUMBER);
             }
         }
 
-        // Initialize execution sequence loop safely
-        runCounterEngine();
+        // Fire the pipeline loop sequence
+        fetchGoogleMetricsJSONP();
     })();
 </script>
