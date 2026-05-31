@@ -78,10 +78,7 @@
         </main>      
     </div>
 
-    <div id="footer-placeholder"></div>
-
-<script>
-        // 1️⃣ Initialize your Firebase configuration cluster elements
+    <script>
         const firebaseConfig = {
             apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
             authDomain: "mypet-worlds.firebaseapp.com",
@@ -96,12 +93,10 @@
         const db = firebase.firestore();
         
         let currentUserId = null;
-        let activePetsListener = null; // 🚀 Global real-time listener hook pointer
+        let activePetsListener = null;
 
-        // 🔒 2️⃣ Security Guard & Real-Time Engine Setup
         auth.onAuthStateChanged(async (user) => {
             if (!user) {
-                // If they sign out, close the active cloud database connection cleanly
                 if (activePetsListener) activePetsListener();
                 window.location.href = "account.html";
                 return;
@@ -117,24 +112,21 @@
                     if (document.getElementById('dash-role')) document.getElementById('dash-role').innerText = (userData.profileType || "PET_OWNER").replace('_', ' ').toUpperCase();
                 }
 
-                // 🔄 Fire up the automated live data stream loop
                 startLivePetsListener();
 
             } catch (error) { console.error("Error initializing dashboard metadata maps:", error); }
         });
 
-        // ✨ 3️⃣ THE LIVE FEED CONSTRUCTOR: Streams entries straight out of Firestore live
+        // 🔄 RENDERING PIPELINE: Streams clinical data profiles and generates medical history badges
         function startLivePetsListener() {
             if (!currentUserId) return;
 
             const feedContainer = document.getElementById('live-registered-pets-feed');
 
-            // Listen directly to the pets subcollection folder paths
             activePetsListener = db.collection("users").doc(currentUserId).collection("pets")
                 .orderBy("updatedAt", "desc")
                 .onSnapshot(async (snapshot) => {
                     
-                    // Clear the viewport area before redrawing fresh updates
                     feedContainer.innerHTML = "";
 
                     if (snapshot.empty) {
@@ -146,24 +138,20 @@
                         return;
                     }
 
-                    // Download your structural visual registered-pet.html display framework asset card
                     const response = await fetch('petowner/registered-pet.html');
                     if (!response.ok) return;
                     const cardTemplateHTML = await response.text();
 
-                    // Loop through every single animal file object array tracking item found
                     snapshot.forEach((doc) => {
                         const petData = doc.data();
-                        const petId = doc.id; // Internal core doc address identifier token string
+                        const petId = doc.id;
 
                         const cardWrapper = document.createElement('div');
                         cardWrapper.innerHTML = cardTemplateHTML;
                         const cardElement = cardWrapper.firstElementChild;
 
-                        // Embed the document index key code so we can edit/update it directly later
                         cardElement.setAttribute('data-id', petId);
 
-                        // Inject database parameters straight into text nodes placeholders
                         cardElement.querySelector('.view-petName').innerText = petData.petName || "Unnamed";
                         cardElement.querySelector('.view-petGender').innerText = petData.gender || "Unknown";
                         cardElement.querySelector('.view-petSpecies').innerText = petData.species || "Unknown";
@@ -173,7 +161,7 @@
                         cardElement.querySelector('.view-healthLog1').innerText = petData.healthLogs ? petData.healthLogs[0] : "";
                         cardElement.querySelector('.view-healthLog2').innerText = petData.healthLogs ? petData.healthLogs[1] : "";
 
-                        // 💉 LOOP VACCINE ARRAYS: Generate separate lines for multi-booster files
+                        // 💉 RENDERING NEW CLINICAL DETAILS: Generate detailed list nodes for history cards
                         const vaccineContainer = cardElement.querySelector('.view-vaccine-list');
                         vaccineContainer.innerHTML = ""; 
 
@@ -184,16 +172,25 @@
                         } else {
                             historyArray.forEach((vac) => {
                                 const row = document.createElement('div');
-                                row.style.cssText = "display: flex; justify-content: space-between; background: rgba(2, 6, 23, 0.3); padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.02); margin-bottom: 4px;";
+                                row.style.cssText = "background: rgba(2, 6, 23, 0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); margin-bottom: 10px; font-family: 'Lexend', sans-serif;";
                                 row.innerHTML = `
-                                    <span style="font-weight: 600; color: #fff;">🛡️ ${vac.type}</span>
-                                    <span style="color: #94a3b8; font-size: 0.85rem;">Administered: ${vac.date} • <span style="color: #f87171; font-weight:600;">Expires: ${vac.expiry}</span></span>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; wrap: wrap; gap: 8px;">
+                                        <span style="font-weight: 800; color: #fff; font-size: 0.95rem;">🛡️ ${vac.type}</span>
+                                        <span style="color: #94a3b8; font-size: 0.8rem;">Administered: <strong>${vac.date}</strong></span>
+                                    </div>
+                                    <div style="margin-top: 6px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 8px 12px; border-radius: 6px;">
+                                        <strong>Label/Components:</strong> ${vac.label || 'N/A'}<br>
+                                        <strong>Serial/Batch:</strong> <span style="font-family: monospace; color: var(--leaf-green); font-weight:700;">${vac.serialNumber || 'N/A'}</span><br>
+                                        <strong>Veterinarian:</strong> ${vac.vetName || 'N/A'} <span style="color: #64748b; font-size:0.75rem;">(MVC: ${vac.mvcNo || 'N/A'})</span>
+                                    </div>
+                                    <div style="margin-top: 6px; text-align: right; font-size: 0.8rem; color: #f87171; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        ⏳ Expires: ${vac.expiry}
+                                    </div>
                                 `;
                                 vaccineContainer.appendChild(row);
                             });
                         }
 
-                        // Drop the fully constructed asset node element container directly into the live display grid array tracking field wrapper
                         feedContainer.appendChild(cardElement);
                     });
                 }, (error) => {
@@ -201,7 +198,7 @@
                 });
         }
 
-        // ➕ 4️⃣ FORM CREATION PIPELINE: Upgraded with Option 2 Guaranteed unique Short-ID configurations
+        // 💾 FORM SAVING ACTION: Collects your new legal clinical properties on initial setup
         async function injectNewPetForm() {
             try {
                 const response = await fetch('petowner/pet-profile.html');
@@ -213,7 +210,6 @@
                 tempWrapper.innerHTML = formHTML;
                 const freshFormElement = tempWrapper.firstElementChild;
 
-                // 👑 FIRESTORE SHORT-UUID MAKER: Grabs a unique ID snapshot in local memory structure
                 const customRefId = db.collection("users").doc(currentUserId).collection("pets").doc().id;
                 const polishedShortId = customRefId.substring(0, 6).toUpperCase();
                 freshFormElement.querySelector('.petUniqueId').value = polishedShortId;
@@ -223,6 +219,10 @@
                     if(!currentUserId) return;
 
                     const vType = freshFormElement.querySelector('.vaccineType').value;
+                    const vLabel = freshFormElement.querySelector('.vaccineLabel').value;
+                    const vSerial = freshFormElement.querySelector('.vaccineSerial').value;
+                    const vVet = freshFormElement.querySelector('.vaccineVet').value;
+                    const vMvc = freshFormElement.querySelector('.vaccineMvc').value;
                     const vDate = freshFormElement.querySelector('.vaccineDate').value;
                     const vExpiry = freshFormElement.querySelector('.vaccineExpiry').value;
 
@@ -230,6 +230,10 @@
                     if (vType && vDate) {
                         initialVaccines.push({
                             type: vType,
+                            label: vLabel || "N/A",
+                            serialNumber: vSerial || "N/A",
+                            vetName: vVet || "N/A",
+                            mvcNo: vMvc || "N/A",
                             date: vDate,
                             expiry: vExpiry
                         });
@@ -242,7 +246,7 @@
                         age: freshFormElement.querySelector('.petAge').value || "N/A",
                         gender: freshFormElement.querySelector('.petGender').value,
                         uniqueID: polishedShortId,
-                        vaccinations: initialVaccines, // Saved cleanly as a structure list array database map document node tracking row element
+                        vaccinations: initialVaccines,
                         healthLogs: [
                             freshFormElement.querySelector('.healthLog1').value || "",
                             freshFormElement.querySelector('.healthLog2').value || ""
@@ -263,7 +267,69 @@
             } catch (error) { console.error(error); }
         }
 
-        // Shared global helpers used dynamically by nested layout fragments elements instances maps controls items
+        // ➕ RECORD INLINE BOOSTER LOGS: Updates helper mechanics to capture brand, batch numbers, and clinician parameters
+        async function submitInlineBooster(btn) {
+            const card = btn.closest('.registered-pet-card');
+            const petId = card.getAttribute('data-id');
+            if (!currentUserId || !petId) return;
+
+            const typeInput = card.querySelector('.newVaccineType');
+            const dateInput = card.querySelector('.newVaccineDate');
+            
+            // 🚀 GRAB EXTRA INLINE INPUTS: Pull values off our expanded inline view layout panel forms
+            const labelInput = card.querySelector('.newVaccineLabel');
+            const serialInput = card.querySelector('.newVaccineSerial');
+            const vetInput = card.querySelector('.newVaccineVet');
+            const mvcInput = card.querySelector('.newVaccineMvc');
+
+            const type = typeInput.value.trim();
+            const date = dateInput.value;
+
+            if (!type || !date) {
+                alert("Please fill in both the vaccine name and administration date.");
+                return;
+            }
+
+            const speciesText = card.querySelector('.view-petSpecies').innerText.toLowerCase();
+            const adminDate = new Date(date);
+            const gapYears = speciesText.includes('rabbit') ? 1 : 3;
+            adminDate.setFullYear(adminDate.getFullYear() + gapYears);
+            const expiry = adminDate.toISOString().split('T')[0];
+
+            const newVaccineObj = { 
+                type, 
+                label: labelInput ? labelInput.value.trim() || "N/A" : "N/A",
+                serialNumber: serialInput ? serialInput.value.trim() || "N/A" : "N/A",
+                vetName: vetInput ? vetInput.value.trim() || "N/A" : "N/A",
+                mvcNo: mvcInput ? mvcInput.value.trim() || "N/A" : "N/A",
+                date, 
+                expiry 
+            };
+
+            try {
+                const petRef = db.collection("users").doc(currentUserId).collection("pets").doc(petId);
+                
+                await petRef.update({
+                    vaccinations: firebase.firestore.FieldValue.arrayUnion(newVaccineObj),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                typeInput.value = "";
+                dateInput.value = "";
+                if(labelInput) labelInput.value = "";
+                if(serialInput) serialInput.value = "";
+                if(vetInput) vetInput.value = "";
+                if(mvcInput) mvcInput.value = "";
+                
+                card.querySelector('.booster-form-slot').style.display = 'none';
+                alert("Vaccination passport log successfully updated!");
+            } catch (error) {
+                console.error("Error appending booster shot document log:", error);
+                alert("Failed to record vaccination entry.");
+            }
+        }
+
+        // Shared dynamic conversion tools
         const scheduleSpecs = {
             dog: "Core Rabies, DHPP (Distemper, Hepatitis, Parvovirus, Parainfluenza). Booster every 3 Years.",
             cat: "Core FVRCP (Feline Viral Rhinotracheitis, Calicivirus, Panleukopenia) + Rabies. Booster every 3 Years.",
@@ -294,70 +360,17 @@
             expiryInput.value = adminDate.toISOString().split('T')[0];
         }
 
-        document.getElementById('dash-logout-btn').addEventListener('click', async () => {
-            try { await auth.signOut(); } catch (error) { console.error(error); }
-        });
-
-    // 🔄 1️⃣ TOGGLE BOOSTER INPUT VIEW: Opens or closes the mini booster panel
         function toggleBoosterForm(btn) {
             const card = btn.closest('.registered-pet-card');
             const formSlot = card.querySelector('.booster-form-slot');
             formSlot.style.display = (formSlot.style.display === 'none' || formSlot.style.display === '') ? 'block' : 'none';
         }
 
-        // 💉 2️⃣ SUBMIT INLINE BOOSTER: Appends a new vaccination object to the pet's history array
-        async function submitInlineBooster(btn) {
-            const card = btn.closest('.registered-pet-card');
-            const petId = card.getAttribute('data-id');
-            if (!currentUserId || !petId) return;
-
-            const typeInput = card.querySelector('.newVaccineType');
-            const dateInput = card.querySelector('.newVaccineDate');
-
-            const type = typeInput.value.trim();
-            const date = dateInput.value;
-
-            if (!type || !date) {
-                alert("Please fill in both the vaccine name and administration date.");
-                return;
-            }
-
-            // Automatically calculate expiry date based on the species text inside the card
-            const speciesText = card.querySelector('.view-petSpecies').innerText.toLowerCase();
-            const adminDate = new Date(date);
-            const gapYears = speciesText.includes('rabbit') ? 1 : 3;
-            adminDate.setFullYear(adminDate.getFullYear() + gapYears);
-            const expiry = adminDate.toISOString().split('T')[0];
-
-            const newVaccineObj = { type, date, expiry };
-
-            try {
-                const petRef = db.collection("users").doc(currentUserId).collection("pets").doc(petId);
-                
-                // Firestore arrayUnion atomically appends the new object map to your existing array!
-                await petRef.update({
-                    vaccinations: firebase.firestore.FieldValue.arrayUnion(newVaccineObj),
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                // Reset inputs and collapse form panel
-                typeInput.value = "";
-                dateInput.value = "";
-                card.querySelector('.booster-form-slot').style.display = 'none';
-                alert("Vaccination passport log successfully updated!");
-            } catch (error) {
-                console.error("Error appending booster shot document log:", error);
-                alert("Failed to record vaccination entry.");
-            }
-        }
-
-        // 💾 3️⃣ UPDATE PROFILE: Saves inline text edits (Name & Medical Logs) straight back to Firestore
         async function saveCardEdits(btn) {
             const card = btn.closest('.registered-pet-card');
             const petId = card.getAttribute('data-id');
             if (!currentUserId || !petId) return;
 
-            // Grab the edited texts directly off the screen layout grid nodes
             const updatedName = card.querySelector('.view-petName').innerText.trim();
             const log1 = card.querySelector('.view-healthLog1').innerText.trim();
             const log2 = card.querySelector('.view-healthLog2').innerText.trim();
@@ -373,37 +386,32 @@
                     healthLogs: [log1, log2],
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                
                 alert(`Secure registry records updated successfully!`);
             } catch (error) {
-                console.error("Error updating editable string targets parameters:", error);
+                console.error(error);
                 alert("Failed to synchronize updates with the cloud.");
             }
         }
 
-        // 🗑️ 4️⃣ REMOVE PROFILE: Deletes the pet document entirely from the subcollection matrix
         async function deletePetProfile(btn) {
             const card = btn.closest('.registered-pet-card');
             const petId = card.getAttribute('data-id');
             const petName = card.querySelector('.view-petName').innerText;
             if (!currentUserId || !petId) return;
 
-            const securityCheck = confirm(`Are you absolutely sure you want to remove ${petName}'s profile file permanently from your ecosystem account records? This action cannot be undone.`);
+            const securityCheck = confirm(`Are you absolutely sure you want to remove ${petName}'s profile file permanently?`);
             if (!securityCheck) return;
 
             try {
                 await db.collection("users").doc(currentUserId).collection("pets").doc(petId).delete();
-                // Notice we don't need to manually remove the card from the HTML page! 
-                // Our live real-time listener (.onSnapshot) from Step 3 will automatically notice it's gone and vanish it!
                 alert("Profile file deleted safely.");
-            } catch (error) {
-                console.error("Firestore document deletion drop:", error);
-                alert("Failed to delete record.");
-            }
+            } catch (error) { alert("Failed to delete record."); }
         }
 
-    
-        // Particle Ambient Background Logic
+        document.getElementById('dash-logout-btn').addEventListener('click', async () => {
+            try { await auth.signOut(); } catch (error) { console.error(error); }
+        });
+      
         let mouse = { x: null, y: null, radius: 250 };
         function initBackgroundOrganicPulse() {
             const canvas = document.getElementById('neuralCanvas');
@@ -487,5 +495,6 @@
             resize();
             animate();
         }
-    </script></body>
-</html>
+    </script>
+    <div id="footer-placeholder"></div>
+
