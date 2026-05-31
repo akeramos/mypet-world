@@ -20,26 +20,22 @@
 </header>
 
 <style>
-/* --- Header Layout & Glassmorphism Theme Tweak --- */
+    /* --- Header Layout & Glassmorphic Tweak --- */
     .pet-header {
         position: relative;
-        z-index: 9999;       /* Keeps header above your background leaf canvas */
-        flex-shrink: 0;      /* Prevents flex layouts from crushing the header height */
+        z-index: 9999;
+        flex-shrink: 0;
         padding: 15px 40px; 
-        
-        /* Dark, deep glassmorphic bar matching your canvas theme */
         background: rgba(2, 6, 23, 0.4); 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        
         color: white;
         overflow: hidden;
         font-family: 'Lexend', system-ui, -apple-system, sans-serif;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
     }
     
-    /* --- The Layout Core --- */
     .header-content {
         position: relative;
         z-index: 2;
@@ -50,7 +46,6 @@
         margin: 0 auto;
     }
     
-    /* Brand styling container */
     .brand-container {
         display: flex;
         align-items: center;
@@ -78,7 +73,7 @@
 
     .nav-user-greeting {
         font-size: 0.9rem;
-        color: #4ade80; /* Glowing Leaf Green text */
+        color: #4ade80; 
         font-weight: 700;
         margin-right: 8px;
         letter-spacing: -0.3px;
@@ -91,100 +86,115 @@
         gap: 15px;
     }
 
-/* --- Moving Animals Magic --- */
-.animated-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-}
+    /* --- Moving Animals Animation --- */
+    .animated-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
 
-.floating-animal {
-    position: absolute;
-    font-size: 1.6rem;
-    bottom: -50px;
-    opacity: 0.1; 
-    animation: floatUp 14s linear infinite;
-}
+    .floating-animal {
+        position: absolute;
+        font-size: 1.6rem;
+        bottom: -50px;
+        opacity: 0.1; 
+        animation: floatUp 14s linear infinite;
+    }
 
-.floating-animal:nth-child(1) { left: 15%; animation-duration: 11s; animation-delay: 0s; }
-.floating-animal:nth-child(2) { left: 35%; animation-duration: 15s; animation-delay: 3s; }
-.floating-animal:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 1s; }
-.floating-animal:nth-child(4) { left: 70%; animation-duration: 16s; animation-delay: 5s; }
-.floating-animal:nth-child(5) { left: 85%; animation-duration: 10s;  animation-delay: 2s; }
+    .floating-animal:nth-child(1) { left: 15%; animation-duration: 11s; animation-delay: 0s; }
+    .floating-animal:nth-child(2) { left: 35%; animation-duration: 15s; animation-delay: 3s; }
+    .floating-animal:nth-child(3) { left: 50%; animation-duration: 12s; animation-delay: 1s; }
+    .floating-animal:nth-child(4) { left: 70%; animation-duration: 16s; animation-delay: 5s; }
+    .floating-animal:nth-child(5) { left: 85%; animation-duration: 10s;  animation-delay: 2s; }
 
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.15; }
-    90% { opacity: 0.15; }
-    100% { transform: translateY(-180px) rotate(180deg); opacity: 0; }
-}
+    @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.15; }
+        90% { opacity: 0.15; }
+        100% { transform: translateY(-180px) rotate(180deg); opacity: 0; }
+    }
 
-/* --- Navigation Button --- */
-.nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 8px 18px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.95rem;
-    cursor: pointer;
-}
+    /* --- Navigation Button --- */
+    .nav-link {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 8px 18px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.95rem;
+        cursor: pointer;
+    }
 
-.nav-link:hover {
-    background: rgba(74, 222, 128, 0.15); 
-    border-color: #4ade80;                
-    color: #4ade80;                       
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(74, 222, 128, 0.15);
-}
+    .nav-link:hover {
+        background: rgba(74, 222, 128, 0.15); 
+        border-color: #4ade80;                                
+        color: #4ade80;                                       
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(74, 222, 128, 0.15);
+    }
 
-.account-btn {
-    background: rgba(0, 0, 0, 0.3);
-}
+    .account-btn {
+        background: rgba(0, 0, 0, 0.3);
+    }
 </style>
 
 <script>
     (function() {
         function checkAndRenderHeader() {
-            if (typeof firebase !== 'undefined' && firebase.auth) {
-                firebase.auth().onAuthStateChanged((user) => {
+            // Ensure both Auth and Firestore engines are completely initialized before proceeding
+            if (typeof firebase !== 'undefined' && firebase.auth && firebase.firestore) {
+                firebase.auth().onAuthStateChanged(async (user) => {
                     const navContainer = document.getElementById('header-nav-container');
                     
-                    // SELF-CORRECTING FIX: If the async loader hasn't painted the HTML yet, 
-                    // wait 50ms and try running the render engine again.
                     if (!navContainer) {
                         setTimeout(checkAndRenderHeader, 50);
                         return;
                     }
 
-                    if (user) {
-                        // MEMBER STATE: Show their email prefix + a portal link
-                        const shortEmail = user.email.split('@')[0]; 
-                        navContainer.innerHTML = `
-                            <span class="nav-user-greeting">👋 Hi, ${shortEmail}</span>
-                            <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
-                        `;
+                    if (user && user.emailVerified) {
+                        try {
+                            // 🚀 COUPLING FIX: Fetch the database configuration profile record live
+                            const db = firebase.firestore();
+                            const userDoc = await db.collection("users").doc(user.uid).get();
+                            
+                            let displayName = user.email.split('@')[0]; // Fallback string parameter
+                            if (userDoc.exists && userDoc.data().username) {
+                                displayName = userDoc.data().username;
+                            }
+
+                            // Render their actual saved identity profile metrics
+                            navContainer.innerHTML = `
+                                <span class="nav-user-greeting">👋 Hi, ${displayName}</span>
+                                <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
+                            `;
+                        } catch (error) {
+                            console.error("Header identity pull dropped:", error);
+                            // Resilient fallback configuration
+                            const backupName = user.email.split('@')[0];
+                            navContainer.innerHTML = `
+                                <span class="nav-user-greeting">👋 Hi, ${backupName}</span>
+                                <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
+                            `;
+                        }
                     } else {
-                        // GUEST STATE: Fallback to the regular sign-in link
+                        // User session absent or unverified -> Show default login node link
                         navContainer.innerHTML = `
                             <a href="account.html" class="nav-link account-btn">👤 Account</a>
                         `;
                     }
                 });
             } else {
-                // Retry in 100ms if Firebase libraries are still processing network handshake
                 setTimeout(checkAndRenderHeader, 100);
             }
         }
         
-        // Fire the initialization sequence safely
         checkAndRenderHeader();
     })();
 </script>
