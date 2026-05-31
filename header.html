@@ -147,36 +147,43 @@
 
 <script>
     (function() {
+        let authListenerDeclared = false;
+
         function checkAndRenderHeader() {
-            // Ensure both Auth and Firestore engines are completely initialized before proceeding
+            // Confirm both Auth and Firestore engines are ready in global window memory space
             if (typeof firebase !== 'undefined' && firebase.auth && firebase.firestore) {
+                
+                // Prevent creating duplicate session track observer listeners on component re-entries
+                if (authListenerDeclared) return;
+                authListenerDeclared = true;
+
                 firebase.auth().onAuthStateChanged(async (user) => {
                     const navContainer = document.getElementById('header-nav-container');
                     
+                    // 🔄 THE TIMING FAILSAFE: If your async includeHTML method hasn't completed yet, 
+                    // pause for 50 milliseconds and let the rendering queue catch up!
                     if (!navContainer) {
+                        authListenerDeclared = false; // Reset lock flag
                         setTimeout(checkAndRenderHeader, 50);
                         return;
                     }
 
                     if (user && user.emailVerified) {
                         try {
-                            // 🚀 COUPLING FIX: Fetch the database configuration profile record live
                             const db = firebase.firestore();
                             const userDoc = await db.collection("users").doc(user.uid).get();
                             
-                            let displayName = user.email.split('@')[0]; // Fallback string parameter
+                            let displayName = user.email.split('@')[0]; // Default string parameter
                             if (userDoc.exists && userDoc.data().username) {
                                 displayName = userDoc.data().username;
                             }
 
-                            // Render their actual saved identity profile metrics
                             navContainer.innerHTML = `
                                 <span class="nav-user-greeting">👋 Hi, ${displayName}</span>
                                 <a href="account.html" class="nav-link account-btn">🎛️ Portal</a>
                             `;
                         } catch (error) {
-                            console.error("Header identity pull dropped:", error);
-                            // Resilient fallback configuration
+                            console.error("Internal header document pull dropped:", error);
                             const backupName = user.email.split('@')[0];
                             navContainer.innerHTML = `
                                 <span class="nav-user-greeting">👋 Hi, ${backupName}</span>
@@ -184,17 +191,19 @@
                             `;
                         }
                     } else {
-                        // User session absent or unverified -> Show default login node link
+                        // User session absent or unverified -> Render standard access portal button link
                         navContainer.innerHTML = `
                             <a href="account.html" class="nav-link account-btn">👤 Account</a>
                         `;
                     }
                 });
             } else {
+                // Wait for the asynchronous web file downloads to complete processing initialization setup
                 setTimeout(checkAndRenderHeader, 100);
             }
         }
         
+        // 🚀 DUAL TRIGGER: Fires immediately on load and tracks window state
         checkAndRenderHeader();
     })();
 </script>
