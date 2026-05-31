@@ -1,47 +1,61 @@
-<div class="welcome-banner">
-    <h2>Welcome back, <span id="dash-username">Loading...</span>! 🐾</h2>
-    <p>Account Type: <span id="dash-role">Pet Owner</span></p>
-    <p>Registered Email: <span id="dash-email">...</span></p>
-</div>
-
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-<script>
-    // Initialize your Firebase configurations
-    const firebaseConfig = {
-        apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
-        authDomain: "mypet-worlds.firebaseapp.com",
-        projectId: "mypet-worlds",
-        storageBucket: "mypet-worlds.firebasestorage.app",
-        messagingSenderId: "223873016606",
-        appId: "1:223873016606:web:b228b11e349e9ee85c9f0f"
-    };
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Owner Dashboard</title>
     
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
 
-    // 🔒 Security Guard: Kick unauthenticated users back to login page
-    auth.onAuthStateChanged(async (user) => {
-        if (!user) {
-            window.location.href = "account.html";
-            return;
-        }
+    <div class="welcome-banner">
+        <h2>Welcome back, <span id="dash-username">Loading...</span>! 🐾</h2>
+        <p>Account Type: <span id="dash-role">Pet Owner</span></p>
+        <p>Registered Email: <span id="dash-email">...</span></p>
+    </div>
 
-        try {
-            // Pull this exact user's profile details from your Firestore 'users' collection
-            const userDoc = await db.collection("users").doc(user.uid).get();
-            if (userDoc.exists) {
-                const userData = userDoc.data();
-                
-                // Inject the live database information into your dashboard HTML elements
-                document.getElementById('dash-username').innerText = userData.username || "Pet Owner";
-                document.getElementById('dash-email').innerText = userData.email;
+    <h1>Pet Owner Dashboard</h1>
+    <p>Coming Soon</p>
+
+    <script>
+        // Initialize your Firebase configurations
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
+            authDomain: "mypet-worlds.firebaseapp.com",
+            projectId: "mypet-worlds",
+            storageBucket: "mypet-worlds.firebasestorage.app",
+            messagingSenderId: "223873016606",
+            appId: "1:223873016606:web:b228b11e349e9ee85c9f0f"
+        };
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // 🔒 Security Guard: Kick unauthenticated users back to login page
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = "account.html";
+                return;
             }
-        } catch (error) {
-            console.error("Error loading dashboard profile metrics:", error);
-        }
-    });
-</script>
+
+            try {
+                // Pull this exact user's profile details from your Firestore 'users' collection
+                const userDoc = await db.collection("users").doc(user.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    
+                    // Inject the live database information into your dashboard HTML elements
+                    document.getElementById('dash-username').innerText = userData.username || "Pet Owner";
+                    document.getElementById('dash-email').innerText = userData.email;
+                }
+            } catch (error) {
+                console.error("Error loading dashboard profile metrics:", error);
+            }
+        });
+    </script>
+</body>
+</html>
