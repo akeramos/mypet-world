@@ -28,7 +28,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // Cloned exactly from index layout promise map array
             await Promise.all([
                 includeHTML('header-placeholder', 'header.html'),
                 includeHTML('services-grid-placeholder', 'services.html'),
@@ -37,9 +36,7 @@
                 includeHTML('footer-placeholder', 'footer.html')
             ]);
             loadCounter();
-            // Fires your layout completion listener hooks safely
             window.dispatchEvent(new Event('ComponentsLoaded'));
-            
             initBackgroundOrganicPulse();
         });
     </script>
@@ -53,21 +50,28 @@
     <div class="content-container">
         <main>            
             <div class="glass-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);">
-                <h2 style="margin-top:0; font-size: 1.8rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">Welcome back, <span id="dash-username" style="color: #4ade80;  text-transform: Capitalize;"></span>! 🐾</h2>
+                <h2 style="margin-top:0; font-size: 1.8rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">Welcome <span id="dash-username" style="color: #4ade80; text-transform: capitalize;"></span>! 🐾</h2>
                 <p style="font-size: 1.1rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
                 <p style="font-size: 1.1rem; color: #94a3b8; margin: 8px 0; line-height: 1.7;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
-                <h1 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-top: 24px; margin-bottom: 0;">Pet Owner Dashboard Workspace</h1>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px;">
+                    <h1 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0;">Dashboard</h1>
+                    
+                    <button id="dash-logout-btn" class="btn-danger" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; cursor: pointer; transition: all 0.2s ease;">
+                        Sign Out
+                    </button>
+                </div>
             </div>
+            
             <div id="services-grid-placeholder"></div>
             <div id="services2-grid-placeholder"></div>
             <div id="third-column-placeholder"></div>
-        </main>     
+        </main>      
     </div>
 
     <div id="footer-placeholder"></div>
 
     <script>
-        // Initialize your Firebase configurations
         const firebaseConfig = {
             apiKey: "AIzaSyAwbT7Tb1uh7XySfPjqvpit-A-OpuZ9wrw",
             authDomain: "mypet-worlds.firebaseapp.com",
@@ -81,7 +85,7 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // 🔒 Security Guard: Kick unauthenticated users back to login page
+        // 🔒 Security Guard Listener: Route logic tracking setup
         auth.onAuthStateChanged(async (user) => {
             if (!user) {
                 window.location.href = "account.html";
@@ -112,8 +116,18 @@
                 console.error("Error loading dashboard profile metrics:", error);
             }
         });
+
+        // 🚀 NEW: Click Listener to sign out the user and clean out data cookies
+        document.getElementById('dash-logout-btn').addEventListener('click', async () => {
+            try {
+                await auth.signOut();
+                // The onAuthStateChanged listener above will automatically kick them to account.html!
+            } catch (error) {
+                alert("Failed to securely log out. Please check your connection.");
+                console.error("Logout Pipeline Error:", error);
+            }
+        });
       
-        // Particle Background Logic Cloned Exactly from index
         let mouse = { x: null, y: null, radius: 250 };
 
         function initBackgroundOrganicPulse() {
@@ -216,3 +230,5 @@
             animate();
         }
     </script>
+</body>
+</html>
