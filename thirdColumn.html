@@ -108,10 +108,9 @@
         </div>
     </div>
 </div>
-
 <script>
     (function() {
-        // 🛰️ Updated to your working URL link setup
+        // 🛰️ Verified functional endpoint link
         const GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbyX-qeGntX5NzpFwGN4JrO_S10cwjBO16H9_nRukU0jsx08IP2dTQHJW6O1j4Ti7XQG/exec"; 
 
         function updateTickerDisplay(currentNum) {
@@ -130,8 +129,9 @@
             tickerContainer.innerHTML = generatedHTML;
         }
 
-        // Global response routing function
-        window.processSheetCounter = function(data) {
+        // 🚀 THE FRAME-PROOFING EXTENSION:
+        // Core handler that takes the incoming number matrix and updates the screen
+        function processCounterUpdate(data) {
             const liveTotal = data.total_views || 0;
             if (liveTotal > 0) {
                 updateTickerDisplay(liveTotal);
@@ -139,7 +139,12 @@
             }
             const scriptNode = document.getElementById('jsonpExecutionScript');
             if (scriptNode) scriptNode.remove();
-        };
+        }
+
+        // Expose the callback globally across every possible browser window frame level
+        window.processSheetCounter = processCounterUpdate;
+        if (window.parent) window.parent.processSheetCounter = processCounterUpdate;
+        if (window.top) window.top.processSheetCounter = processCounterUpdate;
 
         function fetchLiveCounter() {
             try {
