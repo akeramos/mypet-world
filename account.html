@@ -124,19 +124,29 @@
 
         // Firebase Operations Actions
         async function handleSignIn(e) {
-          e.preventDefault();
-          const email = document.getElementById('login-email').value;        
-          const pass = document.getElementById('login-pass').value;          
-          try { await auth.signInWithEmailAndPassword(email, pass); } 
-          const user = auth.currentUser;
-            if (!user.emailVerified) {
-                await auth.signOut();
-                document.getElementById('error-message')
-                    .innerText =
+            e.preventDefault();
+            const email =
+                document.getElementById('login-email').value;
+            const pass =
+                document.getElementById('login-pass').value;
+            try {
+                await auth.signInWithEmailAndPassword(
+                    email,
+                    pass
+                );
+                const user = auth.currentUser;
+                if (!user.emailVerified) {                
+                  await auth.signOut();
+                  document.getElementById('error-message')
+                    .innerText =                    
                     "Please verify your email before signing in.";
-                return;
+                  await auth.signOut();
+                  return;
+                }
+            } catch (err) {
+                document.getElementById('error-message')
+                    .innerText = err.message;
             }
-            catch (err) { document.getElementById('error-message').innerText = err.message; }
         }
 
         async function handleSignUp(e) {
@@ -176,7 +186,12 @@
                         createdAt:
                             firebase.firestore.FieldValue.serverTimestamp()
                     });
-              window.location.reload();
+              alert(
+                "Account created successfully. Please verify your email before signing in."
+              );
+              await auth.signOut();
+              showForm('signin');
+
             } catch (err) {
                 document.getElementById('error-message')
                     .innerText = err.message;
@@ -281,12 +296,12 @@
 
                         <div class="input-group">
                             <label>Password</label>
-                            <input type="password" id="register-pass" required>
+                            <input type="password" id="register-pass" minlength="6" required>
                         </div>
 
                         <div class="input-group">
                             <label>Confirm Password</label>
-                            <input type="password" id="confirm-pass" required>
+                            <input type="password" id="confirm-pass" minlength="6" required>
                         </div>
 
                         <button type="submit" class="auth-btn btn-primary">
