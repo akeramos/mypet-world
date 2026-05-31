@@ -26,7 +26,7 @@
         // Initialize Firebase safely via browser compat channel
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-
+        const db = firebase.firestore();
         // Include wrapper templates
         async function includeHTML(placeholderId, filename) {
             try {
@@ -54,17 +54,64 @@
 
         // Handle State Transitions dynamically based on Firebase Auth Core
         function setupAuthListener() {
-            auth.onAuthStateChanged((user) => {
-                const gateway = document.getElementById('auth-gateway');
-                const profile = document.getElementById('user-profile-view');
-                
+            auth.onAuthStateChanged(async (user) => {
+                const gateway =
+                    document.getElementById('auth-gateway');
+                const profile =
+                    document.getElementById('user-profile-view');
                 if (user) {
                     gateway.style.display = 'none';
                     profile.style.display = 'block';
-                    document.getElementById('profile-email').innerText = user.email;
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 1500);
+
+                  document.getElementById('profile-email')
+                        .innerText = user.email;
+                    try {
+                        const userDoc =
+                            await db
+                                .collection("users")
+                                .doc(user.uid)
+                                .get();
+                        if (!userDoc.exists) {
+                            console.warn(
+                                "User profile not found."
+                            );
+                            window.location.href =
+                                "index.html";
+                            return;
+                        }
+                        const profileType =
+                            userDoc.data().profileType;
+                        setTimeout(() => {
+                            switch (profileType) {
+                                case "pet_owner":
+                                    window.location.href =
+                                        "pet-owner-dashboard.html";
+                                    break;
+                                case "veterinary_clinic":
+                                    window.location.href =
+                                        "vet-dashboard.html";
+                                    break;
+                                case "event_organizer":
+                                    window.location.href =
+                                        "event-dashboard.html";
+                                    break;
+                                case "service_provider":
+                                    window.location.href =
+                                        "service-dashboard.html";
+                                    break;
+                                default:
+                                    window.location.href =
+                                        "index.html";
+                            }
+                        }, 1500);
+                    } catch (error) {
+                        console.error(
+                            "Profile lookup failed:",
+                            error
+                        );
+                        window.location.href =
+                            "index.html";
+                    }
                 } else {
                     gateway.style.display = 'block';
                     profile.style.display = 'none';
@@ -84,10 +131,44 @@
 
         async function handleSignUp(e) {
             e.preventDefault();
-            const email = document.getElementById('register-email').value;
-            const pass = document.getElementById('register-pass').value;
-            try { await auth.createUserWithEmailAndPassword(email, pass); } 
-            catch (err) { document.getElementById('error-message').innerText = err.message; }
+            const profileType =
+                document.getElementById('profile-type').value;
+            const username =
+                document.getElementById('username').value;
+            const email =
+                document.getElementById('register-email').value;
+            const gender =
+                document.getElementById('gender').value;
+            const password =
+                document.getElementById('register-pass').value;
+            const confirmPassword =
+                document.getElementById('confirm-pass').value;
+            if (password !== confirmPassword) {
+                document.getElementById('error-message')
+                    .innerText = "Passwords do not match.";
+                return;
+            }
+            try {
+                const credential =
+                    await auth.createUserWithEmailAndPassword(
+                        email,
+                        password
+                    );
+                await db
+                    .collection("users")
+                    .doc(credential.user.uid)
+                    .set({
+                        email: email,
+                        username: username,
+                        profileType: profileType,
+                        gender: gender,
+                        createdAt:
+                            firebase.firestore.FieldValue.serverTimestamp()
+                    });
+            } catch (err) {
+                document.getElementById('error-message')
+                    .innerText = err.message;
+            }
         }
 
         async function handleForgotPassword(e) {
@@ -150,22 +231,57 @@
                     </div>
                 </div>
 
-                <div id="signup-view" style="display:none;">
+                <<div id="signup-view" style="display:none;">
                     <h3>Create Profile</h3>
+
                     <form onsubmit="handleSignUp(event)">
+
+                        <div class="input-group">
+                            <label>Choose a Profile</label>
+                            <select id="profile-type" required>
+                                <option value="">Select Profile Type</option>
+                                <option value="pet_owner">Pet Owner</option>
+                                <option value="veterinary_clinic">Veterinary Clinic</option>
+                                <option value="event_organizer">Event Organizer</option>
+                                <option value="service_provider">Services Provider</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Username / Company Name</label>
+                            <input type="text" id="username" required>
+                        </div>
+
                         <div class="input-group">
                             <label>Email Address</label>
-                            <input type="email" id="register-email" required placeholder="email@domain.com">
+                            <input type="email" id="register-email" required>
                         </div>
+
+                        <div class="input-group">
+                            <label>Gender</label>
+                            <select id="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="prefer_not_to_say">Prefer Not To Say</option>
+                            </select>
+                        </div>
+
                         <div class="input-group">
                             <label>Password</label>
-                            <input type="password" id="register-pass" required placeholder="Minimum 6 characters">
+                            <input type="password" id="register-pass" required>
                         </div>
-                        <button type="submit" class="auth-btn btn-primary">Register New Account</button>
+
+                        <div class="input-group">
+                            <label>Confirm Password</label>
+                            <input type="password" id="confirm-pass" required>
+                        </div>
+
+                        <button type="submit" class="auth-btn btn-primary">
+                            Register New Account
+                        </button>
+
                     </form>
-                    <div class="auth-switchlinks">
-                        <p>Already have an account? <a href="#" onclick="showForm('signin')">Sign In</a></p>
-                    </div>
                 </div>
 
                 <div id="forgot-view" style="display:none;">
