@@ -72,12 +72,10 @@
                                 .doc(user.uid)
                                 .get();
                         if (!userDoc.exists) {
-                            console.warn(
-                                "User profile not found."
-                            );
-                            window.location.href =
-                                "index.html";
-                            return;
+                          setTimeout(() => {
+                              window.location.reload();
+                          }, 1000); 
+                          return;
                         }
                         const profileType =
                             userDoc.data().profileType;
@@ -165,6 +163,7 @@
                         createdAt:
                             firebase.firestore.FieldValue.serverTimestamp()
                     });
+              window.location.reload();
             } catch (err) {
                 document.getElementById('error-message')
                     .innerText = err.message;
@@ -231,7 +230,7 @@
                     </div>
                 </div>
 
-                <<div id="signup-view" style="display:none;">
+                <div id="signup-view" style="display:none;">
                     <h3>Create Profile</h3>
 
                     <form onsubmit="handleSignUp(event)">
@@ -281,6 +280,15 @@
                             Register New Account
                         </button>
 
+                      <div class="auth-switchlinks">
+                          <p>
+                              Already have an account?
+                              <a href="#" onclick="showForm('signin')">
+                                  Sign In
+                              </a>
+                          </p>
+                      </div>
+                      
                     </form>
                 </div>
 
