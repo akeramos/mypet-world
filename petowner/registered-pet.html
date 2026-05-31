@@ -31,12 +31,29 @@
                 ➕ Record Shot
             </button>
 
-            <div class="booster-form-slot" style="display: none; margin-top: 12px; padding: 16px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid rgba(255,255,255,0.04);">
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <input type="text" class="newVaccineType" placeholder="Vaccine Name (e.g., Rabies Booster)" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 12px; border-radius: 6px; color: white; font-size: 0.9rem; outline: none;">
-                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;">
-                        <input type="date" class="newVaccineDate" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 12px; border-radius: 6px; color: white; font-size: 0.9rem; outline: none; cursor: pointer;">
-                        <button onclick="submitInlineBooster(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; font-family: 'Lexend', sans-serif; font-size: 0.9rem;">Add</button>
+            <div class="booster-form-slot" style="display: none; margin-top: 12px; padding: 20px; background: rgba(2, 6, 23, 0.4); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); font-family: 'Lexend', sans-serif;">
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <span style="font-size: 0.85rem; color: var(--leaf-green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Log New Booster Shot</span>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <input type="text" class="newVaccineType" placeholder="Vaccine Name (e.g. Core Feline 4-Way)" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
+                        <input type="text" class="newVaccineLabel" placeholder="Brand Label (e.g. PureVax Feline 4)" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
+                    </div>
+            
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                        <input type="text" class="newVaccineSerial" placeholder="Serial / Batch No." style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
+                        <input type="text" class="newVaccineVet" placeholder="Veterinarian Name" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
+                        <input type="text" class="newVaccineMvc" placeholder="Vet MVC No." style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 10px 14px; border-radius: 8px; color: white; font-size: 0.85rem; outline: none;">
+                    </div>
+            
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); padding: 8px 14px; border-radius: 8px;">
+                            <label style="font-size: 0.75rem; color: #94a3b8; white-space: nowrap;">Admin Date:</label>
+                            <input type="date" class="newVaccineDate" style="background: transparent; border: none; color: white; font-size: 0.85rem; outline: none; cursor: pointer; width: 100%;">
+                        </div>
+                        <button onclick="submitInlineBooster(this)" style="background: var(--leaf-green); color: var(--dark-green); border: none; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Lexend', sans-serif; font-size: 0.85rem; height: 100%;">
+                            💾 Add Booster
+                        </button>
                     </div>
                 </div>
             </div>
