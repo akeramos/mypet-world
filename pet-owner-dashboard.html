@@ -125,9 +125,15 @@
                 tempWrapper.innerHTML = formHTML;
                 const freshFormElement = tempWrapper.firstElementChild;
 
-                // Auto-generate unique ID specific to this fresh instance copy block path
-                freshFormElement.querySelector('.petUniqueId').value = Math.floor(1000 + Math.random() * 90000);
-
+                // 🚀 THE FIRESTORE WAY: Initialize an empty document reference placeholder to grab a guaranteed unique ID string
+                const customRefId = db.collection("users").doc(currentUserId).collection("pets").doc().id;
+                
+                // Trim the 20-character string down to the first 6 characters and force uppercase for clean visibility
+                const polishedShortId = customRefId.substring(0, 6).toUpperCase();
+                
+                // Inject the guaranteed unique short-code directly into your form field view element
+                freshFormElement.querySelector('.petUniqueId').value = polishedShortId;
+                                
                 // Add submit database interception listener specifically to this component row instance
                 freshFormElement.querySelector('.dynamic-pet-submit-form').addEventListener('submit', async (e) => {
                     e.preventDefault();
