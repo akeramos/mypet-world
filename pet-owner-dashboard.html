@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mypet-world | Pet Owner Dashboard</title>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/first.png">
+    <link rel="stylesheet" href="style.css">
+
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>  
+    
     <script>
         async function includeHTML(placeholderId, filename) {
             try {
@@ -24,7 +27,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // Load required layout fragments concurrently 
+            // Cloned exactly from index layout promise map array
             await Promise.all([
                 includeHTML('header-placeholder', 'header.html'),
                 includeHTML('services-grid-placeholder', 'services.html'),
@@ -33,7 +36,7 @@
                 includeHTML('footer-placeholder', 'footer.html')
             ]);
             
-            // Tell any child elements that the layout containers are ready!
+            // Fires your layout completion listener hooks safely
             window.dispatchEvent(new Event('ComponentsLoaded'));
             
             initBackgroundOrganicPulse();
@@ -47,29 +50,18 @@
     <div id="header-placeholder"></div>
     
     <div class="content-container">
-        <main class="auth-main" style="max-width: 1200px; margin: 0 auto; width: 100%; justify-content: flex-start; min-height: auto;">
+        <main>
             
-            <div class="glass-card welcome-banner" style="margin-bottom: 32px; text-align: left; width: 100%; box-sizing: border-box;">
-                <h2 style="margin-top:0;">Welcome back, <span id="dash-username" style="color: var(--leaf-green);">Loading...</span>! 🐾</h2>
-                <p style="margin: 6px 0; color: #cbd5e1;"><strong>Account Type:</strong> <span id="dash-role">Pet Owner</span></p>
-                <p style="margin: 6px 0; color: #cbd5e1;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
-                <h1 style="font-size: 1.8rem; font-weight: 800; margin-top: 20px; margin-bottom: 0; letter-spacing: -0.5px;">Pet Owner Dashboard Portal</h1>
+            <div class="glass-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);">
+                <h2 style="margin-top:0; font-size: 1.8rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">Welcome back, <span id="dash-username" style="color: #4ade80;">Loading...</span>! 🐾</h2>
+                <p style="font-size: 1.1rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
+                <p style="font-size: 1.1rem; color: #94a3b8; margin: 8px 0; line-height: 1.7;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
+                <h1 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-top: 24px; margin-bottom: 0;">Pet Owner Dashboard Workspace</h1>
             </div>
 
-            <div class="dashboard-section-block" style="width: 100%; margin-bottom: 32px;">
-                <h3 style="color: var(--leaf-green); text-align: left; margin-bottom: 16px;">Core Pet Services</h3>
-                <div id="services-grid-placeholder"></div>
-            </div>
-
-            <div class="dashboard-section-block" style="width: 100%; margin-bottom: 32px;">
-                <h3 style="color: var(--leaf-green); text-align: left; margin-bottom: 16px;">Community Features</h3>
-                <div id="services2-grid-placeholder"></div>
-            </div>
-
-            <div class="dashboard-section-block" style="width: 100%; margin-bottom: 32px;">
-                <div id="third-column-placeholder"></div>
-            </div>
-            
+            <div id="services-grid-placeholder"></div>
+            <div id="services2-grid-placeholder"></div>
+            <div id="third-column-placeholder"></div>
         </main>        
     </div>
 
@@ -90,7 +82,7 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Security Guard: Kick unauthenticated users back to login page
+        // 🔒 Security Guard: Kick unauthenticated users back to login page
         auth.onAuthStateChanged(async (user) => {
             if (!user) {
                 window.location.href = "account.html";
@@ -98,7 +90,6 @@
             }
 
             try {
-                // Pull user configurations from Firestore
                 const userDoc = await db.collection("users").doc(user.uid).get();
                 if (userDoc.exists) {
                     const userData = userDoc.data();
@@ -123,7 +114,7 @@
             }
         });
       
-        // Particle Background Logic Configuration Setup
+        // Particle Background Logic Cloned Exactly from index
         let mouse = { x: null, y: null, radius: 250 };
 
         function initBackgroundOrganicPulse() {
@@ -188,7 +179,7 @@
 
             function init() {
                 particles = [];
-                for (let i = 0; i < 40; i++) particles.push(new Particle());
+                for (let i = 0; i < 60; i++) particles.push(new Particle());
             }
 
             function animate() {
@@ -214,8 +205,8 @@
 
             window.addEventListener('resize', resize);
             window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
+                mouse.x = e.clientX + window.scrollX;
+                mouse.y = e.clientY + window.scrollY;
             });
             window.addEventListener('mouseout', () => {
                 mouse.x = null;
@@ -226,5 +217,3 @@
             animate();
         }
     </script>
-</body>
-</html>
