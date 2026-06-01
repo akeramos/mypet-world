@@ -157,10 +157,15 @@
                         cardElement.querySelector('.view-petGender').innerText = petData.gender || "Unknown";
                         cardElement.querySelector('.view-petSpecies').innerText = petData.species || "Unknown";
                         cardElement.querySelector('.view-petSubspecies').innerText = petData.subspecies || "Unknown";
-                        cardElement.querySelector('.view-petAge').innerText = petData.age || "N/A";
+                        cardElement.querySelector('.view-petAge').innerText = petData.age || "N/A";       
                         cardElement.querySelector('.view-petUniqueId').innerText = petData.uniqueID || "------";
-                        cardElement.querySelector('.view-healthLog1').innerText = petData.healthLogs ? petData.healthLogs[0] : "";
-                        cardElement.querySelector('.view-healthLog2').innerText = petData.healthLogs ? petData.healthLogs[1] : "";
+                        cardElement.querySelector('.view-healthLog1').innerText = petData.healthLogs ? (petData.healthLogs[0] || "-") : "-";
+                        cardElement.querySelector('.view-healthLog2').innerText = petData.healthLogs ? (petData.healthLogs[1] || "-") : "-";
+                        cardElement.querySelector('.view-healthLog3').innerText = petData.healthLogs ? (petData.healthLogs[2] || "-") : "-";
+                        cardElement.querySelector('.view-healthLog4').innerText = petData.healthLogs ? (petData.healthLogs[3] || "-") : "-";
+                        cardElement.querySelector('.view-healthLog5').innerText = petData.healthLogs ? (petData.healthLogs[4] || "-") : "-";
+                        cardElement.querySelector('.view-healthLog6').innerText = petData.healthLogs ? (petData.healthLogs[5] || "-") : "-";
+                                
 
                         // 💉 FIXED LOOP LOGIC: Correct single execution pipeline handles sorting flawlessly
                         const vaccineContainer = cardElement.querySelector('.view-vaccine-list');
@@ -390,20 +395,26 @@
             const card = btn.closest('.registered-pet-card');
             const petId = card.getAttribute('data-id');
             if (!currentUserId || !petId) return;
-
+        
             const updatedName = card.querySelector('.view-petName').innerText.trim();
+            
+            // 📊 Capture all 6 bio-matrix parameters seamlessly:
             const log1 = card.querySelector('.view-healthLog1').innerText.trim();
             const log2 = card.querySelector('.view-healthLog2').innerText.trim();
-
+            const log3 = card.querySelector('.view-healthLog3').innerText.trim();
+            const log4 = card.querySelector('.view-healthLog4').innerText.trim();
+            const log5 = card.querySelector('.view-healthLog5').innerText.trim();
+            const log6 = card.querySelector('.view-healthLog6').innerText.trim();
+        
             if (!updatedName) {
                 alert("Companion's name cannot be left empty.");
                 return;
             }
-
+        
             try {
                 await db.collection("users").doc(currentUserId).collection("pets").doc(petId).update({
                     petName: updatedName,
-                    healthLogs: [log1, log2],
+                    healthLogs: [log1, log2, log3, log4, log5, log6], // 💾 Saves all 6 as a clean array!
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert(`Secure registry records updated successfully!`);
