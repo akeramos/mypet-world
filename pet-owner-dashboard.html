@@ -153,6 +153,22 @@
 
                         cardElement.setAttribute('data-id', petId);
 
+                        // 🎨 DYNAMIC SPECIES THEME ENGINE
+                        const species = (petData.species || "cat").toLowerCase();
+                        const badgeElement = cardElement.querySelector('.digital-license-badge');
+                        
+                        if (badgeElement) {
+                            if (species.includes('dog')) {
+                                badgeElement.style.borderColor = "#38bdf8"; // 🚙 Cyber Light Blue (Canine)
+                            } else if (species.includes('rabbit')) {
+                                badgeElement.style.borderColor = "#c084fc"; // 🔮 Orchid Purple (Exotic)
+                            } else if (species.includes('bird')) {
+                                badgeElement.style.borderColor = "#f59e0b"; // 🍊 Vibrant Amber (Avian)
+                            } else {
+                                badgeElement.style.borderColor = "#4ade80"; // 🟢 Emerald Mint (Feline / Default)
+                            }
+                        }
+                        
                         cardElement.querySelector('.view-petName').innerText = petData.petName || "Unnamed";
                         cardElement.querySelector('.view-petGender').innerText = petData.gender || "Unknown";
                         cardElement.querySelector('.view-petSpecies').innerText = petData.species || "Unknown";
