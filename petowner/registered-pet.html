@@ -99,12 +99,16 @@
                 </div>
             </div>
         </div>
-    </div> 
 
-    <div style="display: grid; grid-template-columns: 1fr; gap: 24px; box-sizing: border-box; width: 100%;">
-        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); padding: clamp(16px, 3vw, 24px); border-radius: 20px; box-sizing: border-box; width: 100%;">
-            <h3 style="color: #4ade80; font-size: 1.1rem; margin-top: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Health Information</h3>
-            <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 16px; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;" onclick="toggleHealthForm(this)">
+                <h3 style="color: #4ade80; font-size: 1.1rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+                    <span>🏥</span> Health Information
+                </h3>
+                <span class="view-health-arrow" style="color: #4ade80; font-size: 1.1rem; transition: transform 0.2s ease;">🔽</span>
+            </div>
+
+            <div class="health-logs-form-slot" style="display: none; margin-top: 16px; flex-direction: column; gap: 14px;">
                 <div>
                     <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 6px;">1. General Notes</label>
                     <div class="view-healthLog1" contenteditable="true" style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); padding: 14px; border-radius: 12px; color: #e2e8f0; font-size: 0.9rem; outline: none; min-height: 24px; line-height: 1.5; box-sizing: border-box; width: 100%;">-</div>
@@ -115,9 +119,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 2px solid rgba(255, 255, 255, 0.08); padding-top: 24px; flex-wrap: wrap; gap: 16px; width: 100%; box-sizing: border-box;">
+    </div> <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 2px solid rgba(255, 255, 255, 0.08); padding-top: 24px; flex-wrap: wrap; gap: 16px; width: 100%; box-sizing: border-box;">
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <button onclick="saveCardEdits(this)" style="background: #4ade80; color: #1e293b; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif; box-shadow: 0 4px 12px rgba(74,222,128,0.15);">Update Profile</button>
             <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Remove</button>
