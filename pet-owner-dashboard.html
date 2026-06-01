@@ -47,30 +47,29 @@
 
     <div id="header-placeholder"></div>
     
-    <div class="content-container">
-        <main>            
-            <div class="glass-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);">
-                <h2 style="margin-top:0; font-size: 1.8rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">Welcome <span id="dash-username" style="color: #4ade80; text-transform: capitalize;"></span>! 🐾</h2>
-                <p style="font-size: 1.1rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
-                <p style="font-size: 1.1rem; color: #94a3b8; margin: 8px 0; line-height: 1.7;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
+    <div class="content-container" style="max-width: 1200px; margin: 0 auto; padding: clamp(12px, 3vw, 24px); box-sizing: border-box; width: 100%;">
+        <main style="width: 100%; box-sizing: border-box;">            
+            <div class="glass-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: clamp(20px, 4vw, 40px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box; width: 100%;">
+                <h2 style="margin-top:0; font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 800; color: #ffffff; letter-spacing: -0.5px; word-break: break-word;">Welcome <span id="dash-username" style="color: #4ade80; text-transform: capitalize;"></span>! 🐾</h2>
+                <p style="font-size: 1rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
+                <p style="font-size: 1rem; color: #94a3b8; margin: 8px 0; line-height: 1.6; word-break: break-word;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
                 
-                <div style="margin-top: 14px; margin-bottom: 10px;">
-                    <button onclick="injectNewPetForm()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; transition: all 0.2s ease; border:none; cursor:pointer;">
+                <div style="margin-top: 16px; margin-bottom: 10px;">
+                    <button onclick="injectNewPetForm()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; transition: all 0.2s ease; border:none; cursor:pointer;">
                         Add Companion Animal
                     </button>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px;">
-                    <h1 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin: 0;">Dashboard</h1>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; flex-wrap: wrap; gap: 12px;">
+                    <h1 style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0;">Dashboard</h1>
                     <button id="dash-logout-btn" class="btn-danger" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; cursor: pointer; transition: all 0.2s ease;">
                         SIGN OUT
                     </button>
                 </div>
             </div>
 
-            <div id="dynamic-pet-forms-container"></div>
-
-            <div id="live-registered-pets-feed"></div>
+            <div id="dynamic-pet-forms-container" style="width: 100%; box-sizing: border-box;"></div>
+            <div id="live-registered-pets-feed" style="width: 100%; box-sizing: border-box;"></div>
             
             <div id="services-grid-placeholder"></div>
             <div id="services2-grid-placeholder"></div>
@@ -117,7 +116,7 @@
             } catch (error) { console.error("Error initializing dashboard metadata maps:", error); }
         });
 
-        // 🔄 RENDERING PIPELINE: Streams clinical data profiles and generates medical history badges
+        // 🔄 RENDERING PIPELINE: Resolved code duplication and stabilized metric injection mappings
         function startLivePetsListener() {
             if (!currentUserId) return;
 
@@ -131,7 +130,7 @@
 
                     if (snapshot.empty) {
                         feedContainer.innerHTML = `
-                            <div style="text-align: center; color: #94a3b8; padding: 40px 20px; border: 1px dashed rgba(255,255,255,0.06); border-radius:24px; background: rgba(15, 23, 42, 0.2); font-family: 'Lexend', sans-serif;">
+                            <div style="text-align: center; color: #94a3b8; padding: 40px 20px; border: 1px dashed rgba(255,255,255,0.06); border-radius:24px; background: rgba(15, 23, 42, 0.2); font-family: 'Lexend', sans-serif; box-sizing: border-box; width:100%;">
                                 🐾 No registered companion animal files located under this profile matrix yet. Click "Add Pet" above to establish a new record file.
                             </div>
                         `;
@@ -147,6 +146,8 @@
                         const petId = doc.id;
 
                         const cardWrapper = document.createElement('div');
+                        cardWrapper.style.width = "100%";
+                        cardWrapper.style.boxSizing = "border-box";
                         cardWrapper.innerHTML = cardTemplateHTML;
                         const cardElement = cardWrapper.firstElementChild;
 
@@ -161,16 +162,7 @@
                         cardElement.querySelector('.view-healthLog1').innerText = petData.healthLogs ? petData.healthLogs[0] : "";
                         cardElement.querySelector('.view-healthLog2').innerText = petData.healthLogs ? petData.healthLogs[1] : "";
 
-                        // 💉 RENDERING NEW CLINICAL DETAILS: Generate detailed list nodes for history cards
-                        const vaccineContainer = cardElement.querySelector('.view-vaccine-list');
-                        vaccineContainer.innerHTML = ""; 
-
-                        const historyArray = petData.vaccinations || [];
-
-                        if (historyArray.length === 0) {
-                            vaccineContainer.innerHTML = `<span style="color: #64748b; font-size: 0.9rem; font-style: italic;">No verified medical vaccine records tracked.</span>`;
-                        } else {
-                            // 💉 LOOP VACCINE ARRAYS: Generate separate lines for multi-booster files
+                        // 💉 FIXED LOOP LOGIC: Correct single execution pipeline handles sorting flawlessly
                         const vaccineContainer = cardElement.querySelector('.view-vaccine-list');
                         vaccineContainer.innerHTML = ""; 
 
@@ -180,19 +172,18 @@
                         if (historyArray.length === 0) {
                             vaccineContainer.innerHTML = `<span style="color: #64748b; font-size: 0.9rem; font-style: italic;">No verified medical vaccine records tracked.</span>`;
                         } else {
-                            // Sort vaccine entries chronologically by expiry date strings so the earliest expiry pops out first
                             const sortedVaccines = [...historyArray].sort((a, b) => new Date(a.expiry) - new Date(b.expiry));
-                            prioritizedExpiry = sortedVaccines[0].expiry; // Capture the nearest deadline date element string
+                            prioritizedExpiry = sortedVaccines[0].expiry;
 
                             historyArray.forEach((vac) => {
                                 const row = document.createElement('div');
-                                row.style.cssText = "background: rgba(2, 6, 23, 0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); font-family: 'Lexend', sans-serif;";
+                                row.style.cssText = "background: rgba(2, 6, 23, 0.3); padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); font-family: 'Lexend', sans-serif; box-sizing: border-box; width: 100%; margin-bottom: 8px;";
                                 row.innerHTML = `
                                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                                         <span style="font-weight: 800; color: #fff; font-size: 0.95rem;">🛡️ ${vac.type}</span>
                                         <span style="color: #94a3b8; font-size: 0.8rem;">Administered: <strong>${vac.date}</strong></span>
                                     </div>
-                                    <div style="margin-top: 6px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 8px 12px; border-radius: 6px;">
+                                    <div style="margin-top: 6px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; background: rgba(0,0,0,0.15); padding: 8px 12px; border-radius: 6px; word-break: break-word;">
                                         <strong>Label/Components:</strong> ${vac.label || 'N/A'}<br>
                                         <strong>Serial/Batch:</strong> <span style="font-family: monospace; color: var(--leaf-green); font-weight:700;">${vac.serialNumber || 'N/A'}</span><br>
                                         <strong>Veterinarian:</strong> ${vac.vetName || 'N/A'} <span style="color: #64748b; font-size:0.75rem;">(MVC: ${vac.mvcNo || 'N/A'})</span>
@@ -205,10 +196,7 @@
                             });
                         }
 
-                        // 🚀 INTERACTIVE SNAPSHOT INJECTIONS: Force priority expiry tracking directly onto your wallet card license footer
                         cardElement.querySelector('.view-passportMasterExpiry').innerText = prioritizedExpiry;
-                        }
-
                         feedContainer.appendChild(cardElement);
                     });
                 }, (error) => {
@@ -216,7 +204,7 @@
                 });
         }
 
-        // 💾 FORM SAVING ACTION: Collects your new legal clinical properties on initial setup
+        // 💾 FORM SAVING ACTION
         async function injectNewPetForm() {
             try {
                 const response = await fetch('petowner/pet-profile.html');
@@ -285,7 +273,7 @@
             } catch (error) { console.error(error); }
         }
 
-        // ➕ RECORD INLINE BOOSTER LOGS: Updates helper mechanics to capture brand, batch numbers, and clinician parameters
+        // ➕ RECORD INLINE BOOSTER LOGS
         async function submitInlineBooster(btn) {
             const card = btn.closest('.registered-pet-card');
             const petId = card.getAttribute('data-id');
@@ -294,7 +282,6 @@
             const typeInput = card.querySelector('.newVaccineType');
             const dateInput = card.querySelector('.newVaccineDate');
             
-            // 🚀 GRAB EXTRA INLINE INPUTS: Pull values off our expanded inline view layout panel forms
             const labelInput = card.querySelector('.newVaccineLabel');
             const serialInput = card.querySelector('.newVaccineSerial');
             const vetInput = card.querySelector('.newVaccineVet');
@@ -515,4 +502,5 @@
         }
     </script>
     <div id="footer-placeholder"></div>
-
+</body>
+</html>
