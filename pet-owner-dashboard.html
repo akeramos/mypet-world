@@ -371,6 +371,21 @@
             formSlot.style.display = (formSlot.style.display === 'none' || formSlot.style.display === '') ? 'block' : 'none';
         }
 
+        // 🏥 SLIDER TOGGLE ENGINE: Smoothly expands and hides the clinical records inside the card wrapper
+        function toggleHealthForm(headerEl) {
+            const card = headerEl.closest('.registered-pet-card');
+            const formSlot = card.querySelector('.health-logs-form-slot');
+            const arrow = card.querySelector('.view-health-arrow');
+            
+            if (formSlot.style.display === 'none' || formSlot.style.display === '') {
+                formSlot.style.display = 'flex';
+                arrow.style.transform = 'rotate(180deg)'; // Arrow flips up cleanly
+            } else {
+                formSlot.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)'; // Arrow resets back down
+            }
+        }
+
         async function saveCardEdits(btn) {
             const card = btn.closest('.registered-pet-card');
             const petId = card.getAttribute('data-id');
@@ -479,7 +494,7 @@
                 particles.forEach(p => {
                     p.update();
                     p.draw();
-                    if (mouse.x !== null && mouse.y !== null) {
+                    if (mouse.x !== null && mouse.y !== null) {    
                         let dx = p.x - mouse.x;
                         let dy = p.y - mouse.y;
                         let dist = Math.sqrt(dx*dx + dy*dy);
