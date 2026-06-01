@@ -52,8 +52,7 @@
                 </button>
             </div>
             
-            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%;">
-                </div>
+            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%;"></div>
 
             <div class="booster-form-slot" style="display: none; margin-top: 16px; padding: clamp(12px, 3vw, 24px); background: #1e293b; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: inset 0 1px 2px rgba(255,255,255,0.05); box-sizing: border-box; width: 100%;">
                 <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -103,19 +102,40 @@
         <div style="border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 16px; margin-top: 16px;">
             <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;" onclick="toggleHealthForm(this)">
                 <h3 style="color: #4ade80; font-size: 1.1rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
-                    <span>🏥</span> Health Information
+                    <span>📋</span> Emergency Clinical Bio-Matrix
                 </h3>
                 <span class="view-health-arrow" style="color: #4ade80; font-size: 1.1rem; transition: transform 0.2s ease;">🔽</span>
             </div>
 
-            <div class="health-logs-form-slot" style="display: none; margin-top: 16px; flex-direction: column; gap: 14px; width: 100%;">
-                <div style="margin-bottom: 14px;">
-                    <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 6px;">1. General Notes</label>
-                    <div class="view-healthLog1" contenteditable="true" style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); padding: 14px; border-radius: 12px; color: #e2e8f0; font-size: 0.9rem; outline: none; min-height: 24px; line-height: 1.5; box-sizing: border-box; width: 100%;">-</div>
+            <div class="health-logs-form-slot" style="display: none; margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; width: 100%; box-sizing: border-box;">
+                <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">⚖️ Body Weight</label>
+                    <div class="view-healthLog1" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 2px;">-</div>
                 </div>
-                <div>
-                    <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600; display: block; margin-bottom: 6px;">2. Past History</label>
-                    <div class="view-healthLog2" contenteditable="true" style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.1); padding: 14px; border-radius: 12px; color: #e2e8f0; font-size: 0.9rem; outline: none; min-height: 24px; line-height: 1.5; box-sizing: border-box; width: 100%;">-</div>
+
+                <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">🩸 Blood Type</label>
+                    <div class="view-healthLog2" contenteditable="true" style="color: #f87171; font-size: 0.95rem; font-weight: 800; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">✂️ Reproductive Status</label>
+                    <div class="view-healthLog3" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #fca5a5; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">⚠️ Critical Allergies</label>
+                    <div class="view-healthLog4" contenteditable="true" style="color: #fca5a5; font-size: 0.95rem; font-weight: 800; outline: none; border-bottom: 1px dashed rgba(239,68,68,0.2); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: rgba(74, 222, 128, 0.03); border: 1px solid rgba(74, 222, 128, 0.15); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #86efac; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">💊 Chronic Medications</label>
+                    <div class="view-healthLog5" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(74,222,128,0.15); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: rgba(74, 222, 128, 0.03); border: 1px solid rgba(74, 222, 128, 0.15); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #86efac; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">🪱 Last De-worming Date</label>
+                    <div class="view-healthLog6" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(74,222,128,0.15); padding-bottom: 2px;">-</div>
                 </div>
             </div>
         </div>
