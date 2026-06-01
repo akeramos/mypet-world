@@ -1,193 +1,19 @@
-<style>
-    /* Global Card Architecture */
-    .registered-pet-card {
-        margin-bottom: 32px;
-        text-align: left;
-        background: #0f172a;
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        border-radius: 28px;
-        padding: 32px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        font-family: 'Lexend', sans-serif;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    /* Core Digital License Layer */
-    .digital-license-badge {
-        background: linear-gradient(135deg, #1e293b 0%, #020617 100%);
-        border: 2px solid #4ade80;
-        border-radius: 20px;
-        padding: 24px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        margin-bottom: 24px;
-        box-sizing: border-box;
-    }
-
-    /* Header Strip Component */
-    .registry-header-strip {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        padding-bottom: 12px;
-        margin-bottom: 16px;
-        width: 100%;
-        gap: 12px;
-    }
-
-    /* Profile Core Metadata Container */
-    .profile-meta-block {
-        display: flex;
-        gap: 24px;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .profile-avatar-frame {
-        position: relative;
-        width: 96px;
-        height: 96px;
-        background: #0f172a;
-        border: 2px solid #4ade80;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        overflow: hidden;
-        flex-shrink: 0;
-    }
-
-    .profile-info-details {
-        flex: 1;
-        min-width: 260px;
-    }
-
-    .name-editable-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 6px;
-        margin-bottom: 6px;
-    }
-
-    /* Form Layout Grid Architecture */
-    .form-grid-double {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-
-    .form-grid-triple {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-    }
-
-    .form-grid-action-row {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 16px;
-        align-items: flex-end;
-    }
-
-    .input-field-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    /* Dynamic Media Query Optimization Layer */
-    @media (max-width: 768px) {
-        .registered-pet-card {
-            padding: 16px;
-            border-radius: 20px;
-        }
-
-        .digital-license-badge {
-            padding: 16px;
-            border-radius: 16px;
-        }
-
-        .registry-header-strip {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .registry-header-strip span:last-child {
-            align-self: flex-start;
-        }
-
-        .profile-info-details {
-            min-width: 100%;
-        }
-
-        .name-editable-wrapper {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-        }
-
-        .view-petName {
-            font-size: 1.4rem !important;
-            width: 100%;
-        }
-
-        /* Responsive Form Collapsing */
-        .form-grid-double, 
-        .form-grid-triple, 
-        .form-grid-action-row {
-            grid-template-columns: 1fr !important;
-            gap: 12px;
-        }
-
-        .form-grid-action-row button {
-            width: 100%;
-            height: 48px;
-        }
-
-        /* Action Buttons Footers */
-        .action-footer-container {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            gap: 16px !important;
-        }
-
-        .action-footer-container div {
-            display: grid !important;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            width: 100%;
-        }
-
-        .action-footer-container button,
-        .action-footer-container a {
-            text-align: center;
-            justify-content: center;
-            width: 100%;
-            box-sizing: border-box;
-        }
-    }
-</style>
-
-<div class="registered-pet-card">
+<div class="registered-pet-card" style="margin-bottom: 32px; text-align: left; background: #0f172a; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 28px; padding: 32px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); font-family: 'Lexend', sans-serif;">
     
-    <div class="digital-license-badge">
+    <div class="digital-license-badge" style="background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 2px solid #4ade80; border-radius: 20px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); margin-bottom: 24px;">
         
-        <div class="registry-header-strip">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px; margin-bottom: 16px; width: 100%;">
             <span style="font-size: 0.8rem; font-weight: 800; color: #cbd5e1; letter-spacing: 1.5px; text-transform: uppercase;">Mypet-World Companion</span>
             <span style="font-size: 0.7rem; background: rgba(74, 222, 128, 0.2); color: #4ade80; padding: 4px 12px; border-radius: 20px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid rgba(74,222,128,0.3);">Registry Card</span>
         </div>
 
-        <div class="profile-meta-block">
-            <div class="profile-avatar-frame">
+        <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+            <div style="position: relative; width: 96px; height: 96px; background: #0f172a; border: 2px solid #4ade80; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); overflow: hidden;">
                 <img src="./assets/first.png" alt="Companion Avatar" style="width: 75%; height: 75%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.4));">
             </div>
 
-            <div class="profile-info-details">
-                <div class="name-editable-wrapper">
+            <div style="flex: 1; min-width: 200px;">
+                <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px;">
                     <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 800; text-transform: uppercase;">Companion Name:</span>
                     <h2 class="view-petName" contenteditable="true" style="margin: 0; font-weight: 800; font-size: 1.6rem; color: #ffffff; outline: none; border-bottom: 2px dashed rgba(255,255,255,0.2); display: inline-block; padding-bottom: 2px;" title="Click to edit name">Loading Name...</h2>
                 </div>
@@ -207,7 +33,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 20px; padding-top: 14px; border-top: 2px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 24px;">
+        <div style="margin-top: 20px; padding-top: 14px; border-top: 2px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
             <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; text-transform: uppercase;">Ecosystem Status:</span>
                 <span class="view-passportStatus" style="font-size: 0.85rem; font-weight: 800; color: #4ade80; letter-spacing: 0.5px;">✅ SECURE</span>
@@ -219,49 +45,47 @@
         </div>
 
         <div style="border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 20px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <h3 style="color: #4ade80; font-size: 1.1rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Immunization Passport</h3>
                 <button onclick="toggleBoosterForm(this)" style="background: rgba(74, 222, 128, 0.15); border: 1px solid #4ade80; color: #4ade80; padding: 8px 16px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; font-family: 'Lexend', sans-serif; transition: all 0.2s;">
                     ➕ Add Vaccination Shot
                 </button>
             </div>
             
-            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 12px;">
+                </div>
 
-            <div class="booster-form-slot" style="display: none; margin-top: 16px; padding: 20px; background: #1e293b; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: inset 0 1px 2px rgba(255,255,255,0.05);">
+            <div class="booster-form-slot" style="display: none; margin-top: 16px; padding: 24px; background: #1e293b; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: inset 0 1px 2px rgba(255,255,255,0.05);">
                 <div style="display: flex; flex-direction: column; gap: 16px;">
-                    <span style="font-size: 0.85rem; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+                    <pan style="font-size: 0.85rem; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
                         Add New Vaccination Shot
                     </span>
-                    
-                    <div class="form-grid-double">
-                        <div class="input-field-wrapper">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Type of Vaccination</label>
-                            <input type="text" class="newVaccineType" placeholder="e.g. Core Feline 4-Way" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                            <input type="text" class="newVaccineType" placeholder="e.g. Core Feline 4-Way" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
                         </div>
-                        <div class="input-field-wrapper">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Brand Label / Components</label>
-                            <input type="text" class="newVaccineLabel" placeholder="e.g. PureVax Feline 4" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                            <input type="text" class="newVaccineLabel" placeholder="e.g. PureVax Feline 4" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
                         </div>
                     </div>
-                    
-                    <div class="form-grid-triple">
-                        <div class="input-field-wrapper">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Serial / Batch No.</label>
-                            <input type="text" class="newVaccineSerial" placeholder="e.g. 64393A" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: monospace; width: 100%; box-sizing: border-box;">
+                            <input type="text" class="newVaccineSerial" placeholder="e.g. 64393A" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: monospace;">
                         </div>
-                        <div class="input-field-wrapper">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Veterinarian Name</label>
-                            <input type="text" class="newVaccineVet" placeholder="e.g. Dr Ismasyahir" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                            <input type="text" class="newVaccineVet" placeholder="e.g. Dr Ismasyahir" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
                         </div>
-                        <div class="input-field-wrapper">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Vet MVC No.</label>
-                            <input type="text" class="newVaccineMvc" placeholder="e.g. 1451" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                            <input type="text" class="newVaccineMvc" placeholder="e.g. 1451" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif;">
                         </div>
                     </div>
-                    
-                    <div class="form-grid-action-row">
-                        <div class="input-field-wrapper">
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: flex-end;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
                             <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Date of Administration</label>
                             <input type="date" class="newVaccineDate" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 11px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; cursor: pointer; width: 100%; box-sizing: border-box;">
                         </div>
@@ -272,10 +96,8 @@
                 </div>
             </div>
         </div>
-    </div> 
-
-    <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
-        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); padding: 24px; border-radius: 20px; box-sizing: border-box;">
+    </div> <div style="display: grid; grid-template-columns: 1fr; gap: 24px;">
+        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); padding: 24px; border-radius: 20px;">
             <h3 style="color: #4ade80; font-size: 1.1rem; margin-top: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Health Information</h3>
             <div style="display: flex; flex-direction: column; gap: 14px;">
                 <div>
@@ -290,7 +112,7 @@
         </div>
     </div>
 
-    <div class="action-footer-container" style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 2px solid rgba(255, 255, 255, 0.08); padding-top: 24px; flex-wrap: wrap; gap: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 2px solid rgba(255, 255, 255, 0.08); padding-top: 24px; flex-wrap: wrap; gap: 16px;">
         <div style="display: flex; gap: 12px;">
             <button onclick="saveCardEdits(this)" style="background: #4ade80; color: #1e293b; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif; box-shadow: 0 4px 12px rgba(74,222,128,0.15);">Update Profile</button>
             <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Remove</button>
