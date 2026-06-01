@@ -8,8 +8,11 @@
         </div>
 
         <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
-            <div style="position: relative; width: 96px; height: 96px; background: #0f172a; border: 2px solid #4ade80; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); overflow: hidden; flex-shrink: 0;">
-                <img src="./assets/first.png" alt="Companion Avatar" style="width: 75%; height: 75%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.4));">
+            
+            <div onclick="triggerAvatarUpload(this)" style="position: relative; width: 96px; height: 96px; background: #0f172a; border: 2px solid #4ade80; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); overflow: hidden; flex-shrink: 0; cursor: pointer;" title="Click to upload pet photo">
+                <img src="./assets/first.png" class="view-petAvatar" alt="Companion Avatar" style="width: 100%; height: 100%; object-fit: cover; filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.4));">            
+                <input type="file" class="avatar-file-input" accept="image/*" style="display: none;" onchange="handleAvatarFileChange(this)">            
+                <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); color: #4ade80; font-size: 0.65rem; text-align: center; padding: 2px 0; font-weight: 800; text-transform: uppercase;">Edit</div>
             </div>
 
             <div style="flex: 1; min-width: 200px;">
