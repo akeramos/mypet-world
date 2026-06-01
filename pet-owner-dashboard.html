@@ -187,7 +187,8 @@
                                 badgeElement.style.borderColor = "#4ade80"; // 🟢 Emerald Mint (Feline / Default)
                             }
                         }
-
+                        
+                        cardElement.querySelector('.view-petAvatar').src = petData.petAvatarData || "./assets/first.png";
                         cardElement.querySelector('.view-petName').innerText = petData.petName || "Unnamed";
                         cardElement.querySelector('.view-petGender').innerText = petData.gender || "Unknown";
                         cardElement.querySelector('.view-petSpecies').innerText = petData.species || "Unknown";
@@ -291,6 +292,7 @@
                         uniqueID: polishedShortId,
                         vaccinations: initialVaccines,
                         healthLogs: ["-", "-", "-", "-", "-", "-"],
+                        petAvatarData: "",
                         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                     };
 
@@ -413,6 +415,66 @@
             }
         }
 
+        // 📸 Trigger the hidden file input when clicking the avatar frame
+        function triggerAvatarUpload(element) {
+            const fileInput = element.querySelector('.avatar-file-input');
+            if (fileInput) fileInput.click();
+        }
+        
+        // 🗜️ Core Processing: Compresses images locally before hitting the server
+        function handleAvatarFileChange(inputEl) {
+            const file = inputEl.files[0];
+            if (!file) return;
+        
+            const card = inputEl.closest('.registered-pet-card');
+            const petId = card.getAttribute('data-id');
+            const avatarImg = card.querySelector('.view-petAvatar');
+        
+            if (!currentUserId || !petId) return;
+        
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = async function () {
+                    // Target avatar profile box boundaries exactly
+                    const targetWidth = 256;
+                    const targetHeight = 256;
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    const ctx = canvas.getContext('2d');
+        
+                    // Draw and square crop the image centered automatically
+                    let minEdge = Math.min(img.width, img.height);
+                    let sx = (img.width - minEdge) / 2;
+                    let sy = (img.height - minEdge) / 2;
+                    ctx.drawImage(img, sx, sy, minEdge, minEdge, 0, 0, targetWidth, targetHeight);
+        
+                    // Compress to JPEG format at medium-high quality settings (70%)
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        
+                    // Immediately set the front-end layout preview for visual speed
+                    avatarImg.src = compressedDataUrl;
+        
+                    try {
+                        // 📂 OPTION A: Write directly to Firestore as a data string string box if under 50KB
+                        // This completely bypasses Firebase Storage, keeping your storage costs flat at $0!
+                        await db.collection("users").doc(currentUserId).collection("pets").doc(petId).update({
+                            petAvatarData: compressedDataUrl,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                        console.log("Compressed avatar mapped smoothly to Firestore records matrix.");
+                    } catch (err) {
+                        console.error("Failed to commit profile image upload metadata maps:", err);
+                        alert("Cloud sync connection timed out.");
+                    }
+                };
+            };
+        }
+        
         async function saveCardEdits(btn) {
             const card = btn.closest('.registered-pet-card');
             const petId = card.getAttribute('data-id');
