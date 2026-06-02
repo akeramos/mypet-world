@@ -78,7 +78,6 @@
         margin: 0 0 12px 0;
         max-width: 600px;
         line-height: 1.2;
-        /* 🔥 High-contrast deep drop shadow ensures readability over white/bright image sections */
         text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
@@ -89,8 +88,12 @@
         margin: 0;
         max-width: 500px;
         line-height: 1.5;
-        /* 🔥 Secondary tight shadow protection layer */
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Responsive line break handling */
+    .slider-overlay p br {
+        display: inline;
     }
 
     /* Staggered Timings for the 5 Slides */
@@ -109,13 +112,35 @@
         100% { opacity: 0; } 
     }
     
-    /* Mobile scaling safety */
+    /* 📱 Mobile scaling safety updates */
     @media (max-width: 768px) {
-        .hero-slider { height: 260px; }
-        .slide-img-sharp, .slide-bg-blur { opacity: 0.4; }
-        .slider-overlay { padding: 0 24px; }
-        .slider-overlay h1 { font-size: 1.6rem; }
-        .slider-overlay p { font-size: 0.95rem; }
+        .hero-slider { 
+            height: 320px; /* Increased height to safely clear long wrapped paragraphs */
+        }
+        .slide-img-sharp, .slide-bg-blur { 
+            opacity: 0.35; /* Drop slightly more to boost text contrast on tiny screens */
+        }
+        .slider-overlay { 
+            padding: 0 20px; /* More horizontal breathing room */
+        }
+        .slider-overlay h1 { 
+            font-size: 1.5rem; 
+            margin-bottom: 8px;
+        }
+        .slider-overlay p { 
+            font-size: 0.9rem; 
+            line-height: 1.4;
+        }
+        /* Ignore manual breaks on mobile to let text flow naturally */
+        .slider-overlay p br {
+            display: none;
+        }
+    }
+
+    /* Small Mobile Tweaks (e.g., iPhone SE) */
+    @media (max-width: 380px) {
+        .hero-slider { height: 340px; } /* Gives extra padding vertical space for text stack */
+        .slider-overlay h1 { font-size: 1.35rem; }
     }
 </style>
 
