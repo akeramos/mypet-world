@@ -1,151 +1,156 @@
-<div class="registered-pet-card" style="margin-bottom: 36px; text-align: left; box-sizing: border-box; width: 100%;">
+<div class="registered-pet-card" style="margin-bottom: 32px; text-align: left; background: #0f172a; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 28px; padding: clamp(16px, 4vw, 32px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); font-family: 'Lexend', sans-serif; box-sizing: border-box; width: 100%;">
     
-    <div class="digital-license-badge-front" style="background: #f1f5f9; border: 1px solid #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); position: relative; overflow: hidden; box-sizing: border-box; width: 100%; color: #0f172a; margin-bottom: 16px;">
+    <div class="digital-license-badge" style="background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 2px solid #4ade80; border-radius: 20px; padding: clamp(16px, 3vw, 24px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); position: relative; overflow: hidden; margin-bottom: 24px; box-sizing: border-box;">
         
-        <div style="background: linear-gradient(90deg, #f472b6 0%, #c084fc 100%); padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); width: 100%; box-sizing: border-box;">
-            <span style="font-size: 0.75rem; font-weight: 800; color: #ffffff; letter-spacing: 0.8px; text-transform: uppercase;">Companion Registry</span>
-            <span style="font-size: 0.65rem; background: #ffffff; color: #b91c1c; padding: 2px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.5px;">MYPET-WORLD</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px; margin-bottom: 16px; width: 100%; flex-wrap: wrap; gap: 8px;">
+            <span style="font-size: 0.8rem; font-weight: 800; color: #cbd5e1; letter-spacing: 1.5px; text-transform: uppercase;">Mypet-World Companion</span>
+            <span style="font-size: 0.7rem; background: rgba(74, 222, 128, 0.2); color: #4ade80; padding: 4px 12px; border-radius: 20px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid rgba(74,222,128,0.3);">Registry Card</span>
         </div>
 
-        <div style="padding: 16px; display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
             
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; margin: 0 auto mobile;">
-                <div onclick="triggerAvatarUpload(this)" style="position: relative; width: 95px; height: 120px; background: #cbd5e1; border: 2px solid #ffffff; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow: hidden; cursor: pointer;" title="Click to upload pet photo">
-                    <img src="./assets/first.png" class="view-petAvatar" alt="Companion Avatar" style="width: 100%; height: 100%; object-fit: cover;">            
-                    <input type="file" class="avatar-file-input" accept="image/*" style="display: none;" onchange="handleAvatarFileChange(this)">            
-                    <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.8); color: #ffffff; font-size: 0.55rem; text-align: center; padding: 2px 0; font-weight: 800; letter-spacing: 0.5px;">UPDATE</div>
-                </div>
-                <span class="view-petUniqueId" style="color: #1e293b; font-family: 'Courier New', monospace; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; background: #ffffff; padding: 1px 6px; border: 1px solid #cbd5e1; border-radius: 4px;">------</span>
+            <div onclick="triggerAvatarUpload(this)" style="position: relative; width: 96px; height: 96px; background: #0f172a; border: 2px solid #4ade80; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.4); overflow: hidden; flex-shrink: 0; cursor: pointer;" title="Click to upload pet photo">
+                <img src="./assets/first.png" class="view-petAvatar" alt="Companion Avatar" style="width: 100%; height: 100%; object-fit: cover; filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.4));">            
+                <input type="file" class="avatar-file-input" accept="image/*" style="display: none;" onchange="handleAvatarFileChange(this)">            
+                <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.6); color: #4ade80; font-size: 0.65rem; text-align: center; padding: 2px 0; font-weight: 800; text-transform: uppercase;">Edit</div>
             </div>
 
-            <div style="flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 8px;">
-                <div>
-                    <div style="font-size: 0.6rem; color: #64748b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px;">Companion Name:</div>
-                    <h2 class="view-petName" contenteditable="true" style="margin: 0; font-weight: 800; font-size: 1.35rem; color: #0f172a; outline: none; border-bottom: 1px dashed #64748b; display: inline-block; padding-bottom: 1px; width: 100%; text-transform: uppercase;" title="Click to edit name">Loading...</h2>
+            <div style="flex: 1; min-width: 200px;">
+                <div style="display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
+                    <span style="font-size: 0.85rem; color: #94a3b8; font-weight: 800; text-transform: uppercase;">Companion Name:</span>
+                    <h2 class="view-petName" contenteditable="true" style="margin: 0; font-weight: 800; font-size: 1.6rem; color: #ffffff; outline: none; border-bottom: 2px dashed rgba(255,255,255,0.2); display: inline-block; padding-bottom: 2px;" title="Click to edit name">Loading Name...</h2>
                 </div>
+                
+                <p style="margin: 0; color: #f1f5f9; font-size: 0.95rem; line-height: 1.5; word-break: break-word;">
+                    <span style="color: #94a3b8; font-weight:800; font-size: 0.8rem; text-transform: uppercase;">Information:</span> 
+                    <span class="view-petGender" style="font-weight: 700; color: #4ade80;">...</span> • 
+                    <span class="view-petSpecies" style="text-transform: capitalize; font-weight: 700;">...</span> 
+                    (<span class="view-petSubspecies" style="color: #cbd5e1;">...</span>) • 
+                    <span class="view-petAge" style="font-weight: 700;">...</span> Years Old
+                </p>
 
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <div>
-                        <div style="font-size: 0.55rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Species</div>
-                        <div class="view-petSpecies" style="text-transform: uppercase; font-weight: 800; color: #334155; font-size: 0.85rem; margin-top: 1px;">...</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.55rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Breed</div>
-                        <div class="view-petSubspecies" style="font-weight: 800; color: #475569; font-size: 0.85rem; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-transform: uppercase;">...</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.55rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Gender</div>
-                        <div class="view-petGender" style="font-weight: 800; color: #16a34a; font-size: 0.85rem; margin-top: 1px; text-transform: uppercase;">...</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.55rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Age</div>
-                        <div style="font-weight: 800; color: #334155; font-size: 0.85rem; margin-top: 1px; text-transform: capitalized;"><span class="view-petAge">...</span> Years Old</div>
-                    </div>
-                </div>
+                <p style="margin: 6px 0 0 0; color: #f1f5f9; font-size: 0.95rem;">
+                    <span style="color: #94a3b8; font-weight:800; font-size: 0.8rem; text-transform: uppercase;">Unique ID:</span> 
+                    <span class="view-petUniqueId" style="color: #4ade80; font-family: monospace; font-weight: 800; letter-spacing: 1px; background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 6px;">------</span>
+                </p>
+            </div>
+        </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 2px; border-top: 1px solid #e2e8f0; padding-top: 6px;">
-                    <div style="display: flex; align-items: center; gap: 4px;">
-                        <span style="color: #64748b; font-size: 0.6rem; font-weight: 800; text-transform: uppercase;">Registry Status:</span>
-                        <span class="view-passportStatus" style="font-size: 0.7rem; font-weight: 800; color: #16a34a; letter-spacing: 0.3px;">✅ SECURE</span>
+        <div style="margin-top: 20px; padding-top: 14px; border-top: 2px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; box-sizing: border-box;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 800; text-transform: uppercase;">Ecosystem Status:</span>
+                <span class="view-passportStatus" style="font-size: 0.85rem; font-weight: 800; color: #4ade80; letter-spacing: 0.5px;">✅ SECURE</span>
+            </div>
+            <div style="font-size: 0.85rem; color: #f1f5f9; font-weight: 700;">
+                <span style="color: #94a3b8; font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Next Booster Due:</span> 
+                <span class="view-passportMasterExpiry" style="color: #fca5a5; font-weight: 800; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); padding: 4px 10px; border-radius: 8px; margin-left: 4px; font-family: monospace;">--/--/----</span>
+            </div>
+        </div>
+
+        <div style="border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 20px; box-sizing: border-box;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                <h3 style="color: #4ade80; font-size: 1.1rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Immunization Passport</h3>
+                <button onclick="toggleBoosterForm(this)" style="background: rgba(74, 222, 128, 0.15); border: 1px solid #4ade80; color: #4ade80; padding: 8px 16px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; cursor: pointer; font-family: 'Lexend', sans-serif; transition: all 0.2s;">
+                    ➕ Add Vaccination
+                </button>
+            </div>
+            
+            <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; width: 100%;"></div>
+
+            <div class="booster-form-slot" style="display: none; margin-top: 16px; padding: clamp(12px, 3vw, 24px); background: #1e293b; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: inset 0 1px 2px rgba(255,255,255,0.05); box-sizing: border-box; width: 100%;">
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <span style="font-size: 0.85rem; color: #4ade80; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+                        Add New Vaccination (Please Ensure All Information is Correct)
+                    </span>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; width: 100%;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Type of Vaccination</label>
+                            <input type="text" class="newVaccineType" placeholder="e.g. Core Feline 4-Way" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Brand Label / Components</label>
+                            <input type="text" class="newVaccineLabel" placeholder="e.g. PureVax Feline 4" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; width: 100%;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Serial / Batch No.</label>
+                            <input type="text" class="newVaccineSerial" placeholder="e.g. 64393A" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: monospace; width: 100%; box-sizing: border-box;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Veterinarian Name</label>
+                            <input type="text" class="newVaccineVet" placeholder="e.g. Dr Ismasyahir" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Vet Registration No.</label>
+                            <input type="text" class="newVaccineMvc" placeholder="MRCVS/RCVS/MVC/STRV/License" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; font-family: 'Lexend', sans-serif; width: 100%; box-sizing: border-box;">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; align-items: flex-end; width: 100%;">
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="font-size: 0.75rem; color: #cbd5e1; font-weight: 600;">Date of Administration</label>
+                            <input type="date" class="newVaccineDate" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); padding: 11px 14px; border-radius: 10px; color: white; font-size: 0.85rem; outline: none; cursor: pointer; width: 100%; box-sizing: border-box;">
+                        </div>
+                        <button onclick="submitInlineBooster(this)" style="background: #4ade80; color: #1e293b; border: none; padding: 12px 28px; border-radius: 10px; font-weight: 800; cursor: pointer; font-family: 'Lexend', sans-serif; font-size: 0.9rem; height: 44px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(74, 222, 128, 0.3); width: 100%; box-sizing: border-box;">
+                            Save
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div style="border-top: 2px solid rgba(255, 255, 255, 0.1); padding-top: 16px; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;" onclick="toggleHealthForm(this)">
+                <h3 style="color: #4ade80; font-size: 1.1rem; margin: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+                    Health Information
+                </h3>
+                <span class="view-health-arrow" style="color: #4ade80; font-size: 1.1rem; transition: transform 0.2s ease;">🔽</span>
+            </div>
+
+            <div class="health-logs-form-slot" style="display: none; margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; width: 100%; box-sizing: border-box;">
+                <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;"> Weight (Kg)</label>
+                    <div class="view-healthLog1" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">🩸 Blood Type</label>
+                    <div class="view-healthLog2" contenteditable="true" style="color: #f87171; font-size: 0.95rem; font-weight: 800; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: #1e293b; border: 1px solid rgba(255, 255, 255, 0.08); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">Spayed/ Neutered Status</label>
+                    <div class="view-healthLog3" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #fca5a5; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">Allergies</label>
+                    <div class="view-healthLog4" contenteditable="true" style="color: #fca5a5; font-size: 0.95rem; font-weight: 800; outline: none; border-bottom: 1px dashed rgba(239,68,68,0.2); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: rgba(74, 222, 128, 0.03); border: 1px solid rgba(74, 222, 128, 0.15); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #86efac; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">Chronic Medications</label>
+                    <div class="view-healthLog5" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(74,222,128,0.15); padding-bottom: 2px;">-</div>
+                </div>
+
+                <div style="background: rgba(74, 222, 128, 0.03); border: 1px solid rgba(74, 222, 128, 0.15); padding: 14px; border-radius: 14px; box-sizing: border-box;">
+                    <label style="font-size: 0.75rem; color: #86efac; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 6px;">De-worming Date</label>
+                    <div class="view-healthLog6" contenteditable="true" style="color: #ffffff; font-size: 0.95rem; font-weight: 700; outline: none; border-bottom: 1px dashed rgba(74,222,128,0.15); padding-bottom: 2px;">-</div>
+                </div>
+            </div>
+        </div>
+
+    </div> <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 32px; border-top: 2px solid rgba(255, 255, 255, 0.08); padding-top: 24px; flex-wrap: wrap; gap: 16px; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button onclick="saveCardEdits(this)" style="background: #4ade80; color: #1e293b; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif; box-shadow: 0 4px 12px rgba(74,222,128,0.15);">Update Profile</button>
+            <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Remove</button>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="#" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #f87171; color: #fca5a5; padding: 10px 16px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">🚨 Report Missing</a>
+            <a href="#" style="background: rgba(148, 163, 184, 0.15); border: 1px solid rgba(148, 163, 184, 0.4); color: #cbd5e1; padding: 10px 16px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Report Dead</a>
         </div>
     </div>
-
-    <div class="digital-license-badge-back" style="background: #f8fafc; border: 1px solid #ffffff; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); position: relative; overflow: hidden; box-sizing: border-box; width: 100%; color: #0f172a; padding: 16px;">
-        
-        <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 12px;" onclick="toggleHealthForm(this)">
-            <span style="font-size: 0.75rem; font-weight: 800; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase;">Clinical Parameters Matrix</span>
-            <span class="view-health-arrow" style="color: #64748b; font-size: 0.85rem; transition: transform 0.2s ease;">🔽</span>
-        </div>
-
-        <div class="health-logs-form-slot" style="display: none; flex-direction: column; gap: 1px; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 10px; overflow: hidden; margin-bottom: 20px; width: 100%; box-sizing: border-box;">
-            <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 10px 14px;">
-                <span style="font-size: 0.75rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Body Weight (Kg)</span>
-                <div class="view-healthLog1" contenteditable="true" style="color: #0f172a; font-size: 0.85rem; font-weight: 800; text-align: right; min-width: 60px; outline: none; background: rgba(0,0,0,0.02); padding: 2px 6px; border-radius: 4px;">-</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 14px;">
-                <span style="font-size: 0.75rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Blood Type</span>
-                <div class="view-healthLog2" contenteditable="true" style="color: #b91c1c; font-size: 0.85rem; font-weight: 800; text-align: right; min-width: 60px; outline: none; background: rgba(0,0,0,0.02); padding: 2px 6px; border-radius: 4px;">-</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 10px 14px;">
-                <span style="font-size: 0.75rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Spayed/ Neutered Status</span>
-                <div class="view-healthLog3" contenteditable="true" style="color: #0f172a; font-size: 0.85rem; font-weight: 800; text-align: right; min-width: 60px; outline: none; background: rgba(0,0,0,0.02); padding: 2px 6px; border-radius: 4px;">-</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 14px;">
-                <span style="font-size: 0.75rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Allergies</span>
-                <div class="view-healthLog4" contenteditable="true" style="color: #b91c1c; font-size: 0.85rem; font-weight: 800; text-align: right; min-width: 60px; outline: none; background: #fee2e2; padding: 2px 6px; border-radius: 4px;">-</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; padding: 10px 14px;">
-                <span style="font-size: 0.75rem; color: #64748b; font-weight: 800; text-transform: uppercase;">Chronic Medication</span>
-                <div class="view-healthLog5" contenteditable="true" style="color: #0f172a; font-size: 0.85rem; font-weight: 800; text-align: right; min-width: 60px; outline: none; background: rgba(0,0,0,0.02); padding: 2px 6px; border-radius: 4px;">-</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px 14px;">
-                <span style="font-size: 0.75rem; color: #64748b; font-weight: 800; text-transform: uppercase;">De-worming (date)</span>
-                <div class="view-healthLog6" contenteditable="true" style="color: #0f172a; font-size: 0.85rem; font-weight: 800; text-align: right; min-width: 60px; outline: none; background: rgba(0,0,0,0.02); padding: 2px 6px; border-radius: 4px;">-</div>
-            </div>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-top: 1px solid #e2e8f0; padding-top: 14px; flex-wrap: wrap; gap: 8px;">
-            <div style="display: flex; flex-direction: column;">
-                <span style="font-size: 0.75rem; font-weight: 800; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase;">Immunization Passport Logs</span>
-                <span style="font-size: 0.65rem; color: #94a3b8; font-weight: 700; margin-top: 1px;">Next Booster Due: <span class="view-passportMasterExpiry" style="color: #b91c1c; font-weight: 800; font-family: monospace;">--/--/----</span></span>
-            </div>
-            <button onclick="toggleBoosterForm(this)" style="background: #1e293b; border: 1px solid #1e293b; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; cursor: pointer; font-family: 'Lexend', sans-serif;">
-                ➕ Add Record
-            </button>
-        </div>
-        
-        <div class="view-vaccine-list" style="display: flex; flex-direction: column; gap: 8px; box-sizing: border-box; width: 100%;"></div>
-
-        <div class="booster-form-slot" style="display: none; margin-top: 14px; padding: 14px; background: #1e293b; border-radius: 12px; box-sizing: border-box; width: 100%; color: white;">
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-                <span style="font-size: 0.75rem; color: #4ade80; font-weight: 800; text-transform: uppercase;">Append Verified Vaccination</span>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <label style="font-size: 0.65rem; color: #cbd5e1;">Vaccination Type</label>
-                        <input type="text" class="newVaccineType" placeholder="e.g. Core Rabies" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 8px 10px; border-radius: 6px; color: white; font-size: 0.8rem; outline: none;">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <label style="font-size: 0.65rem; color: #cbd5e1;">Brand Label / Components</label>
-                        <input type="text" class="newVaccineLabel" placeholder="e.g. PureVax" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 8px 10px; border-radius: 6px; color: white; font-size: 0.8rem; outline: none;">
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px;">
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <label style="font-size: 0.65rem; color: #cbd5e1;">Serial / Batch No.</label>
-                        <input type="text" class="newVaccineSerial" placeholder="e.g. 64393A" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 8px 10px; border-radius: 6px; color: white; font-size: 0.8rem; outline: none; font-family: monospace;">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <label style="font-size: 0.65rem; color: #cbd5e1;">Veterinarian Name</label>
-                        <input type="text" class="newVaccineVet" placeholder="e.g. Dr Christopher James" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 8px 10px; border-radius: 6px; color: white; font-size: 0.8rem; outline: none;">
-                    </div>
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <label style="font-size: 0.65rem; color: #cbd5e1;">Vet Registration No.</label>
-                        <input type="text" class="newVaccineMvc" placeholder="MRCVS/RCVS/MVC/STRV/License" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 8px 10px; border-radius: 6px; color: white; font-size: 0.8rem; outline: none;">
-                    </div>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; align-items: flex-end;">
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                        <label style="font-size: 0.65rem; color: #cbd5e1;">Date of Administration</label>
-                        <input type="date" class="newVaccineDate" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 7px 10px; border-radius: 6px; color: white; font-size: 0.8rem; outline: none; cursor: pointer;">
-                    </div>
-                    <button onclick="submitInlineBooster(this)" style="background: #4ade80; color: #1e293b; border: none; padding: 9px 20px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 0.8rem; height: 36px;">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; flex-wrap: wrap; gap: 12px; width: 100%; box-sizing: border-box;">
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button onclick="saveCardEdits(this)" style="background: #4ade80; color: #1e293b; border: none; padding: 11px 22px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif; box-shadow: 0 4px 12px rgba(74,222,128,0.15);">Update Registry</button>
-            <button onclick="deletePetProfile(this)" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; padding: 11px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; font-family: 'Lexend', sans-serif;">🗑️ Erase File</button>
-        </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="#" style="background: rgba(239, 68, 68, 0.15); border: 1px solid #f87171; color: #fca5a5; padding: 10px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">🚨 Broadcast Missing</a>
-            <a href="#" style="background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.3); color: #cbd5e1; padding: 10px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-decoration: none; font-family: 'Lexend', sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">Archive Deceased</a>
-        </div>
-    </div>
-    
 </div>
