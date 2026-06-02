@@ -28,7 +28,6 @@
         }
     </script>
     <script>
-        // Modified to return a Promise so we can track when it actually finishes loading
         async function includeHTML(placeholderId, filename) {
             try {
                 const response = await fetch(filename);
@@ -43,7 +42,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', async () => {
-            // Use Promise.all to load every single sub-component concurrently and safely
             await Promise.all([
                 includeHTML('header-placeholder', 'header.html'),
                 includeHTML('services-grid-placeholder', 'services.html'),
@@ -57,9 +55,52 @@
             ]);
             loadCounter();
             initHeaderAuth();
-            initBackgroundOrganicPulse();
+            initBackgroundOrganicPulse(); // 🟢 Keeps your leaf shapes running cleanly
         });
     </script>
+    <style>
+        /* 🟢 Organic Pulse Canvas Base Style Configuration */
+        #neuralCanvas {
+            position: fixed; /* Fixed ensures it stays locked behind scrolling modules */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            background: #020617; /* High contrast dark background palette setup */
+        }
+
+        /* 📐 RESPONSIVE GRID LAYOUT PROTECTION CONTROLLERS */
+        .content-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px; /* Restricts the layout stretching on giant screens */
+            margin: 0 auto;
+            padding: clamp(12px, 3vw, 24px); /* Fluid padding: tight 12px on mobile, spacious 24px on desktop */
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .welcome-title {
+            font-size: clamp(1.5rem, 4.5vw, 2.2rem); /* Dynamic font sizing prevents layout overflow */
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 28px;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            text-align: left;
+        }
+
+        .welcome-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: #cbd5e1;
+            margin-top: 0;
+            margin-bottom: 32px;
+            line-height: 1.5;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 
@@ -68,17 +109,19 @@
     <div id="header-placeholder"></div>
     
     <div class="content-container">
-        <main>
+        <main style="width: 100%; box-sizing: border-box;">
             <div id="slider-placeholder"></div>
-            <h2>Welcome to Mypet-world!</h2>
-            <p>Select our services for your loved one.</p>
-            <div id="services-grid-placeholder"></div>
-            <div id="services2-grid-placeholder"></div>
-            <div id="about-placeholder"></div>
-            <div id="first-column-placeholder"></div>
-            <div id="second-column-placeholder"></div>
-            <div id="third-column-placeholder"></div>
-        </main>        
+            
+            <h2 class="welcome-title">Welcome to Mypet-world!</h2>
+            <p class="welcome-subtitle">Select our services for your loved one.</p>
+            
+            <div id="services-grid-placeholder" style="width: 100%; margin-bottom: 24px;"></div>
+            <div id="services2-grid-placeholder" style="width: 100%; margin-bottom: 24px;"></div>
+            <div id="about-placeholder" style="width: 100%; margin-bottom: 24px;"></div>
+            <div id="first-column-placeholder" style="width: 100%; margin-bottom: 24px;"></div>
+            <div id="second-column-placeholder" style="width: 100%; margin-bottom: 24px;"></div>
+            <div id="third-column-placeholder" style="width: 100%; margin-bottom: 24px;"></div>
+        </main>         
     </div>
 
     <div id="footer-placeholder"></div>
@@ -96,7 +139,6 @@
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
                 
-                // Keep particles bounded safely instead of re-instantiating thousands of empty pointers on window resize
                 if (particles.length === 0) {
                     init();
                 } else {
@@ -178,10 +220,9 @@
 
             window.addEventListener('resize', resize);
             
-            // Account for window scrolling offsets so context trails don't drift away on long scroll blocks
             window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX + window.scrollX;
-                mouse.y = e.clientY + window.scrollY;
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
             });
             window.addEventListener('mouseout', () => {
                 mouse.x = null;
