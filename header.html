@@ -25,7 +25,7 @@
         position: relative;
         z-index: 9999;
         flex-shrink: 0;
-        padding: 15px 40px; 
+        padding: 12px clamp(12px, 3vw, 40px); /* 🚀 RESPONSIVE: Fluid side scaling prevents viewport clipping */
         background: rgba(2, 6, 23, 0.4); 
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
@@ -34,6 +34,8 @@
         overflow: hidden;
         font-family: 'Lexend', system-ui, -apple-system, sans-serif;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        box-sizing: border-box;
+        width: 100%;
     }
     
     .header-content {
@@ -44,47 +46,56 @@
         align-items: center; 
         max-width: 1400px;
         margin: 0 auto;
+        gap: 12px; /* 🚀 FIXED: Prevents elements from sticking together on mid-sized tablets */
     }
     
     .brand-container {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: clamp(6px, 1.5vw, 12px); /* 🚀 RESPONSIVE: Tightens image gap on small views */
         text-decoration: none;
         color: white;
+        min-width: 0; /* Allows scaling without overflows */
     }
     
     .brand-logo {
-        width: 45px;
-        height: 45px;
+        width: clamp(34px, 4.5vw, 45px); /* 🚀 RESPONSIVE: Scalable company token size */
+        height: clamp(34px, 4.5vw, 45px);
         object-fit: cover;
         border-radius: 50%; 
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        flex-shrink: 0;
     }
         
     .brand-name {
         margin: 0;
-        font-size: 1.8rem;
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem); /* 🚀 RESPONSIVE: Clean title shrinkage across viewports */
         font-weight: 800;
         text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         letter-spacing: -0.5px;
+        white-space: nowrap;
     }
 
     .nav-user-greeting {
-        font-size: 0.9rem;
+        font-size: clamp(0.8rem, 1.8vw, 0.9rem); /* 🚀 RESPONSIVE: Adjusts name layout context size */
         color: #4ade80; 
         font-weight: 700;
-        margin-right: 8px;
+        margin-right: 4px;
         letter-spacing: -0.3px;
         text-shadow: 0 0 10px rgba(74, 222, 128, 0.2);
         text-transform: capitalize;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* 🚀 FIXED: Clips super long usernames safely with trailing dots (...) */
+        max-width: clamp(100px, 20vw, 250px);
     }
 
     nav {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: clamp(8px, 2vw, 15px); /* 🚀 RESPONSIVE: Compact spacing engine rules */
+        flex-shrink: 0;
     }
 
     /* --- Moving Animals Animation --- */
@@ -124,25 +135,33 @@
         color: white;
         text-decoration: none;
         font-weight: 600;
-        padding: 8px 18px;
+        padding: 6px clamp(12px, 1.5vw, 18px); /* 🚀 RESPONSIVE: Elastic inner link padding fields */
         border-radius: 20px;
         transition: all 0.3s ease;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        font-size: 0.95rem;
+        font-size: clamp(0.85rem, 1.8vw, 0.95rem); /* 🚀 RESPONSIVE: Adapts text size neatly */
         cursor: pointer;
+        white-space: nowrap;
     }
 
     .nav-link:hover {
         background: rgba(74, 222, 128, 0.15); 
-        border-color: #4ade80;                                
-        color: #4ade80;                                       
+        border-color: #4ade80;                                 
+        color: #4ade80;                                        
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(74, 222, 128, 0.15);
     }
 
     .account-btn {
         background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* 📱 CRITICAL RESPONSIVE MEDIA BREAKPOINT FOR TINY PHONES (under 400px) */
+    @media (max-width: 400px) {
+        .nav-user-greeting {
+            display: none; /* 🚀 EXTRA CLEAN: Hides greeting string text on ultra-narrow frames to preserve crucial UI space */
+        }
     }
 </style>
 
@@ -151,20 +170,15 @@
         let authListenerDeclared = false;
 
         function checkAndRenderHeader() {
-            // Confirm both Auth and Firestore engines are ready in global window memory space
             if (typeof firebase !== 'undefined' && firebase.auth && firebase.firestore) {
-                
-                // Prevent creating duplicate session track observer listeners on component re-entries
                 if (authListenerDeclared) return;
                 authListenerDeclared = true;
 
                 firebase.auth().onAuthStateChanged(async (user) => {
                     const navContainer = document.getElementById('header-nav-container');
                     
-                    // 🔄 THE TIMING FAILSAFE: If your async includeHTML method hasn't completed yet, 
-                    // pause for 50 milliseconds and let the rendering queue catch up!
                     if (!navContainer) {
-                        authListenerDeclared = false; // Reset lock flag
+                        authListenerDeclared = false; 
                         setTimeout(checkAndRenderHeader, 50);
                         return;
                     }
@@ -174,7 +188,7 @@
                             const db = firebase.firestore();
                             const userDoc = await db.collection("users").doc(user.uid).get();
                             
-                            let displayName = user.email.split('@')[0]; // Default string parameter
+                            let displayName = user.email.split('@')[0]; 
                             if (userDoc.exists && userDoc.data().username) {
                                 displayName = userDoc.data().username;
                             }
@@ -192,19 +206,15 @@
                             `;
                         }
                     } else {
-                        // User session absent or unverified -> Render standard access portal button link
                         navContainer.innerHTML = `
                             <a href="account.html" class="nav-link account-btn">👤 Account</a>
                         `;
                     }
                 });
             } else {
-                // Wait for the asynchronous web file downloads to complete processing initialization setup
                 setTimeout(checkAndRenderHeader, 100);
             }
         }
-        
-        // 🚀 DUAL TRIGGER: Fires immediately on load and tracks window state
         checkAndRenderHeader();
     })();
 </script>
