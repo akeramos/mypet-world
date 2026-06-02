@@ -67,22 +67,22 @@
 
     <div id="header-placeholder"></div>
     
-    <div class="content-container" style="max-width: 1200px; margin: 0 auto; padding: clamp(12px, 3vw, 24px); box-sizing: border-box; width: 100%;">
+    <div class="content-container" style="max-width: 1200px; margin: 0 auto; padding: clamp(10px, 3vw, 24px); box-sizing: border-box; width: 100%;">
         <main style="width: 100%; box-sizing: border-box;">            
-            <div class="glass-card" style="margin-bottom: 32px; text-align: left; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: clamp(20px, 4vw, 40px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box; width: 100%; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
-                <h2 style="margin-top:0; font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 800; color: #ffffff; letter-spacing: -0.5px; word-break: break-word;">Welcome <span id="dash-username" style="color: #4ade80; text-transform: capitalize;"></span>! 🐾</h2>
-                <p style="font-size: 1rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
-                <p style="font-size: 1rem; color: #94a3b8; margin: 8px 0; line-height: 1.6; word-break: break-word;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
+            <div class="glass-card" style="margin-bottom: 24px; text-align: left; background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 24px; padding: clamp(14px, 4vw, 40px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25); box-sizing: border-box; width: 100%; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
+                <h2 style="margin-top:0; font-size: clamp(1.3rem, 3.5vw, 1.8rem); font-weight: 800; color: #ffffff; letter-spacing: -0.5px; word-break: break-word; line-height: 1.3;">Welcome <span id="dash-username" style="color: #4ade80; text-transform: capitalize;"></span>! 🐾</h2>
+                <p style="font-size: 0.95rem; color: #cbd5e1; margin: 8px 0;"><strong>Account Type:</strong> <span id="dash-role" style="color: #4ade80; font-weight: 600;">Pet Owner</span></p>
+                <p style="font-size: 0.95rem; color: #94a3b8; margin: 8px 0; line-height: 1.5; word-break: break-word;"><strong>Registered Email:</strong> <span id="dash-email">...</span></p>
                 
-                <div style="margin-top: 16px; margin-bottom: 10px;">
-                    <button onclick="injectNewPetForm()" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; transition: all 0.2s ease; border:none; cursor:pointer;">
+                <div style="margin-top: 18px; margin-bottom: 6px;">
+                    <button onclick="injectNewPetForm()" class="btn-primary" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; transition: all 0.2s ease; border:none; cursor:pointer; width: auto; max-width: 100%; box-sizing: border-box;">
                         Add Companion Animal
                     </button>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; flex-wrap: wrap; gap: 12px;">
-                    <h1 style="font-size: 1.4rem; font-weight: 700; color: #ffffff; margin: 0;">Dashboard</h1>
-                    <button id="dash-logout-btn" class="btn-danger" style="display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; font-family: 'Lexend', sans-serif; cursor: pointer; transition: all 0.2s ease;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px; flex-wrap: wrap; gap: 12px;">
+                    <h1 style="font-size: 1.3rem; font-weight: 700; color: #ffffff; margin: 0;">Dashboard</h1>
+                    <button id="dash-logout-btn" class="btn-danger" style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; font-family: 'Lexend', sans-serif; cursor: pointer; transition: all 0.2s ease;">
                         SIGN OUT
                     </button>
                 </div>
@@ -178,13 +178,13 @@
                         
                         if (badgeElement) {
                             if (species.includes('dog')) {
-                                badgeElement.style.borderColor = "#38bdf8"; // 🚙 Cyber Light Blue (Canine)
+                                badgeElement.style.borderColor = "#38bdf8";
                             } else if (species.includes('rabbit')) {
-                                badgeElement.style.borderColor = "#c084fc"; // 🔮 Orchid Purple (Exotic)
+                                badgeElement.style.borderColor = "#c084fc";
                             } else if (species.includes('bird')) {
-                                badgeElement.style.borderColor = "#f59e0b"; // 🍊 Vibrant Amber (Avian)
+                                badgeElement.style.borderColor = "#f59e0b";
                             } else {
-                                badgeElement.style.borderColor = "#4ade80"; // 🟢 Emerald Mint (Feline / Default)
+                                badgeElement.style.borderColor = "#4ade80";
                             }
                         }
                         
@@ -396,6 +396,7 @@
             expiryInput.value = adminDate.toISOString().split('T')[0];
         }
 
+        // Toggle layout modules
         function toggleBoosterForm(btn) {
             const card = btn.closest('.registered-pet-card');
             const formSlot = card.querySelector('.booster-form-slot');
@@ -415,13 +416,11 @@
             }
         }
 
-        // 📸 Trigger the hidden file input when clicking the avatar frame
         function triggerAvatarUpload(element) {
             const fileInput = element.querySelector('.avatar-file-input');
             if (fileInput) fileInput.click();
         }
         
-        // 🗜️ Core Processing: Compresses images locally before hitting the server
         function handleAvatarFileChange(inputEl) {
             const file = inputEl.files[0];
             if (!file) return;
@@ -438,7 +437,6 @@
                 const img = new Image();
                 img.src = event.target.result;
                 img.onload = async function () {
-                    // Target avatar profile box boundaries exactly
                     const targetWidth = 256;
                     const targetHeight = 256;
                     
@@ -447,28 +445,22 @@
                     canvas.height = targetHeight;
                     const ctx = canvas.getContext('2d');
         
-                    // Draw and square crop the image centered automatically
                     let minEdge = Math.min(img.width, img.height);
                     let sx = (img.width - minEdge) / 2;
                     let sy = (img.height - minEdge) / 2;
                     ctx.drawImage(img, sx, sy, minEdge, minEdge, 0, 0, targetWidth, targetHeight);
         
-                    // Compress to JPEG format at medium-high quality settings (70%)
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-        
-                    // Immediately set the front-end layout preview for visual speed
                     avatarImg.src = compressedDataUrl;
         
                     try {
-                        // 📂 OPTION A: Write directly to Firestore as a data string string box if under 50KB
-                        // This completely bypasses Firebase Storage, keeping your storage costs flat at $0!
                         await db.collection("users").doc(currentUserId).collection("pets").doc(petId).update({
                             petAvatarData: compressedDataUrl,
                             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                         });
-                        console.log("Compressed avatar mapped smoothly to Firestore records matrix.");
+                        console.log("Compressed avatar mapped smoothly.");
                     } catch (err) {
-                        console.error("Failed to commit profile image upload metadata maps:", err);
+                        console.error(err);
                         alert("Cloud sync connection timed out.");
                     }
                 };
@@ -525,7 +517,6 @@
             try { await auth.signOut(); } catch (error) { console.error(error); }
         });
       
-        // 🔮 UPGRADED: Cyber Blue Interactive Network Constellation Simulation
         let mouse = { x: null, y: null };
         function initBackgroundCyberNetwork() {
             const canvas = document.getElementById('networkCanvas');
@@ -533,7 +524,7 @@
             const ctx = canvas.getContext('2d');
             let particles = [];
             const particleCount = 60; 
-            const connectionDist = 180; // Extended reach webbing
+            const connectionDist = 180;
 
             window.addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX;
@@ -555,7 +546,7 @@
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.baseSize = Math.random() * 3 + 3; // Enhanced node radius (3px - 6px)
+                    this.baseSize = Math.random() * 3 + 3;
                     this.size = this.baseSize;
                     this.speedX = (Math.random() - 0.5) * 0.5;
                     this.speedY = (Math.random() - 0.5) * 0.5;
@@ -564,7 +555,7 @@
                 }
                 update() {
                     this.x += this.speedX;
-                    this.y += this.vy || this.speedY; // Fallback structure safety
+                    this.y += this.vy || this.speedY;
 
                     this.pulse += this.pulseSpeed;
                     this.size = this.baseSize + Math.sin(this.pulse) * 2;
@@ -572,7 +563,6 @@
                     if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
                     if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
 
-                    // Proximity mouse push logic
                     if (mouse.x !== null && mouse.y !== null) {
                         let dx = mouse.x - this.x;
                         let dy = mouse.y - this.y;
@@ -590,7 +580,7 @@
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fill();
-                    ctx.shadowBlur = 0; // Performance optimization reset
+                    ctx.shadowBlur = 0;
                 }
             }
 
