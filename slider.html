@@ -69,6 +69,9 @@
         align-items: flex-start;
         text-align: left;
         z-index: 10; 
+        
+        /* 💡 FIX 1: Ensures padding doesn't expand the container width past 100vw */
+        box-sizing: border-box; 
     }
 
     .slider-overlay h1 {
@@ -76,9 +79,14 @@
         font-weight: 800;
         color: #ffffff;
         margin: 0 0 12px 0;
+        width: 100%; /* 💡 FIX 2: Constrains width dynamically */
         max-width: 600px;
         line-height: 1.2;
         text-shadow: 0 4px 16px rgba(0, 0, 0, 0.95), 0 2px 4px rgba(0, 0, 0, 0.8);
+        
+        /* 💡 FIX 3: Safety locks to force long words to break instead of spilling */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .slider-overlay p {
@@ -86,9 +94,14 @@
         color: #4ade80; /* Leaf-green brand */
         font-weight: 400;
         margin: 0;
+        width: 100%; /* 💡 FIX 2: Constrains width dynamically */
         max-width: 500px;
         line-height: 1.5;
         text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 1px 3px rgba(0, 0, 0, 0.8);
+        
+        /* 💡 FIX 3: Safety locks */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     /* Responsive line break handling */
@@ -115,20 +128,21 @@
     /* 📱 Mobile scaling safety updates */
     @media (max-width: 768px) {
         .hero-slider { 
-            height: 320px; /* Increased height to safely clear long wrapped paragraphs */
+            height: 320px; 
         }
+        /* Drop opacity completely or to a lower rate if background images fight text layout visibility */
         .slide-img-sharp, .slide-bg-blur { 
-            opacity: 0.35; /* Drop slightly more to boost text contrast on tiny screens */
+            opacity: 0.25; 
         }
         .slider-overlay { 
-            padding: 0 20px; /* More horizontal breathing room */
+            padding: 0 24px; /* Crisp, readable side margins */
         }
         .slider-overlay h1 { 
-            font-size: 1.5rem; 
+            font-size: 1.6rem; 
             margin-bottom: 8px;
         }
         .slider-overlay p { 
-            font-size: 0.9rem; 
+            font-size: 0.95rem; 
             line-height: 1.4;
         }
         /* Ignore manual breaks on mobile to let text flow naturally */
@@ -139,8 +153,15 @@
 
     /* Small Mobile Tweaks (e.g., iPhone SE) */
     @media (max-width: 380px) {
-        .hero-slider { height: 340px; } /* Gives extra padding vertical space for text stack */
-        .slider-overlay h1 { font-size: 1.35rem; }
+        .hero-slider { 
+            height: 340px; /* Gives taller box height so long paragraphs wrap without slicing off at bottom */
+        } 
+        .slider-overlay h1 { 
+            font-size: 1.35rem; 
+        }
+        .slider-overlay p {
+            font-size: 0.88rem;
+        }
     }
 </style>
 
